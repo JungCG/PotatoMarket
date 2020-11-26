@@ -1,0 +1,90 @@
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+/* @import url(//fonts.googleapis.com/earlyaccess/jejuhallasan.css); */
+#uploadfile1 {
+   display: none;
+}
+
+#uploadfile2 {
+   display: none;
+}
+
+#uploadfile3 {
+   display: none;
+}
+.GJW-writeBoardSection {
+   display: flex;
+   justify-content: center;
+   width:80vw;
+   opacity: 0.9;
+   font-family: 'Jeju Gothic', serif;
+}
+.upld_btn2{
+	
+	  background-color: #A9F5F2;
+   border-radius: 25px;
+   font-size: 14px;
+   padding: 4px;
+	
+}
+#btn_div {
+   display: flex;
+   justify-content: center;
+   margin-top: 10px;
+   
+}
+#btn_div > input {
+   margin: 10px 10px;
+   font-family: 'Jeju Gothic', serif;
+   
+}
+#btn_div > input:nth-of-type(1) {
+   background-color: #BEF781;
+   border: none;
+   border-radius: 25px;
+   font-size: 16px;
+   padding: 10px;
+}
+#btn_div > input:nth-of-type(2) {
+   background-color: #F3F781;
+   border: none;   
+   border-radius: 25px;
+   font-size: 16px;
+   padding: 10px;
+}
+#btn_div > input:nth-of-type(3) {
+   background-color: #F7BE81;
+   border: none;
+   border-radius: 25px;
+   font-size: 16px;
+   padding: 10px;   
+}
+.imgupld > label {
+   display: flex;
+   justify-content: flex-end;
+   margin-right: 10px;   
+   
+}
+.bowrtbl {
+   border-collapse: collapse;
+   outline: solid 2px #e6e6e6;
+
+   
+}
+.bowrtbl td {
+   padding: 10px;
+
+   /* font-family: 'Jeju Hallasan', cursive; */
+}
+
+.upld_btn {
+   background-color: #A9F5F2;
+   border-radius: 25px;
+   font-size: 14px;
+   padding: 4px;
+}
+.trline {
+   border-top: solid 2px #e6e6e6;
+}
+.trline2 {
+   border-top: dotted 1px #e6e6e6;
+}

@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+#ICR_Product_main {
+	text-align: center;
+}
+
+#ICR_Product {
+	display: inline-block;
+	margin: 30px;
+}
+
+#ICR_pageNum {
+	width: 90%;
+	hieght: 40px;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+#ICR_writeBtn {
+	text-align: right;
+	margin-right: 5%;
+	display: block;
+}
+
+a {
+	text-decoration: none;
+}

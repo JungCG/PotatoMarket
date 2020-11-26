@@ -1,0 +1,485 @@
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+section {
+   display: flex;
+   justify-content: center;
+   flex-wrap: wrap;
+}
+
+section {
+   width: 70vw;
+}
+
+.datupdatebtn {
+   display: none;
+   margin-top:10px;
+}
+
+.GJW-redatform {
+   margin-top: 10px;
+   padding-bottom: 5px;
+   display: flex;
+   justify-content: flex-start;
+   padding-top: 5px;
+   display: none;
+   justify-content: flex-end;
+   height: 40px;
+   width: 50vh;
+   margin-left: 100px;
+}
+
+#GJW-deldat {
+   display: flex;
+   justify-content: flex-end;
+}
+#GJW-commenttextsize{
+
+margin-left: 40px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+font-size: 33px;
+}
+.ee {
+   border-bottom: inset;
+   padding-left: 50px;
+   padding-bottom: 10px;
+}
+
+}
+.jck_content_container_div1 {
+   flex-basis: 0%;
+}
+ 
+.GJW-re {
+   border: 1px soldi black;
+   outline: none;
+}
+
+.GJW-redatbtn {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#GJW-content1 {
+   
+}
+textarea{
+	
+	 overflow:hidden;
+}
+.jck_everything {
+   display: flex;
+   flex-direction: column;
+   flex-wrap: nowrap;
+   justify-content: space-between;
+   align-items: center;
+       height: auto;
+} 
+
+#GJW-dat {
+   width: 100%;
+}
+
+h2 {
+   padding-bottom: 30px;
+   padding-top: 30px;
+}
+
+#GJW-board {
+   width: 100%;
+}
+
+#GJW-title {
+   display: flex;
+   justify-content: center;
+   margin-top: 50px;
+   font-size: 60px;
+   padding-bottom: 10px;
+   border-bottom: 0.5px solid;
+   border-bottom: inset;
+   padding-bottom: 40px;
+   font-family: 'Nanum Gothic';
+}
+
+#GJW-subtitle {
+   margin-top: 20px;
+   display: flex;
+   flex-direction: column;
+   font-size: 20px;
+   border-bottom: inset;
+font-family: 'Noto Sans KR', sans-serif;}
+
+#GJW-main {
+ display: flex;
+    padding: 20px;
+    font-size: 35px;
+    justify-content: center;
+    border: 0px;
+    outline: none;
+    font-family: 'Jeju Gothic';
+    margin-top: 20px;
+    margin-left: 30px;
+   
+}
+
+
+
+.GJW-boardmo{
+font-family: 'Hanna';
+
+
+}
+.GJW-datdat {
+   border-bottom: inset;
+}
+
+.jck_nav_container {
+   width: 10vw;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: nowrap;
+   justify-content: space-between;
+   position: absolute;
+   right: 0px;
+} 
+
+#GJW-datcon {
+   margin-bottom: 20px;
+   width: 100%;
+   margin-top: 30px;
+}
+
+.jck_footer_container {
+   flex-basis: 20%;
+   width: 100vw;
+   display: flex;
+   flex-direction: row;
+   flex-wrap: nowrap;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: beige;
+   margin-top: 10%;
+}
+
+.jck_content_container_div2 {
+   flex-basis: 80%;
+   margin-top: 50px;
+   display: flex;
+   justify-content: center;
+}
+
+.GJW-rdatdelete {
+   margin-top: 16px;
+   margin-left: 10px;
+   color: black;
+}
+
+a:link {
+   text-decoration: none;
+}
+
+a:visited {
+   text-decoration: none;
+}
+
+a:hover {
+   text-decoration: underline;
+}
+
+#GJW-content-1 {
+   border-bottom: 0.5px solid;
+   border-bottom: inset;
+}
+
+#GJW-writer {
+   margin-bottom: 20px;
+   margin-left: 30px;
+   
+}
+
+#GJW-date {
+   padding-bottom: 5px;
+   margin-left: 30px;
+   margin-bottom: 15px;
+}
+
+#GJW-dattext {
+   border: 1px solid brown;
+   overflow: hidden;
+   margin: 20px;
+   width: 100%;
+   margin-left: 0px;
+       border-radius: 25px;
+    padding-left: 30px;
+    padding-top: 20px;
+    font-weight: bold;
+    outline:none;
+}
+
+.GJW-viewimg {
+   width: 300px;
+   margin-top: 30px;
+}
+p{
+	
+	margin-top: 15px;
+}
+
+#GJW-datcon {
+   padding-bottom: 30px;
+}
+
+.GJW-rctext {
+   outline: none;
+   border: 0px;
+   font-size: 15px;
+   margin-left: 180px;
+   resize: none;
+   overflow: hidden;
+   background: aliceblue;
+font-family: 'Nanum Gothic';}
+
+.GJW-ctext {
+   outline: none;
+   border: 0px;
+   font-size: 20px;
+   margin-left: 130px;
+font-family: 'Nanum Gothic';   
+}
+
+#GJW-datstyle {
+   padding-bottom: 15px;
+}
+
+h2 {
+   margin-left: 100px;
+}
+
+.GJW-rcform {
+   padding-top: 10px;
+   width: 100%;
+   flex-direction: column;
+   background: aliceblue;
+}
+
+.GJW-cform {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+}
+
+.GJW-ccontent {
+   width: 80%;
+}
+
+.blockdatupdatebtn {
+   height: 30px;
+   margin-left: 10px;
+   margin-top: 13px;
+}
+
+.redatbtn {
+   height: 30px;
+   margin-left: 10px;
+   margin-top: 13px;
+}
+
+.GJW-cupdatecontent {
+   display: flex;
+   justify-content: flex-end;
+}
+
+#GJW-commenttext {
+   width: 100%;
+   border-bottom: inset;
+font-family: 'Noto Sans KR';
+   font-size:25px;
+   
+}
+
+.GJW-datbt {
+   display: flex;
+   justify-content: flex-end;
+}
+
+.GJW-datWriter {
+   margin-left: 130px;
+    font-weight: bold;
+        margin-top: 20px;
+            margin-bottom: 18px;
+}
+
+.GJW-redatWriter {
+   margin-left: 180px;
+    font-weight: bold;
+        margin-top: 20px;
+            margin-bottom: 18px;
+}
+
+.GJW-redatbt {
+   display: flex;
+   justify-content: flex-end;
+}
+
+.GJW-closeupdate {
+   display: none;
+      margin-top:10px;
+   
+}
+
+.cblockdatupdatebtn {
+   height: 31px;
+   margin: 13px;
+}
+
+.heart {
+   width: 100px;
+   height: 100px;
+   background: #ea2027;
+   position: relative;
+   transform: rotate(45deg);
+   display: flex;
+}
+
+.heart::before, .heart::after {
+   content: "";
+   width: 100px;
+   height: 100px;
+   position: absolute;
+   border-radius: 50%;
+   background: #ea2027;
+}
+
+.heart::before {
+   left: -50%;
+}
+
+.heart::after {
+   top: -50%;
+}
+
+.he {
+   background-image: url( "./images/heart.png" );
+background-size: cover;
+    height: 94px;
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.GJW-heartwrap {
+   display: flex;
+   justify-content: flex-end;
+}
+.GJW-re{
+    border-radius: 20px;
+    border: 1px solid brown;
+    padding-top: 7px;
+    padding-left: 10px;
+}
+#GJW-heartnumber {
+   margin-top: 20px;
+   color: antiquewhite;
+   font-size: 27px;
+   display: block;
+}
+
+textarea {
+   width: 100%;
+   resize: none;
+   overflow-y: hidden; /* prevents scroll bar flash */
+   padding-bottom: 0.2em;
+   line-height: 1.6;
+}
+
+.compofatag {
+   justify-content: flex-end;
+   display: flex;
+   margin-right: 30px;
+       margin-right: 30px;
+    margin-top: 50px;
+}
+
+.compofatag a:nth-of-type(1) {
+   background-color: #BEF781;
+   border: none;
+   border-radius: 25px;
+   font-size: 16px;
+   padding: 10px;
+   margin: 10px;
+}
+
+.compofatag a:nth-of-type(2) {
+   background-color: #F3F781;
+   border: none;
+   border-radius: 25px;
+   font-size: 16px;
+   padding: 10px;
+   margin: 10px;
+}
+
+.compofatag a:nth-of-type(3) {
+   background-color: #F7BE81;
+   border: none;
+   border-radius: 25px;
+   font-size: 16px;
+   padding: 10px;
+   margin: 10px;
+   font-family: 'Hanna';
+   
+}
+
+.dtn {
+   background-color: #CEE3F6;
+   border: none;
+   border-radius: 25px;
+   font-size: 14px;
+   margin: 10px;
+color: navy;	outline:none;
+	cursor:pointer;
+	font-family: 'Hanna';
+	width: 55px;
+}
+
+.ddn {
+   background-color: #D0A9F5;
+   border: none;
+   border-radius: 25px;
+   font-size: 14px;
+	outline:none;
+	cursor:pointer;
+	font-family: 'Hanna';
+	width: 35px;
+	height: 30px;
+	margin-left: 10px;
+}
+.GJW-redatdelbtn{
+background-color: #CEE3F6;
+   border: none;
+   border-radius: 25px;
+   font-size: 14px;
+   margin: 10px;
+   padding: 10px;
+   padding-top: 6px;
+   height: 31px;
+color: navy;outline:none;
+cursor:pointer;
+font-family: 'Hanna';
+width: auto;
+}
+.reblockdatupdatebtn{
+background-color: #CEE3F6;
+   border: none;
+   border-radius: 25px;
+   font-size: 14px;
+   margin: 10px;
+   padding: 10px;
+   padding-top: 6px;
+height: 31px;
+color: navy;outline:none;
+cursor:pointer;
+font-family: 'Hanna';
+width: auto;
+}

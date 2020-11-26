@@ -1,0 +1,165 @@
+body {
+	margin: 0 auto;
+	padding-top: 100px;
+	width: 100%;
+}
+
+a {
+	text-decoration: none;
+	color: #B97A57;
+}
+
+#JWJitemlist a:hover {
+	background: #B97A57;
+}
+
+/* 헤더 부분 스타일 */
+header {
+	text-align: center;
+}
+
+#JWJmainmenu1 {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	height: 80px;
+	width: 100%;
+	background: #F3E3D3;
+	display: block;
+	line-height: 100px;
+	z-index: 2;
+}
+
+#JWJmainmenu1 img {
+	padding: 0 15px 0 15px;
+	width: 40px;
+	height: 40px;
+	margin: 0 auto;
+}
+
+#JWJmainmenu2 {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	display: none;
+	background: #F3E3D3;
+	height: 80px;
+	line-height: 100px;
+	width: 100%;
+	z-index: 2;
+}
+
+#JWJmainmenu2 img {
+	padding: 0 15px 0 15px;
+	width: 40px;
+	height: 40px;
+	margin: 0 auto;
+}
+
+
+
+@media screen and (max-width: 1236px) {
+	#JWJmainmenu1 {
+		display: none;
+	}
+	#JWJmainmenu2 {
+		display: block;
+	}
+}
+
+@media screen and (max-width: 1008px) {
+	#location {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 541px) {
+	#gps {
+		display: none;
+	}
+	#cart {
+		display: none;
+	}
+}
+/* 헤더 부분 스타일 */
+
+/* 메인컨텐츠 부분 스타일 */
+#JWJmainsection {
+	text-align: center;
+}
+
+#JWJprofile {
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 80%;
+	padding-top: 20px;
+}
+
+#JWJprofileimg {
+	display : inline-block;
+}
+
+#profileimg {
+	width: 300px;
+	height: auto;
+}
+
+#profileimg:hover {
+	cursor: pointer;
+	transform: scale(1.1);
+	-o-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	transition: transform .35s;
+	-o-transition: transform .35s;
+	-moz-transition: transform .35s;
+	-webkit-transition: transform .35s;
+}
+
+#JWJprofileinfo {
+	padding-left: 9vw;
+	display: inline-block;
+}
+
+#updatebtn {
+	margin-right: 20px;
+	float: right;
+}
+
+#divline {
+	clear: both;
+}
+
+#JWJCheckButton img {
+	width: 300px;
+	height: auto;
+	padding: 50px;
+}
+
+#JWJhistorylist {
+	display: block;
+	float: right;
+	width: 150px;
+	position: fixed;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 0px;
+}
+
+#JWJhistorylist img {
+	width: 130px;
+	height: 130px;
+	margin: 10px 10px 10px 10px;
+}
+
+/* 메인컨텐츠 부분 스타일 */
+
+/* 푸터 부분 스타일 */
+footer {
+	height: 300px;
+	background: #F3E3D3;
+}
+/* 푸터 부분 스타일 */

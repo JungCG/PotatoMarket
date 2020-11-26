@@ -1,0 +1,209 @@
+@charset "UTF-8";
+div#YJH_SearchPage {
+   background-color: white;
+   float: right;
+   width: 100%;
+   height: 100%;
+}
+
+.YJH_floating_box {
+   float: left;
+   width: 250px;
+   margin: 8px;
+   border: 1px;
+}
+
+#YJH_main{
+   width: 100%;
+   margin: 0 auto;
+}
+
+.YJH_item_image {
+   width: 250px;
+   height: 150px;
+   margin: auto;
+}
+
+.YJH_item_main {
+   width: 80%;
+   text-align: center;
+}
+
+#YJH_item_main_title {
+   float: left;
+   width: 100%;
+   height: 50px;
+   margin: 30px;
+   text-align: center;
+   font-size: 30px;
+   font-weight: bold;
+}
+
+#YJH_item_main_image {
+   width: 450px;
+   height: 400px;
+   text-align: center;
+   display : inline-block;
+}
+
+#YJH_item_main_info {
+   height: 400px;
+   text-align: center;
+   font-weight: normal;
+   padding: 20px;
+   display : inline-block;
+}
+
+#YJH_info {
+   margin: auto;
+   margin: 30px 0 30px 0;
+   font-size: 25px;
+   line-height: 45px;
+}
+
+#YJH__detail {
+   clear : both;
+   width: 100%;
+   margin: 0 auto;
+}
+#YJH_item_detail {
+   width:40%;
+   display : inline-block;
+   height: 15%;
+   text-align: center;
+   position: relative;
+   padding: 20px;
+}
+
+#YJH_other_item {
+   margin-left:100px;
+   width:40%;
+   display : inline-block;
+   height: 15%;
+   text-align: center;
+   border: 1px solid #F5F5DC;
+   border-radius: 15px;
+   position: relative;
+   padding: 20px;
+   background: #F5F5DC;
+}
+
+#YJH_Comment {
+   width: 100%;
+   margin: 0 auto;
+   text-align: center;
+}
+
+#YJH_item {
+   width: 100%;
+   margin: 0 auto;
+   text-align: center;
+}
+
+#YJH_item div {
+   text-align: center;
+}
+
+.ICR_comment_nick_date{
+   font-size: small;
+   padding: 5px;
+   width: 580px;
+   margin: 0 auto;
+}
+#ICR_re_reple{
+   display: none;
+}
+.ICR_p_ref{
+   display: none;
+}
+.carousel-control.left, .carousel-control.right {
+    background-image: none !important;
+}
+.YJH_other_item-1 {
+   width: 150px;
+   height: 60px;
+   text-align: left;
+   line-height: 20px;
+   display: inline-block;
+}
+#YJH_askbutton{
+   background: #e3272b;
+   font-size: 20px;
+   color: white;
+   border:0;
+   outline: 0;
+   margin: 0 5px 0 5px;
+   padding: 7px 10px 7px 10px;
+   border-radius: 5px;
+}
+#ICR_Btndiv{
+   height: 30px;
+   margin-right: 30%;
+}
+#ICR_modify, #ICR_delete, #ICR_list{
+   border: 0;
+   outline: 0;
+   background-color: #B97A57;
+   width: 70px;
+   height: 30px;
+   color: white;
+   margin-left: 10px;
+   padding: 6px;
+   display: inline-block;
+   float: right;
+   cursor: pointer;
+   border-radius: 5px;
+}
+
+#repleBtn{
+   border: 0;
+   outline: 0;
+   background-color: #B97A57;
+   width: 70px;
+   height: 40px;
+   color: white;
+   padding: 6px;
+   cursor: pointer;
+   border-radius: 5px;
+}
+
+#re_RepleBtn{
+   border: 0;
+   outline: 0;
+   background-color: orange;
+   width: 70px;
+   height: 40px;
+   color: white;
+   padding: 6px;
+   cursor: pointer;
+   border-radius: 5px;
+}
+
+.ICR_rp{
+   margin: 5px 0 0 10px;
+   float: left;
+   width: 90px;
+   overflow:hidden;
+   text-overflow:ellipsis;
+   white-space:nowrap;
+}
+
+h2{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+a {
+   text-decoration: none;
+}
+
+@media only screen and (min-width:1507px){
+            #YJH_item_main_image,#YJH_item_main_info, #YJH_item_detail, #YJH_other_item {
+                display:inline-block;
+            }
+@media only screen and (max-width:1507px){
+            #YJH_item_main_image,#YJH_item_main_info, #YJH_item_detail, #YJH_other_item {
+                display:block;
+                clear : both;
+                text-align;
+            }

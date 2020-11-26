@@ -1,0 +1,257 @@
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.boardtype {
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+font-family: 'Noto Sans KR', sans-serif;
+font-size:20px;}
+#gela{
+	
+font-family: 'Noto Sans KR', sans-serif;	
+}
+#prola{
+	font-family: 'Noto Sans KR', sans-serif;	
+	
+}
+#qnala{
+	font-family: 'Noto Sans KR', sans-serif;	
+	
+}
+#newsla{
+	font-family: 'Noto Sans KR', sans-serif;	
+	
+}
+
+.imgtextbox {
+   display: flex;
+}
+
+.GJW-gocontent {
+   cursor: pointer;
+}
+.GJW-hotviewtr{
+class="GJW-boardlisttr"
+
+
+
+}
+.GJW-boardlisttr{
+	    font-family: 'Nanum Gothic';
+	
+}
+.rd {
+   display: none;
+}
+
+.GJW-commentCount {
+   font-size: 14px;
+   color: gray;
+}
+.GJW-boardlisttr{
+	    font-family: 'Nanum Gothic';
+	
+	
+	
+}
+section {
+   display: flex;
+   flex-direction: column;
+}
+
+.boardtype-1 {
+   display: flex;
+   font-weight: bolder;
+font-family: 'Noto Sans KR', sans-serif;}
+
+.typeimg {
+   width: 300px;
+   height: 300px;
+   margin-bottom: 10px;
+}
+
+.gjw-board-wrap {
+   width: 80%;
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   margin-top: 30px;
+   margin-bottom: 30px;
+}
+
+.boardtype-1 {
+   margin: 20px;
+font-size: 25px;
+}
+
+.boardtype {
+   width: 20%;
+       display: contents;
+       
+}
+
+.GJW-Board {
+   display: flex;
+   border-bottom: 2px solid #a52a2a26;
+   width: 80%;
+   display: flex;
+    justify-content: space-around;}
+
+label {
+   cursor: pointer;
+}
+
+.imgtextbox {
+   flex-direction: inherit;
+}
+
+#boardtext {
+   margin: auto;
+   font-size: 50px;
+   font-weight: bold;
+   color: darkgrey;
+   margin-left: 50px;
+}
+
+#GJW-maintable {
+   width: 100%;
+}
+
+#GJW-serchbar {
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+}
+
+table {
+   border-collapse: collapse;
+   border: 1px solid;
+}
+
+.kdy_board_wrap {
+   display: flex;
+   justify-content: center;
+}
+
+table {
+   text-align: center;
+   border: inset;
+   width: 100%;
+}
+
+td {
+   border: 0px;
+   border-bottom: 1px inset;
+   padding: 15px;
+}
+
+#GJW-hotviewtable {
+   background: aliceblue;
+}
+.GJW-boardlisttr{
+	
+	
+}
+
+#GJW-hotviewdiv {
+   width: 100%;
+}
+
+.GJW-hotviewtr {
+   background-color: antiquewhite;
+   color: blue;
+   border-bottom: 1px solid gainsboro;
+   color: lightcoral;
+    font-weight: bold;
+}
+
+#GJW-boardip {
+   background-color: white;
+   font-weight: bolder;
+   font-size: 18px;
+font-family: 'Noto Sans KR', sans-serif;
+
+}
+
+.check {
+   display: none;
+}
+
+.GJW-pagenumber {
+   margin-left: 5px;
+}
+
+#GJW-BoardPagig {
+   justify-content: center;
+   display: flex;
+   margin-top: 20px;
+}
+
+#GJW-srearhinput {
+   display: flex;
+   justify-content: center;
+   margin-left: 40px;
+}
+
+#GJW-writeBoard {
+   justify-content: flex-end;
+   display: flex;
+}
+
+#GJW-menuwrap {
+   display: flex;
+   justify-content: center;
+}
+
+.GJW-boardlisttr {
+   background-color: white;
+}
+
+.GJW-lockimg {
+   width: 15px;
+}
+#GJW-writePage{
+	
+	
+	display: flex;
+    justify-content: flex-end;
+}
+* a {
+   text-decoration: none;
+}
+
+.lase {
+   background-color: #bbe889;
+   border: none;
+   border-radius: 25px;
+   font-size: 20px;
+   padding: 10px;
+   margin: 10px;
+}
+.GJW-scretnumbertext{
+	
+	    border: ridge;
+	    outline: none;
+}
+#GJW-trborder{
+	border-bottom:1px solid brown;
+}
+.lasc {
+   background-color: #bbe889;
+   border: none;
+   border-radius: 25px;
+   font-size: 14px;
+   padding: 10px;
+}
+#GJW-searchbar{
+    padding-left: 10px;
+width: 350px;
+    outline: none;
+    border-radius: 20px;
+    height:30px;
+    border: 1px solid brown;
+}

@@ -1,0 +1,216 @@
+body {
+	margin: 0 auto;
+	width: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+#JWJitemlist a {
+	color: #B97A57;
+}
+
+#JWJitemlist a:hover {
+	color: white;
+	background: #B97A57;
+}
+
+#JWJitemlist h2 {
+	color: #B97A57;
+}
+
+#JWJitemlist h2:hover {
+	color: white;
+}
+
+/* 헤더 부분 스타일 */
+header {
+	height: 400px;
+	text-align: center;
+	margin: 0 auto;
+	background: #F3E3D3;
+}
+
+#JWJmaintitle {
+	position: relative;
+	top: 45%;
+	transform: translateY(-50%);
+}
+
+#JWJmainmenu1 {
+	background: #F3E3D3;
+	position: relative;
+	top: 20%;
+	left: 50%;
+	transform: translateX(-50%);
+	height: 70px;
+	width: 100%;
+	display: block;
+	line-height: 100px;
+}
+
+#JWJmainmenu1 img {
+	padding: 0 15px 0 15px;
+	width: 40px;
+	height: 40px;
+	margin: 0 auto;
+}
+
+#JWJmainmenu2 {
+	position: relative;
+	top: 20%;
+	left: 50%;
+	transform: translateX(-50%);
+	display: none;
+	height: 70px;
+	line-height: 100px;
+	width: 100%;
+	background: #F3E3D3;
+}
+
+#JWJmainmenu2 img {
+	padding: 0 15px 0 15px;
+	width: 40px;
+	height: 40px;
+	margin: 0 auto;
+}
+
+.menu {
+	padding: 0 15px 0 15px;
+	transform: translateY(-30%);
+}
+
+@media screen and (max-width: 1295px) {
+	#JWJmainmenu1 {
+		display: none;
+	}
+	#JWJmainmenu2 {
+		display: block;
+	}
+}
+
+@media screen and (max-width: 541px) {
+	#gps {
+		display: none;
+	}
+	#cart {
+		display: none;
+	}
+}
+/* 헤더 부분 스타일 */
+
+/* 메인컨텐츠 부분 스타일 */
+@media screen and (max-width: 1295px) {
+	#JWJnewitemlist {
+		width: 600px;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	#JWJnewitemlist {
+		width: 100%;
+	}
+}
+
+#JWJmainsection {
+	text-align: center;
+}
+
+#JWJitemlist {
+	margin: 50px 0 50px 0;
+}
+
+#JWJnewitemlist {
+	margin: 0 auto;
+}
+
+#JWJnewitemlist img {
+	width: 230px;
+	height: 230px;
+	margin: 10px 10px 10px 10px;
+}
+
+#JWJnewitemlist img:hover {
+	cursor: pointer;
+	transform: scale(1.1);
+	-o-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	transition: transform .35s;
+	-o-transition: transform .35s;
+	-moz-transition: transform .35s;
+	-webkit-transition: transform .35s;
+}
+
+#JWJhotitemlist {
+	clear: both;
+}
+
+@media screen and (max-width: 1295px) {
+	#JWJhotitemlist {
+		width: 700px;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	#JWJhotitemlist {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 900px) {
+	#JWJhistorylist aside {
+		display: none;
+	}
+}
+
+#JWJhotitemlist {
+	margin: 0 auto;
+}
+
+#JWJhotitemlist img {
+	width: 230px;
+	height: 230px;
+	margin: 10px 10px 10px 10px;
+}
+
+#JWJhotitemlist img:hover {
+	cursor: pointer;
+	transform: scale(1.1);
+	-o-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	transition: transform .35s;
+	-o-transition: transform .35s;
+	-moz-transition: transform .35s;
+	-webkit-transition: transform .35s;
+}
+
+#JWJhistorylist {
+	display: block;
+	float: right;
+	width: 150px;
+	position: fixed;
+	top: 56%;
+	right: 0px;
+	z-index:2;
+}
+
+#JWJhistorylist img {
+	width: 130px;
+	height: 130px;
+	margin: 10px 10px 10px 10px;
+}
+/* 메인컨텐츠 부분 스타일 */
+
+/* 푸터 부분 스타일 */
+footer {
+	height: 300px;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #F3E3D3;
+	z-index:-1;
+}
+/* 푸터 부분 스타일 */

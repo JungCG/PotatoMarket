@@ -1,0 +1,287 @@
+
+section{
+	
+	width: 100%;
+	
+}
+#GJW-titlewrap {
+   display: flex;
+   justify-content: center;
+}
+
+.GJW-searchbox {
+   width: 400px;
+   height: 40px;
+   padding-left: 20px;
+   border-bottom: solid 1px black;
+}
+
+h1 {
+   font-size: 40px;
+   color: brown;
+}
+
+.hhh {
+   
+}
+
+/* .search {
+   background-color:transparent;
+   border: none;
+   border-radius: 30px;
+   font-size: 14px;
+   margin: 10px;
+   padding: 10px;
+   padding-top: 6px;
+   height: 50px;
+   outline: none;
+   cursor: pointer;
+   font-weight: bold;
+   color: royalblue;
+   margin-top: 15px;
+} */
+
+.GJW-searchwrap {
+   display: flex;
+   justify-content: center;
+   margin-top: 30px;
+}
+
+#GJW-resulttext {
+   display: flex;
+   justify-content: center;
+   margin-top: 20px;
+}
+
+#result {
+   font-weight: bold;
+   font-size: 30px;
+}
+
+
+
+@import url("https://fonts.googleapis.com/css?family=Inconsolata:700");
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+html, body {
+   width: 100%;
+   height: 100%;
+}
+
+body {
+   background: #423E34;
+}
+
+.hhh {
+   margin-top: 40px;
+}
+
+.GJW-searchwrap {
+   position: relative;
+   margin: auto;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   width: 300px;
+   height: 100px;
+}
+
+.GJW-searchwrap .search {
+   position: absolute;
+   margin: auto;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   width: 80px;
+   height: 80px;
+   background: crimson;
+   border-radius: 50%;
+   transition: all 1s;
+   z-index: 4;
+   box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
+   border:0;
+   outline:0;
+}
+
+.GJW-searchwrap .search:hover {
+   cursor: pointer;
+}
+
+.GJW-searchwrap .search::before {
+   content: "";
+   position: absolute;
+   margin: auto;
+   top: 30px;
+   right: 0;
+   bottom: 0;
+   left: 30px;
+   width: 12px;
+   height: 2px;
+   background: white;
+   transform: rotate(45deg);
+   border: 2px solid white;
+   transition: all .5s;
+   
+}
+.GJW-searchwrap .xxx::before {
+   content: "";
+   position: absolute;
+   margin: auto;
+   top: 30px;
+   right: 0;
+   bottom: 0;
+   left: 30px;
+   width: 12px;
+   height: 2px;
+   background: white;
+   transform: rotate(45deg);
+   border: 2px solid white;
+   transition: all .5s;
+   opacity: 0;
+}
+.GJW-searchwrap .search::after {
+   content: "";
+   position: absolute;
+   margin: auto;
+   top: -5px;
+   right: 0;
+   bottom: 0;
+   left: -5px;
+   width: 25px;
+   height: 25px;
+   border-radius: 50%;
+   border: 6px solid white;
+   transition: all .5s;
+}
+.GJW-searchwrap .xxx::after {
+   content: "";
+   position: absolute;
+   margin: auto;
+   top: -5px;
+   right: 0;
+   bottom: 0;
+   left: -5px;
+   width: 25px;
+   height: 25px;
+   border-radius: 50%;
+   border: 6px solid white;
+   transition: all .5s;
+   opacity: 0;
+}
+.GJW-searchwrap input {
+   font-family: 'Inconsolata', monospace;
+   position: absolute;
+   margin: auto;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   width: 50px;
+   height: 50px;
+   outline: none;
+   border: none;
+   background: crimson;
+   color: white;
+   text-shadow: 0 0 10px crimson;
+   padding: 0 80px 0 20px;
+   border-radius: 30px;
+   box-shadow: 0 0 25px 0 crimson, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
+   transition: all 1s;
+   opacity: 0;
+   z-index: 5;
+   font-weight: bolder;
+   letter-spacing: 0.1em;
+}
+
+.GJW-searchwrap input:hover {
+   cursor: pointer;
+}
+
+.GJW-searchwrap input:focus {
+   width: 300px;
+   opacity: 1;
+   cursor: text;
+}
+.GJW-searchwrap input:focus ~ .search {
+   right: 500px;
+}
+.GJW-searchwrap input:focus ~ .search {
+   right: -250px;
+   background: #151515;
+   z-index: 6;
+}
+
+.GJW-searchwrap input:focus ~ .xxx::before {
+   top: 0;
+   left: 320px;
+   width: 50px;
+   border: 1px;
+   opacity: 1;
+}
+.GJW-searchwrap input:focus ~ .search::before {
+   content: "";
+   position: absolute;
+   margin: auto;
+   top: 30px;
+   right: 0;
+   bottom: 0;
+   left: 30px;
+   width: 12px;
+   height: 2px;
+   background: white;
+   transform: rotate(45deg);
+   border: 2px solid white;
+   transition: all .5s;
+}
+
+.GJW-searchwrap input:focus ~ .xxx::after {
+   top: 0;
+   left: 320px;
+   width: 50px;
+   height: 2px;
+   border: none;
+   background: white;
+   border-radius: 0%;
+   transform: rotate(-45deg);
+   opacity: 1;
+}
+.GJW-searchwrap input:focus ~ .search::after {
+   content: "";
+   position: absolute;
+   margin: auto;
+   top: -5px;
+   right: 0;
+   bottom: 0;
+   left: -5px;
+   width: 25px;
+   height: 25px;
+   border-radius: 50%;
+   border: 6px solid white;
+   transition: all .5s;
+}
+.GJW-searchwrap input::placeholder {
+   color: white;
+   opacity: 0.5;
+   font-weight: bolder;
+}
+#myChart {
+   padding: 2vw;
+   padding-right: 20vw;
+    padding-left: 20vw;
+}
+a{
+text-decoration: none;
+color:brown;
+}
+a:link {text-decoration: none; color: brown;}
+a:visited {text-decoration: none; color: brown;}
+a:active {text-decoration: none; color: brown;}
+a:hover {text-decoration: underline; color:brown;}
+
