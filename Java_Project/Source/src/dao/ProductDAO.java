@@ -86,7 +86,7 @@ public int[] selectProuctAVG(String pro) {
 	
 	int[] result  = new int[4];
 	int i = 0;
-	String sql ="select round(avg(p_value)) from product where p_name like ? group by to_char(p_adddate, 'mm') having to_char(p_adddate, 'mm') >=8 and to_char(p_adddate, 'mm') <= 11 order by to_char(p_adddate, 'mm') asc";
+	String sql ="SELECT mm, nvl(cost, 0) FROM (select to_char(add_months(sysdate, -3), 'mm') AS MM from dual UNION select to_char(add_months(sysdate, -2), 'mm') from dual UNION select to_char(add_months(sysdate, -1), 'mm') from dual UNION select to_char(add_months(sysdate, 0), 'mm') from dual) A LEFT OUTER JOIN  (select to_char(p_adddate, 'mm') as mm, round(avg(p_value)) cost from product where p_name like ? and to_char(p_adddate, 'mm') >= to_char(add_months(sysdate, -3), 'mm') and to_char(p_adddate, 'mm') <= to_char(sysdate, 'mm') group by to_char(p_adddate, 'mm')) B using(mm) order by mm asc";
 	try {
 		conn =ds.getConnection();
 		pstmt = conn.prepareStatement(sql);
@@ -94,7 +94,7 @@ public int[] selectProuctAVG(String pro) {
 		rs =pstmt.executeQuery();
 		if(rs.next()) {
 			do {
-				result[i] =rs.getInt(1);
+				result[i] =rs.getInt(2);
 				i++;
 			}while(rs.next());
 		}else {
