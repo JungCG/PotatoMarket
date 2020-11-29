@@ -1,4 +1,3 @@
-
 <link rel ="stylesheet" href = "css/GJW-avgchart.css">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
@@ -34,7 +33,7 @@ text-decoration: none;
 <body id="cvs">
    <section>
       <div id="GJW-titlewrap">
-         <h1 class="hhh"><a href ="MainPage.jsp">감자마켓 </a>시세조회</h1>
+         <h1 class="hhh"><a href ="ProductMainPageGetCountCtl.do">감자마켓 </a>시세조회</h1>
       </div>
       <div class="GJW-searchwrap">
          <input type="text" placeholder="Search..." id="searchbox_box" name="searchbox_box" class="GJW-searchbox" required="required">
@@ -87,7 +86,6 @@ text-decoration: none;
                                                 searchbox_box : search
                                              },
                                              dataType : "json",
-                                             //console.log(search),
                                              success : function(
                                                    obj) {
                                                 $('#myChart')

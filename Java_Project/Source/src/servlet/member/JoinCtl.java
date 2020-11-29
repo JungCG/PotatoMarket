@@ -65,10 +65,13 @@ public class JoinCtl extends HttpServlet {
 			out.flush();
 			out.close();
 		} else {
-			String uploadPath = request.getSession().getServletContext().getRealPath(fileSavePath);
+			ServletContext context = getServletContext();
+			String uploadPath = context.getRealPath(fileSavePath); 
 			
-			MultipartRequest multi = new MultipartRequest(request, uploadPath, uploadSizeLimit, encType,
-					new DefaultFileRenamePolicy());
+			// aws
+//			String uploadPath = request.getSession().getServletContext().getRealPath(fileSavePath);
+			
+			MultipartRequest multi = new MultipartRequest(request, uploadPath, uploadSizeLimit, encType, new DefaultFileRenamePolicy());
 
 			String imgname = multi.getFilesystemName("userimg");
 

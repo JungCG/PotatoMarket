@@ -35,7 +35,7 @@ public class LogoutCtl extends HttpServlet {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그아웃 하였습니다.');");
-		script.println("location.href = \"MainPage.jsp\";");
+		script.println("location.href = \"ProductMainPageGetCountCtl.do\";");
 		script.println("</script>");
 		script.close();
 	}

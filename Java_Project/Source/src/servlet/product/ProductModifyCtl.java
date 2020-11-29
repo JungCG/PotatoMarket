@@ -47,8 +47,6 @@ public class ProductModifyCtl extends HttpServlet {
 		String[] FName = new String[3];
 		FName = pservice.selectProductImg(p_id);
 		
-		System.out.println(FName[0] + FName[1] + FName[2]);
-		
 		ProductVO vo = new ProductVO();
 		vo = list.get(0);
 		request.setAttribute("vo", vo);

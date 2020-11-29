@@ -83,7 +83,7 @@ public class SearchEmailSendCtl extends HttpServlet {
 		
 		String host = "http://localhost:8090/Member_MVC2/";
 		// 개인 이메일 작성
-		String from = "****@email.com";
+		String from = "이메일 주소";
 		String to = service.getUserEmail(userID);
 		String subject = "[감자마켓] 임시 비밀번호가 담긴 메일입니다.";
 		

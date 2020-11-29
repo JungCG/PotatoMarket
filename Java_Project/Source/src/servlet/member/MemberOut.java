@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.MemberDAO;
+import service.MemberService;
+
 
 /**
  * Servlet implementation class MemberOut
@@ -31,9 +32,10 @@ public class MemberOut extends HttpServlet {
 		execute(request, response);
 	}
 	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String m_id = (String) request.getSession().getAttribute("UserID");
-		MemberDAO mdao = new MemberDAO();
+		String m_id = (String) request.getSession().getAttribute("userID");
+		MemberService mdao = new MemberService();
 		mdao.WithdrawMember(m_id);
-		response.sendRedirect("./MainPage.jsp");
+		request.getSession().invalidate();
+		response.sendRedirect("./ProductMainPageGetCountCtl.do");
 	}
 }

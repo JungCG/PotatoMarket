@@ -1,30 +1,20 @@
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
-@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
-
 *{
-	font-family : 'Nanum Gothic';
 }
 
 h5{
-	font-family : 'Noto Sans KR';
 	font-size : 15px;
 }
 
 h4{
-	font-family : 'Noto Sans KR';
 }
 
 h3{
-	font-family : 'Hanna';
 }
 
 h2{
-	font-family : 'Hanna';
 }
 
 h1{
-	font-family : 'Hanna';
 }
 
 thead th {
@@ -237,7 +227,6 @@ a:hover{
 .navbar-default .navbar-brand {
 	color : #ffffff;
 	padding-top : 25px;
-	font-family : 'Hanna';
 }
 
 .navbar-default .navbar-brand:hover,
@@ -255,7 +244,6 @@ a:hover{
 
 .navbar-default .navbar-nav > li > a{
 	color : #ffffff;
-	font-family : 'Noto Sans KR';
 	
 }
 

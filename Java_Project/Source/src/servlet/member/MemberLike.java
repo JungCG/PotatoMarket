@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.LikeDAO;
-import dao.MemberDAO;
+import service.LikeService;
+import service.MemberService;
 import vo.LikeVO;
 
 /**
@@ -41,10 +41,10 @@ public class MemberLike extends HttpServlet {
 
 	protected void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		LikeDAO ldao = new LikeDAO();
-		MemberDAO mdao = new MemberDAO();
+		LikeService ldao = new LikeService();
+		MemberService mdao = new MemberService();
 		String m_id = (String) request.getSession().getAttribute("ShowUserID");
-		String m_id2 = (String) request.getSession().getAttribute("UserID");
+		String m_id2 = (String) request.getSession().getAttribute("userID");
 
 		List<LikeVO> lVoList = ldao.showLike(m_id);
 		int likecount;

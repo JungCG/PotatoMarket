@@ -5,8 +5,8 @@
 	id="WebApp_ID" version="3.1">
 	<display-name>Member_MVC2</display-name>
 	<welcome-file-list>
+		<welcome-file>ProductMainPageGetCountCtl.do</welcome-file>
 		<welcome-file>MainPage.jsp</welcome-file>
-		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>default.html</welcome-file>
 		<welcome-file>default.htm</welcome-file>
@@ -25,13 +25,5 @@
 	<filter-mapping>
 		<filter-name>EncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter>
-		<filter-name>MyFilter</filter-name>
-		<filter-class>common.MyFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>MyFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 </web-app>

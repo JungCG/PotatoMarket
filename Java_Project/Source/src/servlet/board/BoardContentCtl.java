@@ -52,12 +52,11 @@ public class BoardContentCtl extends HttpServlet {
 		BoardService sv = new BoardService();
 		List<BaddVO>imgList = sv.selectImg(b_id);
 		request.setAttribute("ImgList",imgList);
-		List<BoardVO> list = sv.selectPost(b_id); 	
+		List<BoardVO> list = sv.getBoard(b_id); 	
 		request.setAttribute("BoardList",list);
 		b_type = list.get(0).getB_type();
 		sv.updateBoardCount(b_id);
 	
-		System.out.println("qwdwqd"+b_type);
 		if(currentPage == 0) {
 			RequestDispatcher dis = request.getRequestDispatcher("Board.jsp?b_id="+b_id+"&b_type="+b_type);
 			dis.forward(request, response);

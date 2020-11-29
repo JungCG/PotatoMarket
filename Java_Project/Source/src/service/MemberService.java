@@ -102,7 +102,6 @@ public class MemberService {
 		return dao.ShowProfile(id);
 	   }
 	   
-	   // 회원정보를 수정하는 메소드
 	   public void UpdateProfile(String name, String id, String pw, String phone, String email, String birth,
 	         String address, String gender, String proimg, String nick, String intro) {
 		   MemberDAO dao = new MemberDAO();
@@ -143,9 +142,17 @@ public class MemberService {
 	public int deleteMember2(String m_id,String o_reason) {
 		int result= new MemberDAO().deleteMember2(m_id,o_reason);
 		return result;
-}
+	}
 	
 	public void WithdrawMember(String m_id) {
 		new MemberDAO().WithdrawMember(m_id);
+	}
+	
+	public void updateDealAmount(String m_id) {
+		new MemberDAO().updateDealAmount(m_id);
+	}
+	
+	public void deleteDealAmount(String m_id) {
+		new MemberDAO().deleteDealAmount(m_id);
 	}
 }

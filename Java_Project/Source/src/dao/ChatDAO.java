@@ -186,7 +186,7 @@ public class ChatDAO {
 	}
 	
 	public int submit(String fromID, String toID, String chatContent){
-		String sql = "insert into chat values ((select max(chatID)+1 from chat), ?, ?, ?, sysdate, 0)";
+		String sql = "insert into chat values ((select nvl(max(chatID)+1,1) from chat), ?, ?, ?, sysdate, 0)";
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);

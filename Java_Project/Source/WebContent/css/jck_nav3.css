@@ -10,7 +10,7 @@
             border-radius: 25px;
         }
         .jck_everything{
-            height : 100vh;
+            height : auto;
             display : flex;
             flex-direction : column;
             flex-wrap : nowrap;

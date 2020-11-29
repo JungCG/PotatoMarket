@@ -1,8 +1,7 @@
-
-<%-- <%@page import="service.product.ProductService"%> --%>
+<%@page import="service.ProductService"%>
+<%@page import="service.MemberService"%>
 <%@page import="vo.MemberVO"%>
 <%@page import="java.util.List"%>
-<%@page import="dao.MemberDAO"%>
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
 <link rel="stylesheet" href="css/jck_nav.css">
@@ -22,18 +21,14 @@
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
+		if(userID == null){
+			session.setAttribute("messageType", "오류 메시지");
+			session.setAttribute("messageContent", "현재 로그인이 되어 있지 않습니다.");
+			response.sendRedirect("Login.jsp");
+			return;
+		}
 	%>
-<link rel="shortcut icon" href="./favicon/favicon.ico"
-	type="image/x-icon">
-<link rel="apple-touch-icon" sizes="180x180"
-	href="./favicon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32"
-	href="./favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16"
-	href="./favicon/favicon-16x16.png">
-<link rel="manifest" href="./favicon/site.webmanifest">
-<link rel="mask-icon" href="./favicon/safari-pinned-tab.svg"
-	color="#5bbad5">
+
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 <meta charset="UTF-8">
@@ -41,7 +36,11 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="js/bootstrap.js"></script>
 <title>감자 마켓</title>
-
+<style type="text/css">
+.jck_content_container{
+margin-top : 5vh;
+}
+</style>
 
 <script type="text/javascript">
 		function getUnread(){
@@ -64,7 +63,7 @@
 		function getInfiniteUnread(){
 			setInterval(function(){
 				getUnread();
-			}, 4000);
+			}, 10000);
 		}
 		
 		function showUnread(result){
@@ -100,7 +99,6 @@
 	transform: translateY(-50%);
 	transform: translateX(-50%);
 	width: 300px;
-	height: 100px;
 	border: 1px solid black;
 	background: white;
 	padding: 30px 30px 30px 30px;
@@ -122,6 +120,23 @@
 	text-align : center;
 	margin : 0 auto;
 }
+
+#JWJprofileinfo > table td{
+	font-weight : bold;
+}
+
+#JWJprofileinfo > table td > h4{
+	font-weight : bold;
+}
+.middle_input {
+	width: 9vw;
+	height: 35px;
+	color: white;
+	background-color: #CC8431;
+	border-radius: 25px;
+	box-sizing: border-box;
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -133,7 +148,7 @@
 				</button>
 				<button class="jck_menu1_item jck_menu1_item2"
 					id="jck_mainpage_btn1">
-					<a href="MainPage.jsp"><img src="./images/logo_img.png"></a>
+					<a href="ProductMainPageGetCountCtl.do"><img src="./images/logo_img.png"></a>
 				</button>
 			</div>
 			<div class="jck_menu_item jck_menu_item2">
@@ -170,7 +185,7 @@
 					<%
 		String id = (String) session.getAttribute("userID");
 
-		MemberDAO dao = new MemberDAO();
+		MemberService dao = new MemberService();
 		List<MemberVO> mVoList = dao.ShowProfile(id);
 		MemberVO mvo = mVoList.get(0);
 		%>
@@ -178,8 +193,18 @@
 						<hr id="divline">
 						<div id = "jck_pro_up_div">
 							<div id="JWJprofileimg">
+								<%
+									if(mvo.getM_image() == null){
+								%>
 								<img src="./images/mypagebefore.png" id="profileimg"
 									class="profileimg">
+									<%}else{%>
+										<img src="./profileIMG/<%=mvo.getM_image()%>" id="profileimg"
+												class="profileimg">
+									<%
+									}
+									
+									%>
 								<h2><%=mvo.getM_nick()%></h2>
 							</div>
 							<div id="JWJprofileinfo">
@@ -224,12 +249,11 @@
 									</tr>
 									<tr>
 										<td>
-											<h4>거래 횟수 :</h4>
+											<h4>판매 횟수 :</h4>
 										</td>
 										<td><%=mvo.getM_sellamount()%></td>
 									</tr>
 									<tr>
-	
 										<td><h4>소개글 :</h4></td>
 										<td><%=mvo.getM_intro()%></td>
 									</tr>
@@ -245,63 +269,54 @@
 								src="./images/modify.png" id=""></a><br> <a href="./ProductSelectLikeCtl.do"
 								title="찜상품조회"><img
 								src="./images/iconmonstr-smiley-thin-240.png" id=""></a> <a
-								href="./MainPage.jsp" title="메인페이지 이동"><img
+								href="./ProductMainPageGetCountCtl.do" title="메인페이지 이동"><img
 								src="./images/home.png" id=""></a> <a title="회원탈퇴"
 								style="cursor: pointer;"><img src="./images/out.png"
 								id="out"></a>
 						</div>
 						<div id="ReCheck">
 							정말 계정을 탈퇴 하시겠습니까?<br> <br> <input type="button"
-								value="확인" class="submit"
-								onclick="location.href='./MemberOut.do'"> <input
-								type="button" id="reset" class="reset" value="취소">
+								value="확인" class="submit middle_input" id = "outButton"> <input
+								type="button" id="reset" class="reset middle_input" value="취소">
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="jck_content_container_div3 jck_nav_container">
 				<%
-				      /* ProductService pdao = new ProductService();
-                       */
+				      ProductService pdao = new ProductService();
+                      
                       String p_1 = "0";
                       String p_2 = "0";
                       String p_3 = "0";
                       
                       if(session.getAttribute("img1") != null)
-				      	p_1 = (String) session.getAttribute("img1");
-                      if(session.getAttribute("img1") != null)
-                      	p_2 = (String) session.getAttribute("img2");
-                      if(session.getAttribute("img1") != null)
-                      	p_3 = (String) session.getAttribute("img3");
+  				      	p_1 = String.valueOf(session.getAttribute("img1"));
+                        if(session.getAttribute("img2") != null)
+                        	p_2 = String.valueOf(session.getAttribute("img2"));
+                        if(session.getAttribute("img3") != null)
+                        	p_3 = String.valueOf(session.getAttribute("img3"));
 				      
                       String p_img1 = "logoimg.png";
                       String p_img2 = "logoimg.png";
                       String p_img3 = "logoimg.png";
-                      /* 
+                      
                       if(!p_1.equals("0"))
 				      	p_img1 = pdao.selectHistory(p_1);
                       if(!p_2.equals("0"))
                       	p_img2 = pdao.selectHistory(p_2);
                       if(!p_3.equals("0"))
-                      	p_img3 = pdao.selectHistory(p_3); */
+                      	p_img3 = pdao.selectHistory(p_3);
 				      %>
 
 			</div>
 		</div>
-		<div class="jck_footer_container">
-			<div>
-				<a href="#">감자 마켓<br>회사 소개
-				</a>
-			</div>
-			<div>
-				<a href="#">개인 정보<br>취급 방침
-				</a>
-			</div>
-			<div>
-				<a href="#">위치기반 서비스<br>이용 약관
-				</a>
-			</div>
-		</div>
+		<div class = "jck_footer_container" style = "text-align : center;">
+            <div style = "color : #CC8431;">상호 : 감자마켓 | 팀원 : 정창균, 정운진, 강대영, 금지운, 윤지혜, 임채린<br>
+주소 : 서울특별시 중구 남대문로 120 대일빌딩 2F, 3F<br>
+서비스 이용문의 : nothing1360@gmail.com | 서비스제휴문의 : nothing1360@gmail.com<br>
+Copyright © Potato-Market. All Rights Reserved.</div>
+        </div>
 	</div>
 
 	<!-- The Modal -->
@@ -314,22 +329,18 @@
 			</div>
 			<div class="jck_modal-body">
 				<ul>
-					<li>
-						<p>
-							<a href="#">&lt;홈페이지 소개&gt;</a>
-						</p>
-					</li>
-					<li>
-						<hr>
-					</li>
-					<li>
-						<p>
-							<a href="MyPage.jsp">&lt;마이 페이지&gt;</a>
-						</p>
-					</li>
-					<li>
-						<hr>
-					</li>
+					<%
+            		if(session.getAttribute("userID") != null){
+            	%>
+            	<li>
+            		<p><a href = "MyPage.jsp">&lt;마이 페이지&gt;</a></p>
+            	</li>
+            	<li>
+            		<hr>
+            	</li>
+            	<%
+            		}
+            	%>
 					<li>
 						<p>
 							<a href="ProductgetCountCtl.do">&lt;상품 검색&gt;</a>
@@ -454,18 +465,28 @@
 				.ready(
 						function() {
 							$("#jck_mainpage_btn1").click(function() {
-								location.href = "./MainPage.jsp";
+								location.href = "./ProductMainPageGetCountCtl.do";
 							});
 							$("#jck_mainpage_btn2").click(function() {
-								location.href = "./MainPage.jsp";
+								location.href = "./ProductMainPageGetCountCtl.do";
 							});
 							$("#jck_mypagebefore").click(function() {
 								location.href = "./Login.jsp";
 							});
 
-							$("#jck_mypageafter").click(function() {
-								location.href = "./MyPage.jsp";
-							});
+							$("#jck_mypageafter").click(function(){
+				    			<%if(userID != null){
+				    				if(userID.equals("MasterPotato1")){
+				    			%>
+				    				location.href = "./AdminListViewCtl.do";
+				    			<%
+				    				}else{
+				    			%>
+				    				location.href = "./MyPage.jsp";
+				    			<%
+				    				}}
+				    			%>
+				    		});
 							$("#jck_loginbefore").click(function() {
 								location.href = "./Login.jsp";
 							});
@@ -477,6 +498,10 @@
 				    		});
 				    		$("#jck_chatbox").click(function(){
 				    			location.href="./box.jsp";
+				    		});
+				    		
+				    		$("#outButton").click(function(){
+				    			location.href = "./MemberOut.do";
 				    		});
 						});
 	</script>

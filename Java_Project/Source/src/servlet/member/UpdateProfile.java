@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.MemberDAO;
+import service.MemberService;
+
 
 @WebServlet("/UpdateProfile.do")
 public class UpdateProfile extends HttpServlet {
@@ -35,8 +36,7 @@ public class UpdateProfile extends HttpServlet {
 		String proimg = request.getParameter("userimg");
 		String nick = request.getParameter("usernickname");
 		String intro = request.getParameter("profileintro");
-		
-		MemberDAO dao = new MemberDAO();
+		MemberService dao = new MemberService();
 		dao.UpdateProfile(name, id, pw, phone, email, birth, address, gender, proimg, nick, intro);
 		
 		response.sendRedirect("./MyPage.jsp");

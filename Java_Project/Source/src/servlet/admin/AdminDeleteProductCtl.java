@@ -1,6 +1,7 @@
 package servlet.admin;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.ChatService;
 import service.ProductService;
+import vo.ProductVO;
 
 /**
  * Servlet implementation class AdminDeleteProductCtl
@@ -33,10 +36,14 @@ public class AdminDeleteProductCtl extends HttpServlet {
 	int p_id = Integer.parseInt(request.getParameter("p_id"));
 	
 	 ProductService sv = new ProductService();
-	 
-	sv.AdminDeleteProduct(p_id);
+	List<ProductVO> list = sv.selectProduct(p_id);
+	ProductVO vo = list.get(0);
 	
-	
+	int result = sv.AdminDeleteProduct(p_id);
+	if(result == 1) {
+		ChatService cs = new ChatService();
+		cs.submit("MasterPotato1", vo.getM_id(), vo.getP_name()+" 이라는 제목으로 올린 상품이 관리자에 의해 삭제되었습니다.");
+	}
 RequestDispatcher dis = request.getRequestDispatcher("AdminListViewCtl.do?type=P");
 dis.forward(request, response);
 	

@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.MemberDAO;
-import dao.ReportDAO;
+import service.MemberService;
+import service.ReportService;
 import vo.ReportVO;
 
 /**
@@ -38,8 +38,8 @@ public class MemberReport extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		ReportDAO rdao = new ReportDAO();
-		MemberDAO mdao = new MemberDAO();
+		ReportService rdao = new ReportService();
+		MemberService mdao = new MemberService();
 
 		List<ReportVO> rVoList = rdao.showReport();
 		int r_id = 0;
@@ -52,10 +52,10 @@ public class MemberReport extends HttpServlet {
 		String m_id2 = request.getParameter("m_id2");
 		String r_reason = request.getParameter("r_reason");
 
-		List<ReportVO> VoList = rdao.showReport(m_id2);
+		List<ReportVO> VoList = rdao.showReport(m_id);
 
-		mdao.UpdateReport(VoList.size() + 1, m_id2);
-		rdao.reportMember(r_id, m_id, m_id2, r_reason);
+		mdao.UpdateReport(VoList.size() + 1, m_id);
+		rdao.reportMember(r_id, m_id2, m_id, r_reason);
 
 		response.sendRedirect("./CheckProfile.jsp");
 	}

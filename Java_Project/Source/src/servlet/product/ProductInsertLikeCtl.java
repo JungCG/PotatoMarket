@@ -49,7 +49,6 @@ public class ProductInsertLikeCtl extends HttpServlet {
 
 		
 		Likeresult = service.likeProduct(p_id, userID);	//result = 2 : insert 성공!	//result = 3 : delete 성공!
-		System.out.println(Likeresult);
 		
 		request.setAttribute("Likeresult", Likeresult);
 		RequestDispatcher disp = request.getRequestDispatcher("ProductContentCtl.do?p_id=" + p_id + "&c_lid=" + c_lid + "&m_id=" + writer_m_id + "&Likeresult=" + Likeresult);

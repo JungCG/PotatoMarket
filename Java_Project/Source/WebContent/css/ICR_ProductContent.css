@@ -7,8 +7,8 @@ div#YJH_SearchPage {
 }
 
 .YJH_floating_box {
-   float: left;
-   width: 250px;
+	display : inline-block;
+	width: 250px;
    margin: 8px;
    border: 1px;
 }

@@ -1,6 +1,5 @@
 package service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +20,13 @@ public class ReportService {
 	}
 	
 	public List<ReportVO> showReport() {
-		List<ReportVO> rVoList = null;
+		List<ReportVO> rVoList = new ArrayList<ReportVO>();
 		rVoList = new ReportDAO().showReport();
 		return rVoList;
 	}
 	
 	public List<ReportVO> showReport(String m_id2) {
-		List<ReportVO> rVoList = null;
+		List<ReportVO> rVoList = new ArrayList<ReportVO>();
 		rVoList = new ReportDAO().showReport(m_id2);
 		return rVoList;
 	}

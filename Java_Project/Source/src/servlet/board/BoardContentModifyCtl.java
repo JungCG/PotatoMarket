@@ -1,4 +1,3 @@
-
 package servlet.board;
 
 import java.io.File;
@@ -150,7 +149,7 @@ public class BoardContentModifyCtl extends HttpServlet {
 		vof.setB_content(Bcontent);
 		vof.setB_secret(b_secret);
 		vof.setB_title(Bsubject);
-		sv.updatePost(vof);
+		sv.updateBoard(vof);
 		response.sendRedirect("BoardContentCtl.do?b_id="+Bno+"&currentPage="+multi.getParameter("currentPage"));
 	}
 

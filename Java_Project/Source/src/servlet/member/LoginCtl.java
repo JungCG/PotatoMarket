@@ -63,7 +63,7 @@ public class LoginCtl extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
 				out.println("alert(\"로그인 성공\");");
-				out.println("location.href = \"MainPage.jsp\";");
+				out.println("location.href = \"ProductMainPageGetCountCtl.do\";");
 				out.println("</script>");
 				out.flush();
 				out.close();

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ProductDAO;
+import service.ProductService;
 import vo.ProductVO;
 
 
@@ -38,8 +38,8 @@ public class BuyList extends HttpServlet {
 
 	private void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String id = (String) request.getSession().getAttribute("ID");
-		ProductDAO dao = new ProductDAO();
+		String id = (String) request.getSession().getAttribute("userID");
+		ProductService dao = new ProductService();
 		
 		String startDate1 = request.getParameter("startDate1");
 		String endDate1 = request.getParameter("endDate1");

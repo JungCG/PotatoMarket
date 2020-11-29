@@ -52,10 +52,11 @@ color:black;
 </head>
 <body>
 <div>
-  <div style ="display:flex; justify-content: center; font-size:30px;     margin-bottom: 20px;"><a href ="MainPage.jsp" style ="color:brown">
+  <div style ="display:flex; justify-content: center; font-size:30px;     margin-bottom: 20px;"><a href ="ProductMainPageGetCountCtl.do" style ="color:brown">
   감자마켓 메인페이지로 이동하기 </a></div>
    <div id="map" style="width: 100%; height: 900px;">
    </div>
+</div>
 </body>
 <script>
 
@@ -444,11 +445,17 @@ for(var i = 0; i<areas.length;i++){
    })
 }
 
+$.ajax({
+    
+    url:"ProductCountSeoulCtl.do",
+    async:false,
+    success:function(res1){
+       areas[16].res=res1;
+    }
+    
+    
+ });
 
-
-for(var i = 0; i<areas.length;i++){
-   console.log(areas[i].res);
-}
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
@@ -501,7 +508,6 @@ circle.setZIndex(1);
 kakao.maps.event.addListener(map, 'zoom_changed', function(){        
     
     var level = map.getLevel();
-    console.log(level);
     if(level >8){
       if(area.value==1){
        customOverlay.setVisible(true)
@@ -525,7 +531,6 @@ kakao.maps.event.addListener(map, 'zoom_changed', function(){
 });
     kakao.maps.event.addListener(circle,'click', function(mouseEvent) {
         var level = map.getLevel();
-         console.log(level)
         if(level>=10){
                for(var i = 1; i < areas.length;i++){
            if(area.value==1){
@@ -574,7 +579,6 @@ kakao.maps.event.addListener(map, 'zoom_changed', function(){
          map.setLevel(8,{anchor: new kakao.maps.LatLng(37.575673, 126.968710)});
            }
            else{
-         console.log("지역코드"+tidx);
          location.href ="ProductgetSearchCountCtl.do?SearchFilter=2&SearchStr="+tidx;
            }
       })

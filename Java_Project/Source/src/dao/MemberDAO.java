@@ -16,7 +16,7 @@ import common.RandomPassword;
 import vo.MemberVO;
 
 public class MemberDAO {
-	private DataSource ds = null; // DataSource ds는 아파티톰캣(was)가 제공하는 dbcp(db connection pool)이다.
+	private DataSource ds = null; 
 	private Connection con = null;
 	private Statement stmt = null;
 	private PreparedStatement pstmt = null;
@@ -25,8 +25,8 @@ public class MemberDAO {
 	public MemberDAO() {
 		try {
 			Context initContext1 = new InitialContext();
-			Context envContext1 = (Context) initContext1.lookup("java:/comp/env"); // lookup Object형 리턴
-			ds = (DataSource) envContext1.lookup("jdbc/potato"); // jdbc.myoracle 내용을 context.xml, server.xml에 작성해야한다.
+			Context envContext1 = (Context) initContext1.lookup("java:/comp/env");
+			ds = (DataSource) envContext1.lookup("jdbc/potato"); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -219,17 +219,14 @@ public class MemberDAO {
 				String pwd_result = rs.getString(1);
 
 				if (pwd.equals(pwd_result)) {
-					// 비밀번호 일치
 					if (rs.getString(2).charAt(0) == 'L') {
 						return 2;
 					}
 					return 1;
 				} else {
-					// 비밀번호 불일치
 					return 0;
 				}
 			} else {
-				// 해당 아이디가 없다.
 				return -1;
 			}
 
@@ -238,7 +235,6 @@ public class MemberDAO {
 		} finally {
 			close();
 		}
-		// 에러
 		return -2;
 	}
 
@@ -282,7 +278,6 @@ public class MemberDAO {
 				cnt = rs.getInt("cnt");
 			}
 		} catch (Exception e) {
-			System.out.println("아이디 중복 확인 실패 : " + e);
 		} finally {
 			close();
 		}
@@ -303,7 +298,6 @@ public class MemberDAO {
 				cnt = rs.getInt("cnt");
 			}
 		} catch (Exception e) {
-			System.out.println("이메일 중복 확인 실패 : " + e);
 		} finally {
 			close();
 		}
@@ -324,7 +318,6 @@ public class MemberDAO {
 				cnt = rs.getInt("cnt");
 			}
 		} catch (Exception e) {
-			System.out.println("이메일 중복 확인 실패 : " + e);
 		} finally {
 			close();
 		}
@@ -594,7 +587,7 @@ public class MemberDAO {
 				pstmt.setString(1, "Y");
 				pstmt.setString(2,o_reason);
 				pstmt.setString(3,m_id);
-				pstmt.executeUpdate();
+				result = pstmt.executeUpdate();
 				
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -606,40 +599,43 @@ public class MemberDAO {
 			return result;
 			
 		}
-		public List<MemberVO> selectGetMemberAll(int start, int end){
-			List<MemberVO> list = new ArrayList<MemberVO>();
-			String sql = "select * from (select * from (select rownum rnum,d.* from(select* from member where m_id <> 'MasterPotato1')d)f where rnum >= ? and rnum<= ?)";
-			try {
-				con = ds.getConnection();
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, start);
-				pstmt.setInt(2, end);
-				rs = pstmt.executeQuery();
-				if (rs.next()) {
-					do {
-						MemberVO vo = new MemberVO();
-						vo.setL_id(rs.getInt("l_id"));
-						vo.setM_id(rs.getString("m_id"));
-						vo.setM_address(rs.getString("m_address"));
-						vo.setM_nick(rs.getString("m_nick"));
-						vo.setM_birth(rs.getDate("m_birth"));
-						vo.setM_joindate(rs.getDate("m_joindate"));
-						vo.setM_sellamount(rs.getInt("m_sellamount"));
-						vo.setM_status(rs.getString("m_status").charAt(0));
-						vo.setM_name(rs.getString("M_name"));
-						vo.setM_phone(rs.getString("M_phone"));
-						vo.setM_reportcount(rs.getInt("M_reportcount"));
-						
-						list.add(vo);
-					} while (rs.next());
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				close();
-			}
-			return list;
-		}
+	   public List<MemberVO> selectGetMemberAll(int start, int end){
+		      List<MemberVO> list = new ArrayList<MemberVO>();
+		      String sql ="select * from (select * from (select rownum rnum,d.* from(select* from member where m_id <> 'MasterPotato1')d)f where rnum >= ? and rnum<= ?)join out using(m_id)";
+		      
+		      
+		      try {
+		         con = ds.getConnection();
+		         pstmt = con.prepareStatement(sql);
+		         pstmt.setInt(1, start);
+		         pstmt.setInt(2, end);
+		         rs = pstmt.executeQuery();
+		         if (rs.next()) {
+		            do {
+		               MemberVO vo = new MemberVO();
+		               vo.setL_id(rs.getInt("l_id"));
+		               vo.setM_id(rs.getString("m_id"));
+		               vo.setM_address(rs.getString("m_address"));
+		               vo.setM_nick(rs.getString("m_nick"));
+		               vo.setM_birth(rs.getDate("m_birth"));
+		               vo.setM_joindate(rs.getDate("m_joindate"));
+		               vo.setM_sellamount(rs.getInt("m_sellamount"));
+		               vo.setM_status(rs.getString("m_status").charAt(0));
+		               vo.setM_name(rs.getString("M_name"));
+		               vo.setM_phone(rs.getString("M_phone"));
+		               vo.setM_email(rs.getString("M_email"));
+		               vo.setM_reportcount(rs.getInt("M_reportcount"));
+		               vo.setM_out(rs.getString("o_status"));
+		               list.add(vo);
+		            } while (rs.next());
+		         }
+		      } catch (SQLException e) {
+		         e.printStackTrace();
+		      } finally {
+		         close();
+		      }
+		      return list;
+		   }
 		public int getMemberAllCount() {
 			int cnt = 0;
 			String sql = "select count(*) from member";
@@ -662,7 +658,6 @@ public class MemberDAO {
 			return cnt;
 		}
 		
-		// 로그인된 계정의 회원정보를 보여주는 메소드
 		public List<MemberVO> ShowProfile(String id) {
 			List<MemberVO> mVoList = null;
 			String sql = "select * from member where m_id = ?";
@@ -690,6 +685,7 @@ public class MemberDAO {
 					mvo.setM_joindate(rs.getDate("M_joindate"));
 					mvo.setM_like(rs.getInt("M_like"));
 					mvo.setM_reportcount(rs.getInt("M_reportcount"));
+					mvo.setM_sellamount(rs.getInt("m_sellamount"));
 					mVoList.add(mvo);
 				}
 			} catch (SQLException e) {
@@ -700,30 +696,27 @@ public class MemberDAO {
 			return mVoList;
 		}
 		
-		// 회원정보를 수정하는 메소드
 		public void UpdateProfile(String name, String id, String pw, String phone, String email, String birth,
 				String address, String gender, String proimg, String nick, String intro) {
 
-			String sql = "update member set m_name = ?, m_id = ?, m_pw = ?, m_phone = ?, m_email = ?,"
-					+ "m_birth = ?, m_address = ?, m_gender = ?, m_image = ?, m_nick = ?, m_intro = ?";
+			String sql = "update member set m_name = ?, m_pw = ?, m_phone = ?, m_email = ?,"
+					+ "m_birth = ?, m_address = ?, m_gender = ?, m_image = ?, m_nick = ?, m_intro = ? where m_id = ?";
 
 			try {
 				con = ds.getConnection();
 				java.sql.Date birthday = java.sql.Date.valueOf(birth);
-
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, name);
-				pstmt.setString(2, id);
-				pstmt.setString(3, pw);
-				pstmt.setString(4, phone);
-				pstmt.setString(5, email);
-				pstmt.setDate(6, birthday);
-				pstmt.setString(7, address);
-				pstmt.setString(8, gender);
-				pstmt.setString(9, proimg);
-				pstmt.setString(10, nick);
-				pstmt.setString(11, intro);
-
+				pstmt.setString(2, pw);
+				pstmt.setString(3, phone);
+				pstmt.setString(4, email);
+				pstmt.setDate(5, birthday);
+				pstmt.setString(6, address);
+				pstmt.setString(7, gender);
+				pstmt.setString(8, proimg);
+				pstmt.setString(9, nick);
+				pstmt.setString(10, intro);
+				pstmt.setString(11, id);
 				pstmt.executeUpdate();
 				con.commit();
 
@@ -818,6 +811,38 @@ public class MemberDAO {
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
+				close();
+			}
+		}
+		
+		public void updateDealAmount(String m_id) {
+			String sql = "update member set m_sellamount = m_sellamount+1 where m_id = ?";
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, m_id);
+				
+				pstmt.executeUpdate();
+				con.commit();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				close();
+			}
+		}
+		
+		public void deleteDealAmount(String m_id) {
+			String sql = "update member set m_sellamount = m_sellamount-1 where m_id = ?";
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, m_id);
+				
+				pstmt.executeUpdate();
+				con.commit();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
 				close();
 			}
 		}

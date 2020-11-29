@@ -39,7 +39,7 @@ public class BoardLikeCtl extends HttpServlet {
 	BoardService sv = new BoardService();
 	sv.insertLike(m_id,b_id,chc);
 	sv.updateLike(b_id,chc);
-	LikeCount =sv.getBoardLikeCount(b_id);
+	LikeCount =sv.getLikeCount(b_id);
 	out.print(LikeCount);
 	out.flush();
 	out.close();

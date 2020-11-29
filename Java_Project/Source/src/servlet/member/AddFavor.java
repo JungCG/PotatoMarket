@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.FavorDAO;
+import service.FavorService;
+
 
 /**
  * Servlet implementation class ManageFavor
@@ -37,7 +38,7 @@ public class AddFavor extends HttpServlet {
 
 	protected void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		FavorDAO fdao = new FavorDAO();
+		FavorService fdao = new FavorService();
 		String m_id = (String) request.getSession().getAttribute("userID");
 		int c_lid = Integer.parseInt(request.getParameter("mainmenu"));
 		int c_sid = Integer.parseInt(request.getParameter("submenu"));

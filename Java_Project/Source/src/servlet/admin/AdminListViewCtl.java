@@ -89,12 +89,11 @@ public class AdminListViewCtl extends HttpServlet {
 		endPage = startPage + pageBlock - 1; // - 1 빼줘야 함. 1~10 --> 즉 1 + 9 = 10, 총 글 35개, 총페이지는 4개, 10
 		if (endPage > pageCount)
 		endPage = pageCount;
-		System.out.println(type);
 		int startRnum = (currentPage - 1) * pageSize + 1;
 		int endRnum = startRnum + pageSize - 1; // currentPage*pageSize
 		
 		
-		list = sv.selectGetBoardAll(startRnum,endRnum);
+		list = sv.selectBoardAll(startRnum,endRnum);
 		plist = psv.searchGetProductAll(startRnum, endRnum);
 		mlist = msv.searchGetMemberAll(startRnum, endRnum);
 		slist = ssv.selectGetReportAll(startRnum, endRnum);

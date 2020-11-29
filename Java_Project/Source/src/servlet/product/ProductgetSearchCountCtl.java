@@ -100,10 +100,6 @@ public class ProductgetSearchCountCtl extends HttpServlet {
 			nextPage = endPage;
 		}
 		
-		
-		
-		
-		
 		List<ProductVO> list = pservice.getProductByPage(startRnum, endRnum, map);
 		
 		int SearchFilter2 = Integer.parseInt(SearchFilter);

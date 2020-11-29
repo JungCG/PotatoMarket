@@ -25,7 +25,8 @@ public class MemberVO {
 	private String m_emailhash;
 	private char m_authorizaion;
 	private String m_joinway;
-	
+	 private String m_out;
+	 
 	public String getM_id() {
 		return m_id;
 	}
@@ -157,6 +158,12 @@ public class MemberVO {
 	}
 	public void setM_joinway(String m_joinway) {
 		this.m_joinway = m_joinway;
+	}
+	public String getM_out() {
+		return m_out;
+	}
+	public void setM_out(String m_out) {
+		this.m_out = m_out;
 	}
 	
 }

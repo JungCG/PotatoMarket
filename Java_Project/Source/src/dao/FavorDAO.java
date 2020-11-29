@@ -12,8 +12,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import vo.ReportVO;
-
 public class FavorDAO {
 	private DataSource ds = null;
 	private Connection conn = null;
@@ -95,5 +93,30 @@ public class FavorDAO {
 			close();
 		}
 		return result;
+	}
+	
+	public List<String> searchFavorMember(int c_lid, int c_sid) {
+		String sql = "select distinct m_id from favor where c_lid = ? and c_sid = ?";
+		List<String> list = new ArrayList<String>();
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c_lid);
+			pstmt.setInt(2, c_sid);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					list.add(rs.getString(1));
+				}while(rs.next());
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		
+		return list;
 	}
 }

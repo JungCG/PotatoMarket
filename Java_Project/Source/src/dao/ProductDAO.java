@@ -63,7 +63,6 @@ public class ProductDAO {
 		}
 
 	}
-	// 커밋 메소드
 		private void commit() {
 			try {
 				if (conn != null) {
@@ -74,7 +73,6 @@ public class ProductDAO {
 			}
 		}
 
-		// 롤백 메소드
 		private void rollback() {
 			try {
 				if (conn != null) {
@@ -91,7 +89,6 @@ public int[] selectProuctAVG(String pro) {
 	String sql ="select round(avg(p_value)) from product where p_name like ? group by to_char(p_adddate, 'mm') having to_char(p_adddate, 'mm') >=8 and to_char(p_adddate, 'mm') <= 11 order by to_char(p_adddate, 'mm') asc";
 	try {
 		conn =ds.getConnection();
-		System.out.println(pro);
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1,"%"+pro+"%");
 		rs =pstmt.executeQuery();
@@ -101,8 +98,6 @@ public int[] selectProuctAVG(String pro) {
 				i++;
 			}while(rs.next());
 		}else {
-			System.out.println("寃��깋�뼱瑜� 李얠�紐삵뻽�뒿�땲�떎");
-			
 		}
 	}catch(Exception e) {
 		e.printStackTrace();
@@ -119,7 +114,6 @@ public int selectProductAVGcount(String pro) {
 	
 	try {
 		conn =ds.getConnection();
-		System.out.println(pro);
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1,"%"+pro+"%");
 		rs =pstmt.executeQuery();
@@ -187,15 +181,12 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 				vo.setP_name(rs.getString("p_name"));
 				vo.setP_adddate(rs.getString("p_adddate").substring(0,11));
 				vo.setP_value(rs.getInt("p_value"));
-				//vo.setP_status(rs.getString("p_status").charAt(0));
 				vo.setP_description(rs.getString("p_description"));
 				vo.setP_like(rs.getInt("p_like"));
 				vo.setP_brand(rs.getString("p_brand"));
-				//vo.setP_dealstatus(rs.getString("p_dealstatus").charAt(0));
 				vo.setP_dealdate(rs.getString("p_dealdate"));
 				vo.setP_premium(rs.getString("p_premium").charAt(0));
 				vo.setP_view(rs.getInt("p_view"));
-				//vo.setL_name(rs.getString("l_name"));
 				list.add(vo);
 			} while (rs.next());
 		}
@@ -207,7 +198,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 	return list;
 }
 
-//모든 상품 갯수 조회하기
 	public int getProductCount() {
 		int cnt = 0;
 		String sql = "select Count(*) from Product";
@@ -226,7 +216,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return cnt;
 	}
 	
-	// 찜 상품 갯수 조회하기
 	public int getLikeProductCount(String m_id) {
 		int cnt = 0;
 		String sql = "select Count(*) from plike where m_id = '" + m_id + "'";
@@ -245,7 +234,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return cnt;
 	}
 
-	// 모든 상품 조회하기
 	public List<ProductVO> selectAllProduct(int start, int end) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		String sql = "select * from (select rownum rnum, d.* from "
@@ -291,7 +279,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return list;
 	}
 	
-	// 관련 상품 조회하기
 	public List<ProductVO> selectrelatedProduct(int c_lid, int p_id) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		String sql = "select a.*, b.pa_img3 from "
@@ -335,7 +322,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return list;
 	}
 	
-	// 판매자의 다른 상품 조회하기
 	public List<ProductVO> selectotherProduct(String m_id, int p_id) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		String sql = "select a.*, b.pa_img3 from "
@@ -368,14 +354,12 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return list;
 	}
 
-	// Pagd를 통해 하나씩 읽어나오기 (pageno와 ,읽을 갯수)를 들고 들어오는 경우가 가장 많다.
-	//검색한 상품 조회 메소드
 	public List<ProductVO> getProductByPage(int start, int end, Map<String, String> map) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		int SearchFilter = Integer.parseInt(map.get("SearchFilter"));
 		String SearchStr = map.get("SearchStr");
 		String sql;
-		if (SearchFilter == 1) { // 상품명 필터
+		if (SearchFilter == 1) {
 			sql = "select * from (select rownum rnum, d.* from " + "(select d.* from (select a.*, b.pa_img3 from "
 					+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) "
 					+ "a join padd b on a.p_id = b.p_id) d ";
@@ -418,7 +402,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			} finally {
 				close();
 			}
-		} else if (SearchFilter == 2) { // 지역명 필터
+		} else if (SearchFilter == 2) {
 			sql = "select * from (select rownum rnum, d.* from " + "(select d.* from (select a.*, b.pa_img3 from "
 					+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) "
 					+ "a join padd b on a.p_id = b.p_id) d ";
@@ -461,7 +445,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			} finally {
 				close();
 			}
-		} else if (SearchFilter == 0) { // 필터X
+		} else if (SearchFilter == 0) {
 			sql = "select * from (select rownum rnum, d.* from " + "(select d.* from (select a.*, b.pa_img3 from "
 					+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) "
 					+ "a join padd b on a.p_id = b.p_id) d ";
@@ -507,14 +491,13 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		}
 		return list;
 	}
-
-	// 검색필터적용 게시글 수 조회하기(페이지적용여부)
+	
 	public int getProductByPageCount(Map<String, String> map) {
 		int cnt = 0;
 		int SearchFilter = Integer.parseInt(map.get("SearchFilter"));
 		String SearchStr = map.get("SearchStr");
 
-		if (SearchFilter == 1) { // 상품명 필터
+		if (SearchFilter == 1) { 
 			String sql = "select Count(*) "
 					+ "from (select p.*, l.l_name from product p join local l on l.l_id = p.l_id) d "
 					+ "where p_name like '%" + SearchStr + "%' order by d.p_id desc";
@@ -530,7 +513,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			} finally {
 				close();
 			}
-		} else if (SearchFilter == 2) { // 지역명 필터
+		} else if (SearchFilter == 2) { 
 			String sql = "select Count(*) "
 					+ "from (select p.*, l.l_name from product p join local l on l.l_id = p.l_id) d "
 					+ "where l_name like '%" + SearchStr + "%' order by d.p_id desc";
@@ -546,7 +529,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			} finally {
 				close();
 			}
-		} else if (SearchFilter == 0) { // 지역명 필터
+		} else if (SearchFilter == 0) { 
 			String sql = "select Count(*) "
 					+ "from (select p.*, l.l_name from product p join local l on l.l_id = p.l_id) d "
 					+ "where l_name like '%" + SearchStr + "%' "
@@ -568,12 +551,10 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return cnt;
 	}
 
-	// 상품 1개 조회하기
 	public List<ProductVO> selectProduct(int p_id, int likeresult2) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		int result = 0;
 
-		// 아이디에 해당하는 닉네임 불러오기
 		String m_nick = "";
 		String sql_nick = "select m.m_nick from product p join member m on m.m_id = p.m_id where p.p_id = " + p_id;
 		try {
@@ -582,8 +563,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			rs = stmt.executeQuery(sql_nick);
 			if (rs.next()) {
 				m_nick = rs.getString("m_nick");
-			} else { // 아무것도 찾지 못 했을 때
-				System.out.println("[crim] !!! 매우 이상한 상황임. 확인 바람!!!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -591,7 +570,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			close();
 		}
 
-		// 상품글 조회
 		String sql = "select p.*, l.l_name from local l join "
 				+ "(select a.*, b.pa_img3 from (select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) "
 				+ "a join padd b on a.p_id = b.p_id) p on l.l_id = p.l_id where p_id = " + p_id;
@@ -599,7 +577,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		
 		if(likeresult2 == 0) {
 			
-				// 조회수+1
 				String sql2 = "update product set p_view = p_view+1 where p_id = " + p_id;
 				try {
 					conn = ds.getConnection();
@@ -653,11 +630,9 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return list;
 	}
 
-	// 상품 1개 댓글 조회하기
 	public List<ProductCommentVO> selectProductComment(int p_id) {
 		List<ProductCommentVO> list = new ArrayList<ProductCommentVO>();
 
-		// 아이디에 해당하는 닉네임 불러오기
 		String m_nick = "";
 		String sql_nick = "select m.m_nick from product p join member m on m.m_id = p.m_id where p.p_id = " + p_id;
 		try {
@@ -666,8 +641,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			rs = stmt.executeQuery(sql_nick);
 			if (rs.next()) {
 				m_nick = rs.getString("m_nick");
-			} else { // 아무것도 찾지 못 했을 때
-				System.out.println("[crim] !!! 매우 이상한 상황임. 확인 바람!!!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -675,7 +648,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			close();
 		}
 
-		// 해당 상품글 댓글 조회
 		String sql = "select * from productcomment where p_id = " + p_id
 				+ "order by p_ref asc, p_re_step asc, p_re_adddate asc";
 		try {
@@ -702,11 +674,9 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return list;
 	}
 
-	// 상품 등록하기
 	public int insertProduct(ProductVO vo) {
 		int result = 0;
 
-		// 입력한 자료들
 		String m_id = vo.getM_id();
 		String p_name = vo.getP_name();
 		int p_value = vo.getP_value();
@@ -718,7 +688,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		int c_sid = vo.getC_sid();
 		String p_description = vo.getP_description();
 
-		// 가장 큰 p_id를 읽어나오는 query문
 		String sql_max = "select nvl(max(p_id),0) from Product";
 		int maxp_id = 0;
 		try {
@@ -728,7 +697,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			if (rs.next()) {
 				maxp_id = rs.getInt(1) + 1;
 				commit();
-			} else { // 아무것도 찾지 못 했을 때
+			} else {
 				rollback();
 			}
 		} catch (Exception e) {
@@ -737,7 +706,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			close();
 		}
 
-		// insert
 		String sql = "insert into Product values (?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?,0,?,'N',null,?,0)";
 		try {
 			conn = ds.getConnection();
@@ -757,7 +725,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 
 			result = pstmt.executeUpdate();
 			if (result < 1) {
-				System.out.println("[crim]!!! insert 실패!!!");
 				rollback();
 			} else {
 				commit();
@@ -770,13 +737,11 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return result;
 	}
 
-	// 게시글 수정하기
 	public List<ProductVO> updateProduct(ProductVO vo) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		int result = 0;
 		int p_id = vo.getP_id();
 
-		// 아이디에 해당하는 닉네임 불러오기
 		String m_nick = "";
 		String sql_nick = "select m.m_nick from product p join member m on m.m_id = p.m_id where p.p_id = " + p_id;
 		try {
@@ -785,16 +750,13 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			rs = stmt.executeQuery(sql_nick);
 			if (rs.next()) {
 				m_nick = rs.getString("m_nick");
-			} else { // 아무것도 찾지 못 했을 때
-				System.out.println("해당 닉네임 없음..");
-			}
+			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
 
-		// product 테이블 업데이트
 		String sql1 = "update Product set "
 				+ "(p_id,m_id,c_lid,c_sid,l_id,p_name,p_adddate,p_value,p_status,p_description,p_like,p_brand,"
 				+ "p_dealstatus,p_dealdate,p_premium,p_view) = " + "(select ?,(select m_id from product where p_id = "
@@ -817,6 +779,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			pstmt.setString(11, String.valueOf(vo.getP_premium()));
 			pstmt.setInt(12, vo.getP_view());
 			result = pstmt.executeUpdate();
+			commit();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -865,7 +828,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return list;
 	}
 
-	// 게시글 삭제하기
 	public int deleteProduct(int p_id) {
 		int result = 0;
 		String sql = "delete from Product where p_id = " + p_id;
@@ -888,7 +850,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return result;
 	}
 
-	// 게시글 찜하기
 	public int likeProduct(int p_id, String m_id) {
 		int result = 0;
 		int result2 = 0;
@@ -902,10 +863,8 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			pstmt.setString(2, m_id);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				System.out.println("이미 찜한 상품임");
 				bool = false;
 			}else {
-				System.out.println("찜 가능한 상품임");
 				bool = true;
 			}
 		}catch(Exception e){
@@ -914,7 +873,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			close();
 		}
 		
-		if(bool) {	//찜 가능하다면 insert	//result = 2
+		if(bool) {	
 			String sql = "insert into plike values (?,?)";
 			try {
 				conn = ds.getConnection();
@@ -924,12 +883,10 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 				pstmt.setString(2, m_id);
 				result = pstmt.executeUpdate();
 				if (result > 0) {
-					System.out.println("dao 찜 성공!");
 					commit();
 					result = 2;
 				}else {
-					System.out.println("dao 찜 실패!");
-					rollback();	//result = 0
+					rollback();	
 				}
 			}catch(Exception e){
 				e.printStackTrace();
@@ -937,7 +894,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 				close();
 			}
 			
-				//p_like + 1
 				if(result==2) {
 					String sql_plus = "update product set p_like = p_like + 1 where p_id = ?";
 					try {
@@ -947,12 +903,10 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 						pstmt.setInt(1, p_id);
 						result2 = pstmt.executeUpdate();
 						if (result2 > 0) {
-							System.out.println("dao 찜 성공!");
 							commit();
 							result = 2;
 						}else {
-							System.out.println("dao 찜 실패!");
-							rollback();	//result = 0
+							rollback();	
 						}
 					}catch(Exception e){
 						e.printStackTrace();
@@ -962,7 +916,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 				}
 				
 				
-		}else{	//찜 이미 되어있으면 delete	//result = 3
+		}else{	
 			String sql = "delete from plike where p_id = ? and m_id = ?";
 			try {
 				conn = ds.getConnection();
@@ -984,7 +938,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			}
 			
 				
-				//p_like - 1
 				if(result==3) {
 					String sql_minus = "update product set p_like = p_like - 1 where p_id = ?";
 					try {
@@ -994,12 +947,10 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 						pstmt.setInt(1, p_id);
 						result2 = pstmt.executeUpdate();
 						if (result2 > 0) {
-							System.out.println("dao 찜 성공!");
 							commit();
 							result = 3;
 						}else {
-							System.out.println("dao 찜 실패!");
-							rollback();	//result = 0
+							rollback();
 						}
 					}catch(Exception e){
 						e.printStackTrace();
@@ -1012,7 +963,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return result;
 	}
 	
-	// 찜 삭제하기
 	public int deletelikeProduct(Map<String, String> map) {
 		int result = 0;
 		int p_id = Integer.parseInt(map.get("p_id"));
@@ -1039,7 +989,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return result;
 	}
 
-	// 찜한 게시글 조회하기
 	public List<ProductVO> selectlikeProduct(int start, int end, String m_id) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		
@@ -1086,7 +1035,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return list;
 	}
 	
-	//상품 찜 유무 확인하기
 	public int checklikeProduct(int p_id, String m_id) {
 		int result = 0;
 		String sql = "select * from plike where p_id = ? and m_id = ?";
@@ -1096,9 +1044,9 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			pstmt.setInt(1, p_id);
 			pstmt.setString(2, m_id);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {	// 이미 찜 한 상태
+			if(rs.next()) {	
 				result = 1;
-			}else {	// 찜 안한 상태
+			}else {	
 				result = -1;
 			}
 		}catch(Exception e) {
@@ -1109,14 +1057,12 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return result;
 	}
 
-	// 댓글등록하기
 	public int writeComment(Map<String, String> map) {
 		int result = 0;
 		int p_id = Integer.parseInt(map.get("p_id"));
 		String m_id = map.get("m_id");
 		String p_re_comment = map.get("p_re_comment");
 
-		// 가장 큰 p_re_id를 읽어나오는 query문
 		String sql_max = "select nvl(max(p_re_id),0) from ProductComment";
 		int maxp_re_id = 0;
 		try {
@@ -1125,7 +1071,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			rs = stmt.executeQuery(sql_max);
 			if (rs.next()) {
 				maxp_re_id = rs.getInt(1) + 1;
-			} else { // 아무것도 찾지 못 했을 때
+			} else {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1133,7 +1079,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			close();
 		}
 
-		// 가장 큰 p_ref를 읽어나오는 query문
 		String sql_max2 = "select nvl(max(p_ref),0) from ProductComment";
 		int maxp_ref = 0;
 		try {
@@ -1142,8 +1087,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			rs = stmt.executeQuery(sql_max2);
 			if (rs.next()) {
 				maxp_ref = rs.getInt(1) + 1;
-			} else { // 아무것도 찾지 못 했을 때
-				System.out.println("[crim] !!! 매우 이상한 상황임. 확인 바람!!!");
+			} else {
 				return 0;
 			}
 		} catch (Exception e) {
@@ -1152,27 +1096,8 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			close();
 		}
 
-//		// 가장 큰 p_re_step를 읽어나오는 query문
-//		String sql_max3 = "select nvl(max(p_re_step),0) from ProductComment";
-//		int maxp_re_step = 0;
-//		try {
-//			conn = ds.getConnection();
-//			stmt = conn.createStatement();
-//			rs = stmt.executeQuery(sql_max3);
-//			if (rs.next()) {
-//				maxp_re_step = rs.getInt(1) + 1;
-//			} else { // 아무것도 찾지 못 했을 때
-//				System.out.println("[crim] !!! 매우 이상한 상황임. 확인 바람!!!");
-//				return 0;
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			close();
-//		}
 
 		String sql = "insert into ProductComment values (?,?,?,?,?,1,1,CURRENT_TIMESTAMP)";
-		// 댓글등록
 		try {
 			conn = ds.getConnection();
 			conn.setAutoCommit(false);
@@ -1182,7 +1107,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			pstmt.setString(3, m_id);
 			pstmt.setString(4, p_re_comment);
 			pstmt.setInt(5, maxp_ref);
-//			pstmt.setInt(6, maxp_re_step);
 			result = pstmt.executeUpdate();
 			if (result > 0) {
 				commit();
@@ -1197,7 +1121,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return result;
 	}
 
-	// 대댓글등록하기
 	public int writeReComment(Map<String, String> map) {
 		int result = 0;
 		int p_re_step = 0;
@@ -1206,7 +1129,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		String m_id = map.get("m_id");
 		String p_re_re_comment = map.get("p_re_re_comment");
 
-		// 가장 큰 p_re_id를 읽어나오는 query문
 		String sql_max = "select nvl(max(p_re_id),0) from ProductComment";
 		int maxp_re_id = 0;
 		try {
@@ -1223,7 +1145,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			close();
 		}
 
-		// update & p_re_step
 		String sql_p_re_step = "select nvl(max(p_re_step),1) from ProductComment where p_id = " + p_id + "and p_ref = " + p_ref;
 		try {
 			conn = ds.getConnection();
@@ -1240,7 +1161,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		}
 
 		String sql = "insert into ProductComment values (?,?,?,?,?,?,2,CURRENT_TIMESTAMP)";
-		// 대댓글등록
 		try {
 			conn = ds.getConnection();
 			conn.setAutoCommit(false);
@@ -1265,7 +1185,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return result;
 	}
 	
-	//댓글 삭제하기
 	public int deleteProductComment(int p_ref){
 		int result = 0;
 		String sql = "delete from Productcomment where p_ref = " + p_ref;
@@ -1277,10 +1196,8 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			result = stmt.executeUpdate(sql);
 			if (result > 0) {
 				commit();
-				System.out.println("댓글 삭제 성공!");
 			} else {
 				rollback();
-				System.out.println("댓글 삭제 실패!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1290,7 +1207,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return result;
 	}
 
-	// 三 카테고리 목록 갯수 조회 메소드
 	public int getCategoryByPageCount(int c_lid) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		int cnt = 0;
@@ -1312,7 +1228,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return cnt;
 	}
 
-	// 三 카테고리 목록 조회 메소드
 	public List<ProductVO> getCategorylist(int start, int end, int c_lid) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		int cnt = 0;
@@ -1359,24 +1274,19 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return list;
 	}
 
-	// 댓 작성시 - 아이디에 해당하는 닉네임 & 시간 불러오기
 	public String[] getNickname(String m_id) {
 		String arr1[] = new String[3];
 
-		// 아이디에 해당하는 닉네임 불러오기
 		String sql_nick = "select m_nick from Member where m_id = '" + m_id + "'";
 		String sql_date = "select p_re_adddate from productcomment where p_re_id = (select nvl(max(p_re_id),0) from productcomment)";
 		String sql_p_ref = "select p_ref from productcomment where p_re_id = (select max(p_re_id) from productcomment)";
 		try {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
-			// 닉네임 조회
 			rs = stmt.executeQuery(sql_nick);
 			if (rs.next()) {
 				arr1[0] = rs.getString("m_nick");
-			} else { // 아무것도 찾지 못 했을 때
-				System.out.println("[crim] !!! 매우 이상한 상황임. 확인 바람!!!");
-			}
+			} 
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -1386,12 +1296,9 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		try {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
-			// 시간 조회
 			rs = stmt.executeQuery(sql_date);
 			if (rs.next()) {
 				arr1[1] = rs.getString("p_re_adddate");
-			} else { // 아무것도 찾지 못 했을 때
-				System.out.println("[crim] !!! 매우 이상한 상황임. 확인 바람!!!");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -1402,13 +1309,10 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		try {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
-			// p_ref 조회
 			rs = stmt.executeQuery(sql_p_ref);
 			if (rs.next()) {
 				arr1[2] = rs.getString("p_ref");
-			} else { // 아무것도 찾지 못 했을 때
-				System.out.println("[crim] !!! 매우 이상한 상황임. 확인 바람!!!");
-			}
+			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -1417,7 +1321,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return arr1;
 	}
 
-	// 모든 지역별 상품 갯수 조회하기
 	public int getLocalProductCount(int l_id) {
 		int cnt = 0;
 		String sql = "select Count(*) from Product where l_id = ?";
@@ -1437,11 +1340,9 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return cnt;
 	}
 
-	// 첨부파일 이미지 등록하기
 	public int insertProductImg(PaddVO pvo) {
 		int result = 0;
 
-		// 가장 큰 p_id를 읽어나오는 query문
 		String sql_max = "select nvl(max(p_id),0) from Product";
 		int maxp_id = 0;
 		try {
@@ -1451,7 +1352,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			if (rs.next()) {
 				maxp_id = rs.getInt(1);
 				commit();
-			} else { // 아무것도 찾지 못 했을 때
+			} else { 
 				rollback();
 			}
 		} catch (Exception e) {
@@ -1484,7 +1385,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return result;
 	}
 
-	// 상품 이미지 조회하기
 	public String[] selectProductImg(int p_id) {
 		String[] FName = new String[3];
 		String sql = "select PA_IMG1, PA_IMG2, PA_IMG3 from padd where p_id = ?";
@@ -1506,13 +1406,11 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return FName;
 	}
 
-	// 상품 이미지 수정하기
 	public int updateProductImg(PaddVO vo) {
 		int result = 0;
 		int p_id = vo.getP_id();
 		String sql2 = "update padd set (p_id,pa_img1,pa_img2,pa_img3) = (select ?,?,?,? from dual) where p_id = ?";
 		try {
-			// padd 테이블 업데이트
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql2);
 			pstmt.setInt(1, p_id);
@@ -1523,10 +1421,8 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			result = pstmt.executeUpdate();
 			if (result > 0) {
 				commit();
-				System.out.println("commit!");
 			} else {
 				rollback();
-				System.out.println("rollback!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1537,7 +1433,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 	}
 	
 	
-	// 상품 이미지 삭제하기
 	public int deleteProductImg(PaddVO vo) {
 		int result = 0;
 		int p_id = vo.getP_id();
@@ -1546,7 +1441,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		String sqlimg2 = "update padd set pa_img2 = null where p_id = ?";
 		String sqlimg3 = "update padd set pa_img3 = null where p_id = ?";
 		
-		//지울 파일명이 있으면 지우기
 		if (!(vo.getPa_img1() == null) && !(vo.getPa_img1().equals(""))) {
 			try {
 				conn = ds.getConnection();
@@ -1555,10 +1449,8 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 				result = pstmt.executeUpdate();
 				if (result > 0) {
 					commit();
-					System.out.println("commit!");
 				} else {
 					rollback();
-					System.out.println("rollback!");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1575,10 +1467,8 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 				result = pstmt.executeUpdate();
 				if (result > 0) {
 					commit();
-					System.out.println("commit!");
 				} else {
 					rollback();
-					System.out.println("rollback!");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1595,10 +1485,8 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 				result = pstmt.executeUpdate();
 				if (result > 0) {
 					commit();
-					System.out.println("commit!");
 				} else {
 					rollback();
-					System.out.println("rollback!");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1610,31 +1498,13 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 	}
 	
 	
-	//
 	public int deleteImg(PaddVO vo) {
 			
 			int result = 0;
 			String sqlimg1 = "update padd set pa_img1 = null where p_id = ?";	
 			String sqlimg2 = "update padd set pa_img1 = null where p_id = ?";
 			String sqlimg3 = "update padd set pa_img1 = null where p_id = ?";
-			System.out.println(vo.getP_id());
-			System.out.println("1"+vo.getPa_img1());
-			System.out.println("2"+vo.getPa_img2());
-			System.out.println("3"+vo.getPa_img3());
 			
-			if(!(vo.getPa_img1()==null)&&!(vo.getPa_img1().equals(""))) {
-				
-			System.out.println("1�씠 �꼸�씠�븘�땲怨� 鍮덉뭏�씠�븘�땲�빞");	
-			}
-			if(!(vo.getPa_img2()==null)&&!(vo.getPa_img2().equals(""))) {
-				
-				System.out.println("2�씠 �꼸�씠�븘�땲怨� 鍮덉뭏�씠�븘�땲�빞");	
-				
-			}
-			if(!(vo.getPa_img3()==null)&&!(vo.getPa_img3().equals(""))) {
-				
-				System.out.println("3�씠 �꼸�씠�븘�땲怨� 鍮덉뭏�씠�븘�땲�빞");		
-			}
 			try {
 				conn =ds.getConnection();
 				if(!(vo.getPa_img1()==null)&&!(vo.getPa_img1().equals(""))) {
@@ -1642,7 +1512,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 						pstmt = conn.prepareStatement(sqlimg1);
 						pstmt.setInt(1, vo.getP_id());
 						pstmt.executeUpdate();
-						System.out.println("1踰덉떎�뻾");
 					}catch(Exception e){
 						e.printStackTrace();
 					}finally {
@@ -1656,7 +1525,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 						pstmt = conn.prepareStatement(sqlimg2);
 						pstmt.setInt(1, vo.getP_id());
 						pstmt.executeUpdate();		
-						System.out.println("2踰덉떎�뻾");
 	
 					}catch(Exception e){
 						e.printStackTrace();
@@ -1670,7 +1538,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 						pstmt = conn.prepareStatement(sqlimg3);
 						pstmt.setInt(1, vo.getP_id());
 						pstmt.executeUpdate();
-						System.out.println("3踰덉떎�뻾");
 	
 					}catch(Exception e){
 						
@@ -1692,7 +1559,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		}
 	
 	
-	//인기상품 4개 조회하기
 	public List<ProductVO> selectBestProduct() {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		String sql = "select * from (select rownum rnum, d.* from (select * from product order by p_like desc) d) where rownum < 5";
@@ -1734,7 +1600,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		return list;
 	}
 
-	// 회원의 상품 판매 갯수 조회하기
 		public int getSalesCount(String id) {
 			int cnt = 0;
 			String sql = "select Count(*) from Product where m_id = ?";
@@ -1754,7 +1619,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			return cnt;
 		}
 
-		// 회원의 상품 구매 갯수 조회하기
 
 		public int getBuyCount(String id) {
 			int cnt = 0;
@@ -1810,10 +1674,9 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			return pVoList;
 		}
 
-		// 판매목록 조회하기
 		public List<ProductVO> selectAllProduct(String id, String startDate, String endDate) {
 			List<ProductVO> pVoList = new ArrayList<ProductVO>();
-			String sql = "select * from product where m_id = ? and p_adddate between to_date(?) and to_date(?)+0.99999 order by p_adddate desc";
+			String sql = "select * from product where m_id = ? and p_adddate between to_date(?) and (to_date(?)+1) order by p_adddate desc";
 
 			try {
 				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -1824,7 +1687,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 				pstmt.setString(3, endDate);
 
 				rs = pstmt.executeQuery();
-
 				if (rs.next()) {
 					do {
 						ProductVO vo = new ProductVO();
@@ -1869,7 +1731,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 
 		public List<ProductVO> selectAllProduct2(String id, String startDate, String endDate) {
 			List<ProductVO> pVoList = new ArrayList<ProductVO>();
-			String sql = "select * from Product where p_id in(select p_id from TradeInfo where b_id = ?) and p_adddate between to_date(?) and to_date(?)+0.99999 order by p_adddate desc";
+			String sql = "select * from Product where p_id in (select p_id from TradeInfo where b_id = ?) and p_adddate between to_date(?) and to_date(?)+0.99999 order by p_adddate desc";
 			try {
 				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 				conn = ds.getConnection();
@@ -1958,13 +1820,11 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			return null;
 		}
 
-		// 상품 1개 조회하기
 		public List<ProductVO> selectProduct(int p_id) {
 			List<ProductVO> list = new ArrayList<ProductVO>();
 			int result = 0;
 
 			String sql = "select p.*, l.l_name " + "from local l join product p on l.l_id = p.l_id where p_id = " + p_id;
-			// 조회수+1
 			String sql2 = "update product set p_view = p_view+1 where p_id = " + p_id;
 			try {
 				ProductVO vo = new ProductVO();
@@ -2000,7 +1860,6 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			return list;
 		}
 
-		// 게시글 찜하기
 		public int likeProduct(int p_id) {
 			int result = 0;
 			String sql = "insert into plike values ((select p_id from product where p_id = ?),'MasterPotato1')";
@@ -2027,5 +1886,106 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 				close();
 			}
 			return result;
+		}
+		
+		public int getSeoulProductCount() {
+			   
+			   int result = 0;
+			   String sql = "select count(*) from product where l_id <= 25";
+
+			     try {
+			          conn = ds.getConnection();
+			          pstmt = conn.prepareStatement(sql);
+			          rs=pstmt.executeQuery();
+			          if(rs.next()) {
+			             
+			             result = rs.getInt(1);
+			          }
+			       } catch (Exception e) {
+			          e.printStackTrace();
+			       } finally {
+			          close();
+			       }
+			       return result;
+
+			}
+		
+
+		public List<ProductVO> getMainProduct1(){
+			List<ProductVO> list = new ArrayList<ProductVO>();
+			String sql = "select * from (select rownum rnum, d.* from (select d.* from (select a.*,b.pa_img3 from (select p.*, l.l_name from local l join Product p on l.l_id = p.l_id order by p_like desc, p_view desc) a join padd b on a.p_id = b.p_id) d order by d.p_like desc, d.p_view desc) d) where rnum >= 1 and rnum <= 4";
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					do {
+						ProductVO vo = new ProductVO();
+						vo.setP_id(rs.getInt("p_id"));
+						vo.setM_id(rs.getString("m_id"));
+						vo.setC_lid(rs.getInt("c_lid"));
+						vo.setC_sid(rs.getInt("c_sid"));
+						vo.setL_id(rs.getInt("l_id"));
+						vo.setP_name(rs.getString("p_name"));
+						vo.setP_adddate(rs.getString("p_adddate"));
+						vo.setP_value(rs.getInt("p_value"));
+						vo.setP_status(rs.getString("p_status").charAt(0));
+						vo.setP_description(rs.getString("p_description"));
+						vo.setP_like(rs.getInt("p_like"));
+						vo.setP_brand(rs.getString("p_brand"));
+						vo.setP_dealstatus(rs.getString("p_dealstatus").charAt(0));
+						vo.setP_dealdate(rs.getString("p_dealdate"));
+						vo.setP_premium(rs.getString("p_premium").charAt(0));
+						vo.setP_view(rs.getInt("p_view"));
+						vo.setL_name(rs.getString("l_name"));
+						vo.setPa_img3(rs.getString("pa_img3"));
+						list.add(vo);
+					}while(rs.next());
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				close();
+			}
+			return list;
+		}
+		
+		public List<ProductVO> getMainProduct2(){
+			List<ProductVO> list = new ArrayList<ProductVO>();
+			String sql = "select * from (select rownum rnum, d.* from (select d.* from (select a.*,b.pa_img3 from (select p.*, l.l_name from local l join Product p on l.l_id = p.l_id order by p_adddate desc) a join padd b on a.p_id = b.p_id) d order by p_adddate desc) d) where rnum >= 1 and rnum <= 4";
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					do {
+						ProductVO vo = new ProductVO();
+						vo.setP_id(rs.getInt("p_id"));
+						vo.setM_id(rs.getString("m_id"));
+						vo.setC_lid(rs.getInt("c_lid"));
+						vo.setC_sid(rs.getInt("c_sid"));
+						vo.setL_id(rs.getInt("l_id"));
+						vo.setP_name(rs.getString("p_name"));
+						vo.setP_adddate(rs.getString("p_adddate"));
+						vo.setP_value(rs.getInt("p_value"));
+						vo.setP_status(rs.getString("p_status").charAt(0));
+						vo.setP_description(rs.getString("p_description"));
+						vo.setP_like(rs.getInt("p_like"));
+						vo.setP_brand(rs.getString("p_brand"));
+						vo.setP_dealstatus(rs.getString("p_dealstatus").charAt(0));
+						vo.setP_dealdate(rs.getString("p_dealdate"));
+						vo.setP_premium(rs.getString("p_premium").charAt(0));
+						vo.setP_view(rs.getInt("p_view"));
+						vo.setL_name(rs.getString("l_name"));
+						vo.setPa_img3(rs.getString("pa_img3"));
+						list.add(vo);
+					}while(rs.next());
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				close();
+			}
+			return list;
 		}
 }

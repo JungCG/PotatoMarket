@@ -38,7 +38,7 @@ public class BoardContentLoadCtl extends HttpServlet {
 	int b_id =  Integer.parseInt(request.getParameter("b_id"));
 	BoardService sv = new BoardService();
 	List<BoardVO>list = new ArrayList<BoardVO>();
-	list =sv.selectPost(b_id);
+	list =sv.getBoard(b_id);
 	request.setAttribute("list",list);
 	List<BaddVO>imglist = new ArrayList<BaddVO>();
 	imglist = sv.selectImg(b_id);

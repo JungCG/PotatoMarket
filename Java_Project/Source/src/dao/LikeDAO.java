@@ -13,8 +13,6 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import vo.LikeVO;
-import vo.MemberVO;
-import vo.ReportVO;
 
 public class LikeDAO {
 	private DataSource ds = null;

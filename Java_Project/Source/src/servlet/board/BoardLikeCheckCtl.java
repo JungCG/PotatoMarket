@@ -35,7 +35,7 @@ public class BoardLikeCheckCtl extends HttpServlet {
 		String m_id = request.getParameter("m_id");
 		int b_id = Integer.parseInt(request.getParameter("b_id"));
 		int checkid = 0;
-		checkid =sv.selectLikeMid(m_id,b_id);
+		checkid =sv.searchLikeMid(m_id,b_id);
 		out.print(checkid);
 		out.flush();
 		out.close();

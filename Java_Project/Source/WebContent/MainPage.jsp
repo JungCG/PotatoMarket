@@ -1,34 +1,29 @@
-	<%-- <%@page import="service.product.ProductService"%> --%>
+<%@page import="service.ProductService"%>
 <link rel = "stylesheet" href = "css/bootstrap.css">
 <link rel = "stylesheet" href = "css/custom.css">
 <link rel = "stylesheet" href = "css/jck_nav_main.css">
+<%@page import="java.util.ArrayList"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
     	String ctx = request.getContextPath();
     	String ctxPath = request.getContextPath();
+    	String userID = null;
+		if(session.getAttribute("userID") != null){
+			userID = (String) session.getAttribute("userID");
+		}
     %>
 <!DOCTYPE html>
 <html>
 <head>
-	<%
-		String userID = null;
-		if(session.getAttribute("userID") != null){
-			userID = (String) session.getAttribute("userID");
-		}
-	%>
-	<link rel="shortcut icon" href="./favicon/favicon.ico" type="image/x-icon">
-	<link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
-	<link rel="manifest" href="./favicon/site.webmanifest">
-	<link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
 	<meta name="msapplication-TileColor" content="#da532c">
 	<meta name="theme-color" content="#ffffff">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src = "./js/jquery-3.5.1.js" type = "text/javascript"></script>
-	<script src = "js/bootstrap.js"></script>
+	<script src = "./js/bootstrap.js"></script>
     <title>감자 마켓</title>
 	
 	<style>
@@ -98,7 +93,7 @@
 		function getInfiniteUnread(){
 			setInterval(function(){
 				getUnread();
-			}, 4000);
+			}, 10000);
 		}
 		
 		function showUnread(result){
@@ -107,6 +102,55 @@
 		
 		
 	</script>
+	<style>
+	.ICR_Product_main {
+			text-align: center;
+		}
+		
+		#ICR_Product {
+			display: inline-block;
+			margin: 20px;
+			padding: 10px;
+			border-radius: 15px;
+		}
+		
+		#ICR_Product:hover{
+			background-color: #F5F5DC;
+			border: 10px;
+			border-color: #F5F5DC;
+		}
+		
+		#ICR_pageNum {
+			width: 90%;
+			hieght: 40px;
+			text-align: center;
+			margin-bottom: 30px;
+		}
+		
+		#ICR_writeBtn {
+			width: 100%;
+			height: 20px;
+			text-align: right;
+			display: inline-block;
+			border-radius: 5px;
+		}
+		#ICR_writeBtn > a{
+			margin-right: 15%;
+			color: white;
+		    background: #B97A57;
+		    text-align: center;
+		    padding: 5px;
+		    right:0;
+		}
+		
+		#ICR_Product:hover{
+			background-color: #F5F5DC;
+		}
+		
+		a {
+			text-decoration: none;
+		}
+	</style>
 </head>
 <body>
      	<div id="JWJmaintitle" style = "display : block;">
@@ -117,7 +161,7 @@
             <div class = "jck_menu_item jck_menu_item1">
                 <button class = "jck_menu1_item jck_menu1_item1" id="jck_myBtn"><img src = "./images/menu.png"></button>
                 <button class = "jck_menu1_item jck_menu1_item2" id = "jck_mainpage_btn1">
-                    <a href="MainPage.jsp"><img src = "./images/logo_img.png"></a>
+                    <a href="ProductMainPageGetCountCtl.do"><img src = "./images/logo_img.png"></a>
                 </button>
             </div>
             <div class = "jck_menu_item jck_menu_item2">
@@ -142,62 +186,140 @@
             <div class = "jck_content_container_div1">
             </div>
             <div class = "jck_content_container_div2">
-                <div id="JWJitemlist">
-					<div id="JWJnewitemlist">
-						<h3>
-							<a href="">새로 올라온 상품</a>
-						</h3>
-						<a href=""><img src="./images/google.png"></a><a href=""><img src="./images/google.png"></a><a
-							href=""><img src="./images/google.png"></a><a href=""><img src="./images/google.png"></a>
+                
+                <div class="ICR_Product_main">
+                <h3>
+					<a href="">인기있는 상품</a>
+				</h3>
+				<c:if test="${not empty noneMsg1 }"><div style="height: 200px;">${noneMsg1 }</div></c:if>
+					<div>
+						<c:if test="${not empty list1 }">
+							<c:forEach items="${list1 }" var="pvo">
+								<div id="ICR_Product">
+								<table style="width: 250px; table-layout: fixed;">
+									<tr>
+										<td colspan="2">
+										<a href="ProductContentCtl.do?p_id=${pvo.p_id}&c_lid=${pvo.c_lid}&m_id=${pvo.m_id}&Likeresult=0">
+										<img style="width: 240px; height: 180px;border-radius: 15px;" src="./upload/${pvo.pa_img3}"></a></td>
+									</tr>
+									<tr>
+										<td colspan="2" style="text-align:left; text-overflow:ellipsis; overflow: hidden;"><nobr>
+										<a href="ProductContentCtl.do?p_id=${pvo.p_id}&c_lid=${pvo.c_lid}&m_id=${pvo.m_id}&Likeresult=0">${pvo.p_name}</a>
+										</nobr></td>
+									</tr>
+									<tr>
+										<td colspan="2" style="text-align: left; font-size: small; width: 40px;">${pvo.l_name}&nbsp;&nbsp;|&nbsp;
+										<fmt:parseDate var="dateString" value="${pvo.p_adddate }" pattern="yyyy-MM-dd HH:mm:ss" />
+										<fmt:formatDate value="${dateString}" pattern="yy년 MM월 dd일 " /></td>
+									</tr>
+									<tr>
+										<td style="font-weight: bold;text-align: left;">${pvo.p_value}원</td>
+										<td style="text-align: right;">
+										<img src="./images/p_view.png" style="width: 20px;height: 20px;">${pvo.p_view }&nbsp;
+										<img src="./images/p_like.png" style="width: 18px;height: 18px;">${pvo.p_like }</td>
+									</tr>
+								</table>
+								</div>
+							</c:forEach>
+						</c:if>
 					</div>
-					<div id="JWJhotitemlist">
-						<h3>
-							<a href="">인기있는 상품</a>
-						</h3>
-						<a href=""><img src="./images/google.png"></a><a href=""><img src="./images/google.png"></a><a
-							href=""><img src="./images/google.png"></a><a href=""><img src="./images/google.png"></a>
+				</div>
+                <div class="ICR_Product_main">
+                <h3>
+					<a href="">새로 올라온 상품</a>
+				</h3>
+				<c:if test="${not empty noneMsg2 }"><div style="height: 200px;">${noneMsg2 }</div></c:if>
+					<div>
+						<c:if test="${not empty list2 }">
+							<c:forEach items="${list2 }" var="pvo">
+								<div id="ICR_Product">
+								<table style="width: 250px; table-layout: fixed;">
+									<tr>
+										<td colspan="2">
+										<a href="ProductContentCtl.do?p_id=${pvo.p_id}&c_lid=${pvo.c_lid}&m_id=${pvo.m_id}&Likeresult=0">
+										<img style="width: 240px; height: 180px;border-radius: 15px;" src="./upload/${pvo.pa_img3}"></a></td>
+									</tr>
+									<tr>
+										<td colspan="2" style="text-align:left; text-overflow:ellipsis; overflow: hidden;"><nobr>
+										<a href="ProductContentCtl.do?p_id=${pvo.p_id}&c_lid=${pvo.c_lid}&m_id=${pvo.m_id}&Likeresult=0">${pvo.p_name}</a>
+										</nobr></td>
+									</tr>
+									<tr>
+										<td colspan="2" style="text-align: left; font-size: small; width: 40px;">${pvo.l_name}&nbsp;&nbsp;|&nbsp;
+										<fmt:parseDate var="dateString" value="${pvo.p_adddate }" pattern="yyyy-MM-dd HH:mm:ss" />
+										<fmt:formatDate value="${dateString}" pattern="yy년 MM월 dd일 " /></td>
+									</tr>
+									<tr>
+										<td style="font-weight: bold;text-align: left;">${pvo.p_value}원</td>
+										<td style="text-align: right;">
+										<img src="./images/p_view.png" style="width: 20px;height: 20px;">${pvo.p_view }&nbsp;
+										<img src="./images/p_like.png" style="width: 18px;height: 18px;">${pvo.p_like }</td>
+									</tr>
+								</table>
+								</div>
+							</c:forEach>
+						</c:if>
 					</div>
 				</div>
             </div>
             <div class = "jck_content_container_div3 jck_nav_container">
                       <%
-				      /* ProductService pdao = new ProductService();
-                       */
+				      ProductService pdao = new ProductService();
+                      
                       String p_1 = "0";
                       String p_2 = "0";
                       String p_3 = "0";
                       
                       if(session.getAttribute("img1") != null)
-				      	p_1 = (String) session.getAttribute("img1");
-                      if(session.getAttribute("img1") != null)
-                      	p_2 = (String) session.getAttribute("img2");
-                      if(session.getAttribute("img1") != null)
-                      	p_3 = (String) session.getAttribute("img3");
+  				      	p_1 = String.valueOf(session.getAttribute("img1"));
+                        if(session.getAttribute("img2") != null)
+                        	p_2 = String.valueOf(session.getAttribute("img2"));
+                        if(session.getAttribute("img3") != null)
+                        	p_3 = String.valueOf(session.getAttribute("img3"));
 				      
                       String p_img1 = "logoimg.png";
                       String p_img2 = "logoimg.png";
                       String p_img3 = "logoimg.png";
-                      /* 
+                      
                       if(!p_1.equals("0"))
 				      	p_img1 = pdao.selectHistory(p_1);
                       if(!p_2.equals("0"))
                       	p_img2 = pdao.selectHistory(p_2);
                       if(!p_3.equals("0"))
-                      	p_img3 = pdao.selectHistory(p_3); */
+                      	p_img3 = pdao.selectHistory(p_3);
+                      
+                      String href1="#";
+                      String href2="#";
+                      String href3="#";
+                      
+                      if(!p_img1.equals("logoimg.png")){
+                    	  href1="./ProductContentCtl.do?p_id="+session.getAttribute("img1")+"&c_lid="+session.getAttribute("img1_c_lid")+"&m_id="+session.getAttribute("img1_m_id")+"&Likeresult="+session.getAttribute("img1_likeresult");
+                      }
+                      if(!p_img2.equals("logoimg.png")){
+                    	  href2="./ProductContentCtl.do?p_id="+session.getAttribute("img2")+"&c_lid="+session.getAttribute("img2_c_lid")+"&m_id="+session.getAttribute("img2_m_id")+"&Likeresult="+session.getAttribute("img2_likeresult");
+                      }
+                      if(!p_img3.equals("logoimg.png")){
+                    	  href3="./ProductContentCtl.do?p_id="+session.getAttribute("img3")+"&c_lid="+session.getAttribute("img3_c_lid")+"&m_id="+session.getAttribute("img3_m_id")+"&Likeresult="+session.getAttribute("img3_likeresult");
+                      }
 				      %>
 		      <div id="JWJhistorylist">
 		         <aside>
 		            <h3 style="color: white; background: #B97A57; text-align : center;">최근 본 상품</h3>
-		            <a href=""><img src="./upload/<%=p_img1 %>"></a> <a href=""><img src="./upload/<%=p_img2 %>"></a>
-		            <a href=""><img src="./upload/<%=p_img3 %>"></a>
+		            
+		            <a href="<%=href1%>"><img src="./upload/<%=p_img1 %>"></a>
+		            
+		            <a href="<%=href2%>"><img src="./upload/<%=p_img2 %>"></a>
+		            
+		            <a href="<%=href3%>"><img src="./upload/<%=p_img3 %>"></a>
 		         </aside>
 		      </div>
             </div>
         </div>
-        <div class = "jck_footer_container">
-            <div><a href = "#">감자 마켓<br>회사 소개</a></div>
-            <div><a href = "#">개인 정보<br>취급 방침</a></div>
-            <div><a href = "#">위치기반 서비스<br>이용 약관</a></div>
+        <div class = "jck_footer_container" style = "text-align : center;">
+            <div style = "color : #CC8431;">상호 : 감자마켓 | 팀원 : 정창균, 정운진, 강대영, 금지운, 윤지혜, 임채린<br>
+주소 : 서울특별시 중구 남대문로 120 대일빌딩 2F, 3F<br>
+서비스 이용문의 : nothing1360@gmail.com | 서비스제휴문의 : nothing1360@gmail.com<br>
+Copyright © Potato-Market. All Rights Reserved.</div>
         </div>
     </div>
     
@@ -211,18 +333,18 @@
         </div>
         <div class="jck_modal-body">
             <ul>
-            	<li>
-            		<p><a href = "#">&lt;홈페이지 소개&gt;</a></p>
-            	</li>
-            	<li>
-					<hr>
-            	</li>
+            	<%
+            		if(session.getAttribute("userID") != null){
+            	%>
             	<li>
             		<p><a href = "MyPage.jsp">&lt;마이 페이지&gt;</a></p>
             	</li>
             	<li>
             		<hr>
             	</li>
+            	<%
+            		}
+            	%>
             	<li>
             		<p><a href = "ProductgetCountCtl.do">&lt;상품 검색&gt;</a></p>
             		<ul>
@@ -339,18 +461,29 @@
     	<script>
     	$(document).ready(function(){
     		$("#jck_mainpage_btn1").click(function(){
-    			location.href = "./MainPage.jsp";
+    			location.href = "./ProductMainPageGetCountCtl.do";
     		});
     		$("#jck_mainpage_btn2").click(function(){
-    			location.href = "./MainPage.jsp";
+    			location.href = "./ProductMainPageGetCountCtl.do";
     		});
     		$("#jck_mypagebefore").click(function(){
     			location.href = "./Login.jsp";
     		});
     		
     		$("#jck_mypageafter").click(function(){
-    			location.href = "./MyPage.jsp";
+    			<%if(userID != null){
+    				if(userID.equals("MasterPotato1")){
+    			%>
+    				location.href = "./AdminListViewCtl.do";
+    			<%
+    				}else{
+    			%>
+    				location.href = "./MyPage.jsp";
+    			<%
+    				}}
+    			%>
     		});
+    		
     		$("#jck_loginbefore").click(function(){
     			location.href = "./Login.jsp";
     		});

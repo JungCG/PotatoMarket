@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import service.ProductService;
 import vo.ProductVO;
@@ -51,19 +52,40 @@ public class ProductContentCtl extends HttpServlet {
 			
 		}
 		
-		//최근 본 상품
-//		HttpSession session = request.getSession();
-//		   if (session.getAttribute("img1") == null)
-//		      session.setAttribute("img1", p_id);
-//		   else if (session.getAttribute("img2") == null)
-//		      session.setAttribute("img2", p_id);
-//		   else if (session.getAttribute("img3") == null)
-//		      session.setAttribute("img3", p_id);
-//		   else{
-//		      session.setAttribute("img3", session.getAttribute("img2"));
-//		      session.setAttribute("img2", session.getAttribute("img1"));
-//		      session.setAttribute("img1", p_id);
-//		   }
+//		최근 본 상품
+		HttpSession session = request.getSession();
+		   if (session.getAttribute("img1") == null) {
+		      session.setAttribute("img1", p_id);
+		      session.setAttribute("img1_c_lid", c_lid);
+		      session.setAttribute("img1_m_id", m_id);
+		      session.setAttribute("img1_likeresult", likeresult2);
+		   }
+		   else if (session.getAttribute("img2") == null) {
+		      session.setAttribute("img2", p_id);
+		      session.setAttribute("img2_c_lid", c_lid);
+		      session.setAttribute("img2_m_id", m_id);
+		      session.setAttribute("img2_likeresult", likeresult2);
+		   }
+		   else if (session.getAttribute("img3") == null) {
+		      session.setAttribute("img3", p_id);
+		      session.setAttribute("img3_c_lid", c_lid);
+		      session.setAttribute("img3_m_id", m_id);
+		      session.setAttribute("img3_likeresult", likeresult2);
+		   }
+		   else{
+		      session.setAttribute("img3", session.getAttribute("img2"));
+		      session.setAttribute("img2", session.getAttribute("img1"));
+		      session.setAttribute("img1", p_id);
+		      session.setAttribute("img3_c_lid", session.getAttribute("img2_c_lid"));
+		      session.setAttribute("img2_c_lid", session.getAttribute("img1_c_lid"));
+		      session.setAttribute("img1_c_lid", c_lid);
+		      session.setAttribute("img3_m_id", session.getAttribute("img2_m_id"));
+		      session.setAttribute("img2_m_id", session.getAttribute("img1_m_id"));
+		      session.setAttribute("img1_m_id", m_id);
+		      session.setAttribute("img3_likeresult", session.getAttribute("img2_likeresult"));
+		      session.setAttribute("img2_likeresult", session.getAttribute("img1_likeresult"));
+		      session.setAttribute("img1_likeresult", likeresult2);
+		   }
 		
 		
 		
@@ -73,8 +95,6 @@ public class ProductContentCtl extends HttpServlet {
 		List<ProductVO> list3 = pservice.selectrelatedProduct(c_lid, p_id);
 		List<ProductVO> list4 = pservice.selectotherProduct(m_id,p_id);
 		result = pservice.checklikeProduct(p_id, userID);
-		
-		System.out.println(result);
 		
 		String[] FName = new String[3];
 		FName = pservice.selectProductImg(p_id);

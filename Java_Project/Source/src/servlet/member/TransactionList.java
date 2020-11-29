@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ProductDAO;
+import service.ProductService;
 import vo.ProductVO;
 
 @WebServlet("/TransactionList.do")
@@ -34,8 +34,8 @@ public class TransactionList extends HttpServlet {
 
 	private void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String id = (String) request.getSession().getAttribute("ID");
-		ProductDAO dao = new ProductDAO();
+		String id = (String) request.getSession().getAttribute("userID");
+		ProductService dao = new ProductService();
 		
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");

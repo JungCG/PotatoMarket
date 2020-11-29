@@ -83,7 +83,7 @@ public class EmailSendCtl extends HttpServlet {
 		
 		String host = "http://localhost:8090/Member_MVC2/";
 		// 개인 이메일 작성
-		String from = "****@email.com";
+		String from = "이메일 주소";
 		String to = service.getUserEmail(userID);
 		String subject = "[감자마켓] 계정 활성화를 위한 이메일 확인 메일입니다.";
 		String content = "다음 링크에 접속하여 이메일 확인을 진행하세요." +"<br>"+ "<a href='" + host + "EmailAcceptCtl.do?code="+SHA256.getSHA256(to)+"&userID="+userID+"'>이메일 인증하기</a>";

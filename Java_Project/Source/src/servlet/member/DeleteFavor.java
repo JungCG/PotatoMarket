@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.FavorDAO;
+import service.FavorService;
+
 
 @WebServlet("/DeleteFavor.do")
 public class DeleteFavor extends HttpServlet {
@@ -31,7 +32,7 @@ public class DeleteFavor extends HttpServlet {
 
 	protected void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		FavorDAO fdao = new FavorDAO();
+		FavorService fdao = new FavorService();
 		String m_id = (String) request.getSession().getAttribute("userID");
 		String c_lsid = request.getParameter("c_lsid");
 		String[] arr = c_lsid.split("-");

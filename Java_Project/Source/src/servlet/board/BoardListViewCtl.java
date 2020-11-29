@@ -90,7 +90,6 @@ public class BoardListViewCtl extends HttpServlet {
 		
 		else {
 			list= sv.searchGetBoardAll(startRnum,endRnum , select);
-			System.out.println(select);
 		}
 		request.setAttribute("list", list);
 		request.setAttribute("b_type", b_type);
@@ -99,7 +98,7 @@ public class BoardListViewCtl extends HttpServlet {
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 		List<BoardVO> hotview = new ArrayList<BoardVO>();
-		hotview = sv.hotPost();
+		hotview = sv.hotView();
 		request.setAttribute("hotview", hotview);
 		request.setAttribute("select",select );
 		if(select!=null) {

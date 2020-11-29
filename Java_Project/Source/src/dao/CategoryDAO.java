@@ -12,10 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import vo.CategoryVO;
 import vo.Category_FavorVO;
-import vo.FavorVO;
-import vo.MemberVO;
 
 public class CategoryDAO {
 	private DataSource ds = null;

@@ -116,7 +116,7 @@ public class ReportDAO {
 	}
 	
 	public List<ReportVO> showReport() {
-		List<ReportVO> rVoList = null;
+		List<ReportVO> rVoList = new ArrayList<ReportVO>();
 		String sql = "select * from report";
 
 		try {
@@ -125,7 +125,6 @@ public class ReportDAO {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				rVoList = new ArrayList<ReportVO>();
 				do {
 					ReportVO rvo = new ReportVO();
 					rvo.setR_id(rs.getInt("r_id"));
@@ -144,17 +143,16 @@ public class ReportDAO {
 	}
 	
 	public List<ReportVO> showReport(String m_id2) {
-		List<ReportVO> rVoList = null;
-		String sql = "select * from report where m_id = ?";
+		List<ReportVO> rVoList = new ArrayList<ReportVO>();
+		String sql = "select * from report where m_id2 = ?";
 
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setNString(1, m_id2);
+			pstmt.setString(1, m_id2);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				rVoList = new ArrayList<ReportVO>();
 				do {
 					ReportVO rvo = new ReportVO();
 					rvo.setR_id(rs.getInt("r_id"));

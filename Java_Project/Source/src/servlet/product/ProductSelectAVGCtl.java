@@ -37,10 +37,6 @@ public class ProductSelectAVGCtl extends HttpServlet {
 		int avg[]= new int[4];
 		avg =sv.selectProuctAVG(select);
 		JSONObject obj = new JSONObject();
-		System.out.println(avg[0]);
-		System.out.println(avg[1]);
-		System.out.println(avg[2]);
-		System.out.println(avg[3]);
 		obj.put("avg8",avg[0]);
 		obj.put("avg9",avg[1]);
 		obj.put("avg10",avg[2]);

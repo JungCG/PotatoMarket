@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ProductDAO;
-import dao.TradeInfoDAO;
+import service.MemberService;
+import service.ProductService;
+import service.TradeInfoService;
+
 
 @WebServlet("/changeDealStatus.do")
 public class changeDealStatus extends HttpServlet {
@@ -28,19 +30,23 @@ public class changeDealStatus extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		ProductDAO pdao = new ProductDAO();
+		ProductService pdao = new ProductService();
 		int p_id = Integer.parseInt(request.getParameter("p_id_value"));
 		String dealstatus = request.getParameter("dealstatus_value");
 		
-		TradeInfoDAO tdao = new TradeInfoDAO();
-		String s_id = (String) request.getSession().getAttribute("ID");
+		TradeInfoService tdao = new TradeInfoService();
+		String s_id = (String) request.getSession().getAttribute("userID");
 		String b_id = request.getParameter("buyerid");
+		
+		MemberService mdao = new MemberService();
 		
 		if (dealstatus.equals("N")) {
 			dealstatus = "Y";
 			tdao.insertTradeInfo(p_id, s_id, b_id);
+			mdao.updateDealAmount(s_id);
 		} else {
 			dealstatus = "N";
+			mdao.deleteDealAmount(s_id);
 			tdao.deleteTradeInfo(p_id);
 		}
 		

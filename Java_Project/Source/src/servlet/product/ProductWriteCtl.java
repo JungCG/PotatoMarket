@@ -3,6 +3,7 @@ package servlet.product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import service.ChatService;
+import service.FavorService;
 import service.ProductService;
 import vo.PaddVO;
 import vo.ProductVO;
@@ -93,7 +96,7 @@ public class ProductWriteCtl extends HttpServlet {
 			}
 
 			
-			int result2 = pservice.insertProductImg(pvo);
+			
 
 		
 		
@@ -101,6 +104,7 @@ public class ProductWriteCtl extends HttpServlet {
 		// =============== 글 정보 ========================================
 
 					int p_id = Integer.parseInt(multi.getParameter("p_id"));
+					String m_id = (String) request.getSession().getAttribute("userID");
 					int c_lid = Integer.parseInt(multi.getParameter("c_lid"));
 					int l_id = Integer.parseInt(multi.getParameter("l_id"));
 					String p_name = multi.getParameter("p_name");
@@ -132,9 +136,21 @@ public class ProductWriteCtl extends HttpServlet {
 					vo.setP_premium(p_premium);
 
 					int result = pservice.insertProduct(vo);
+					int result2 = pservice.insertProductImg(pvo);
 					
 					
 					if (result > 0 && result2 > 0) { // 글등록 성공시 list 페이지로 이동
+						FavorService fs = new FavorService();
+						List<String> lls = fs.searchFavorMember(c_lid, vo.getC_sid());
+						if(lls.size() > 0) {
+							ChatService cs = new ChatService();
+							for(int j = 0 ; j<lls.size();j++) {		
+								String toID = lls.get(j);
+								cs.submit("MasterPotato1", toID, " 회원님이 관심분야로 추가한 상품이 등록되었습니다.");
+								cs.submit("MasterPotato1", toID, " 상품명 : " + p_name+" / 상품 설명 : "+p_description+" / 상품 가격 : "+p_value);
+								cs.submit("MasterPotato1", toID, " 상품명으로 검색해주세요:-) 우리동네 직거래는 감자마켓!!");
+							}
+						}
 						RequestDispatcher disp = request.getRequestDispatcher("ProductgetCountCtl.do");
 						disp.forward(request, response);
 					} else { // 글등록 실패시 데이터 가지고 이전화면으로 이동

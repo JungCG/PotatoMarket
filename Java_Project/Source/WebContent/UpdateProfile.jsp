@@ -1,7 +1,7 @@
-	<%-- <%@page import="service.product.ProductService"%> --%>
+<%@page import="service.ProductService"%>
 <%@page import="vo.MemberVO"%>
 <%@page import="java.util.List"%>
-<%@page import="dao.MemberDAO"%>
+<%@page import="service.MemberService"%>
 <link rel = "stylesheet" href = "css/bootstrap.css">
 <link rel = "stylesheet" href = "css/custom.css">
 <link rel = "stylesheet" href = "css/jck_nav.css">
@@ -10,6 +10,7 @@
     <%
     	String ctx = request.getContextPath();
     	String ctxPath = request.getContextPath();
+    	
     %>
 <!DOCTYPE html>
 <html>
@@ -19,21 +20,63 @@
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
+		if(userID == null){
+			session.setAttribute("messageType", "오류 메시지");
+			session.setAttribute("messageContent", "현재 로그인이 되어 있지 않습니다.");
+			response.sendRedirect("Login.jsp");
+			return;
+		}
 	%>
-	<link rel="shortcut icon" href="./favicon/favicon.ico" type="image/x-icon">
-	<link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
-	<link rel="manifest" href="./favicon/site.webmanifest">
-	<link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
+	
 	<meta name="msapplication-TileColor" content="#da532c">
 	<meta name="theme-color" content="#ffffff">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src = "./js/jquery-3.5.1.js" type = "text/javascript"></script>
 	<script src = "js/bootstrap.js"></script>
     <title>감자 마켓</title>
-	<style type="text/css">
+	<script type="text/javascript">
+		function getUnread(){
+			$.ajax({
+				type:"POST",
+				url : "./ChatUnreadServlet",
+				data : {
+					userID : '<%=userID%>'
+				},
+				success : function(result){
+					if(result >= 1){
+						showUnread(result);
+					}else{
+						showUnread('');
+					}
+				}
+			});
+		}
+		
+		function getInfiniteUnread(){
+			setInterval(function(){
+				getUnread();
+			}, 10000);
+		}
+		
+		function showUnread(result){
+			$('#unread').html(result);
+		}
+		$(document).ready(function() {
+			$("#userpwd2").on("keyup", function() {
+				if ($("#userpwd").val() != $("#userpwd2").val()) {
+					$("#pwchkmsg").css("display", "none");
+					$("#pwchkmsg1").css("display", "inline-block");
+					$("#pwchkmsg2").css("display", "none");
+				} else {
+					$("#pwchkmsg").css("display", "none");
+					$("#pwchkmsg1").css("display", "none");
+					$("#pwchkmsg2").css("display", "inline-block");
+				}
+			});
+		});
+	</script>
+	<style>
 #jck_join_table {
 	border-collapse: collapse;
 }
@@ -128,6 +171,9 @@ table * {
 #showimg{
 	height : 200px;
 }
+#profileIMGGG{
+	height : 200px;
+}
 
 .jck_join_input{
 	width : 250px;
@@ -145,58 +191,6 @@ table * {
 .jck_join_button:active{
 	background-color: rgba(204,132,49,0.7);
 }
-</style>
-	
-	<script type="text/javascript">
-		function getUnread(){
-			$.ajax({
-				type:"POST",
-				url : "./ChatUnreadServlet",
-				data : {
-					userID : '<%=userID%>'
-				},
-				success : function(result){
-					if(result >= 1){
-						showUnread(result);
-					}else{
-						showUnread('');
-					}
-				}
-			});
-		}
-		
-		function getInfiniteUnread(){
-			setInterval(function(){
-				getUnread();
-			}, 4000);
-		}
-		
-		function showUnread(result){
-			$('#unread').html(result);
-		}
-		
-		$(document).ready(function() {
-			$('#profileintro').on('keyup', function() {
-				if ($(this).val().length > 100) {
-					$(this).val($(this).val().substring(0, 100));
-				}
-			});
-			$("#userpwd2").on("input", function() {
-
-				if ($("#userpwd").val() != $("#userpwd2").val()) {
-					$("#pwchkmsg").css("display", "none");
-					$("#pwchkmsg1").css("display", "inline-block");
-					$("#pwchkmsg2").css("display", "none");
-				} else {
-					$("#pwchkmsg").css("display", "none");
-					$("#pwchkmsg1").css("display", "none");
-					$("#pwchkmsg2").css("display", "inline-block");
-				}
-
-			});
-		});
-	</script>
-	<style>
 #JWJprofileform {
 	position: relative;
 	left: 50%;
@@ -235,6 +229,11 @@ body {
 	width: 100%;
 }
 </style>
+<style type="text/css">
+.jck_content_container{
+margin-top : 5vh;
+}
+</style>
 </head>
 <body>
     <div class = "jck_everything">
@@ -242,7 +241,7 @@ body {
             <div class = "jck_menu_item jck_menu_item1">
                 <button class = "jck_menu1_item jck_menu1_item1" id="jck_myBtn"><img src = "./images/menu.png"></button>
                 <button class = "jck_menu1_item jck_menu1_item2" id = "jck_mainpage_btn1">
-                    <a href="MainPage.jsp"><img src = "./images/logo_img.png"></a>
+                    <a href="ProductMainPageGetCountCtl.do"><img src = "./images/logo_img.png"></a>
                 </button>
             </div>
             <div class = "jck_menu_item jck_menu_item2">
@@ -256,7 +255,7 @@ body {
                 <a href = "mapsearch.jsp"><button class = "jck_menu2_item4"><img src = "./images/gps.png"></button></a>
             </div>
             <div class = "jck_menu_item jck_menu_item3">
-            	<button id = "jck_chatbox" class = "jck_menu3_item1 jck_after_login"><img src = "./images/chat.png"><span id = "unread" class = "label label-info"></span></button>
+                <button id = "jck_chatbox" class = "jck_menu3_item1 jck_after_login"><img src = "./images/chat.png"><span id = "unread" class = "label label-info"></span></button>
                 <button id = "jck_mypagebefore" class = "jck_menu3_item1 jck_before_login"><img src = "./images/mypagebefore.png"></button>
                 <button id = "jck_mypageafter" class = "jck_menu3_item1 jck_after_login"><img src = "./images/mypageafter.png"></button>
                 <button id = "jck_loginbefore" class = "jck_menu3_item1 jck_before_login"><img src = "./images/login.png"><div id = "jck_login_text" class="jck_before_login"></div></button>
@@ -267,22 +266,19 @@ body {
             <div class = "jck_content_container_div1">
             </div>
             <div class = "jck_content_container_div2">
-               <div id="JWJmainsection" style="both:clear;">
-
-				<div id="JWJpagetitle" style="text-align:center;">
-					<h1>프로필 수정</h1>
-				</div>
+                <div id="JWJmainsection" style="clear : both;">
+		<div id="JWJpagetitle" style="text-align : center;">
+			<h1>프로필 수정</h1>
+		</div>
 		<div id="JWJprofileform">
 			<form action="./UpdateProfile.do" method="post" name="form1">
 				<%
-						String id = (String) session.getAttribute("userID");
-
-						MemberDAO dao = new MemberDAO();
-						List<MemberVO> mVoList = dao.ShowProfile(id);
-						MemberVO mvo = mVoList.get(0);
+					String id = (String) session.getAttribute("userID");
+					MemberService dao = new MemberService();
+					List<MemberVO> mVoList = dao.ShowProfile(id);
+					MemberVO mvo = mVoList.get(0);
 				%>
-				<fieldset
-					style="border: 0; border-top: 1px solid gray; border-bottom: 1px solid gray;">
+				<fieldset style="border: 0; border-top: 1px solid gray; border-bottom: 1px solid gray;">
 					<legend style="text-align: center;">&nbsp;&nbsp;회&nbsp;원&nbsp;정&nbsp;보&nbsp;&nbsp;</legend>
 					<table id="JWJprofiletable">
 						<tbody>
@@ -290,71 +286,60 @@ body {
 								<td colspan="3">&nbsp;</td>
 							</tr>
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">이 름</td>
-								<td><input type="text" id="username" name="username"
-									readonly required value="<%=mvo.getM_name()%>" style="border:none;"></td>
-								<td></td>
+								<td><input type="text" id="username" name="username" readonly required value="<%=mvo.getM_name()%>" style="border: 0;"></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">회원 ID</td>
-								<td><input type="text" id="id" name="id" readonly
-									value="<%=mvo.getM_id()%>" style="border:none;"></td>
+								<td><input type="text" id="id" name="id" readonly value="<%=mvo.getM_id()%>" style="border: none;"></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">비밀번호</td>
-								<td><input type="password" name="userpwd" id="userpwd"
-									value="<%=mvo.getM_pw()%>" required>&nbsp; <b
-									style="color: gray; font-size: 8pt;">첫글자 대문자 / 대소문자,_ 사용 /
-										6~12글자</b></td>
+								<td><input type="password" name="userpwd" id="userpwd" value="<%=mvo.getM_pw()%>" required>&nbsp; <b style="color: gray; font-size: 8pt;">첫글자 대문자 / 대소문자,_ 사용 / 6~12글자</b></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">비밀번호 확인</td>
-								<td><input type="password" name="userpwd2" id="userpwd2"
-									required>&nbsp;<b id="pwchkmsg"
-									style="display: inline-block;">* 비밀번호를 입력해주세요.</b> <b
-									id="pwchkmsg1" style="display: none;">* 비밀번호를 확인해주세요.</b> <b
-									id="pwchkmsg2" style="display: none;">* 확인 되었습니다.</b></td>
+								<td><input type="password" name="userpwd2" id="userpwd2" required>&nbsp;
+								<b id="pwchkmsg" style="display: inline-block;">* 비밀번호를 입력해주세요.</b> 
+								<b id="pwchkmsg1" style="display: none;">* 비밀번호를 확인해주세요.</b> 
+								<b id="pwchkmsg2" style="display: none;">* 확인 되었습니다.</b></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">휴대전화</td>
-								<td><input type="text" id="userphone" name="userphone"
-									value="<%=mvo.getM_phone()%>" required></td>
+								<td><input type="text" id="userphone" name="userphone" value="<%=mvo.getM_phone()%>" required></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">이메일</td>
-								<td><input type="email" id="email" name="email" readonly
-									value="<%=mvo.getM_email()%>" required>&nbsp;<input
-									type="button" value="중복체크" onclick="emailDupCheck()"></td>
+								<td><input type="email" id="email" name="email" readonly value="<%=mvo.getM_email()%>" required>&nbsp;<input type="button" value="중복체크" onclick="emailDupCheck()"></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">생년월일</td>
-								<td><input type="date" id="userbirth" name="userbirth"
-									style="width: 56%;" value="<%=mvo.getM_birth()%>" required></td>
+								<td><input type="date" id="userbirth" name="userbirth" style="width: 56%;" value="<%=mvo.getM_birth()%>" required></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
@@ -364,64 +349,52 @@ body {
 							</tr>
 							<%
 								String addr = mvo.getM_address();
-							String[] arr = addr.split("_");
+								String[] arr = addr.split("_");
 							%>
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">주소</td>
-								<td><input type="text" id="sample4_postcode" onclick="sample4_execDaumPostcode()"
-									placeholder="우편번호" class = "jck_join_input"> <input type="button"
-									onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-									<input type="text" id="sample4_roadAddress"
-									name="roadAddress" placeholder="도로명주소"
-									value="<%=arr[0]%>"  class = "jck_join_input"><br> <input type="text"
-									id="sample4_jibunAddress" placeholder="지번주소"  class = "jck_join_input"> <span
-									id="guide" style="color: #999; display: none"></span> <br>
-									<input type="text"
-									id="sample4_detailAddress" name="detailAddress"
-									placeholder="상세주소를 입력해주세요." value="<%=arr[1]%>"  class = "jck_join_input"></td>
+								<td>
+								<input type="text" id="sample4_postcode" onclick="sample4_execDaumPostcode()" placeholder="우편번호" class="jck_join_input">
+								<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+								<input type="text" id="sample4_roadAddress" name="roadAddress" placeholder="도로명주소" value="<%=arr[0]%>" class="jck_join_input"><br>
+								<input type="text" id="sample4_jibunAddress" placeholder="지번주소" class="jck_join_input">
+								<span id="guide" style="color: #999; display: none"></span> <br>
+								 <input type="text" id="sample4_detailAddress" name="detailAddress" placeholder="상세주소를 입력해주세요." value="<%=arr[1]%>" class="jck_join_input"></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">성별</td>
-								<td><input type="radio" name="wUserGender" id="man"
-									value="M" <%if (mvo.getM_gender() == 'M') {%> checked="checked"
-									<%}%>>남성&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
-									name="wUserGender" id="woman" value="F"
-									<%if (mvo.getM_gender() == 'F') {%> checked="checked" <%}%>>여성</td>
+								<td><input type="radio" name="wUserGender" id="man" value="M" <%if (mvo.getM_gender() == 'M') {%> checked="checked" <%}%>>남성&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="wUserGender" id="woman" value="F" <%if (mvo.getM_gender() == 'F') {%> checked="checked" <%}%>>여성</td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">프로필 이미지</td>
-								<td><input type="text" id="userimg" name="userimg"
-									value="<%=mvo.getM_image()%>">&nbsp;&nbsp;<input
-									type="button" id="imgbtn" name="imgbtn" value="파일첨부"> <br>
-								<img src="./profileIMG/<%=mvo.getM_image()%>"></td>
+								<td><input type="text" id="userimg" name="userimg" value="<%=mvo.getM_image()%>">&nbsp;&nbsp;<input type="button" id="imgbtn" name="imgbtn" value="파일첨부"> <br>
+									<img src="./profileIMG/<%=mvo.getM_image()%>" id = "profileIMGGG"></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
 
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">닉네임</td>
-								<td><input type="text" id="usernickname"
-									name="usernickname" readonly value="<%=mvo.getM_nick()%>" required style="border:none;"></td>
+								<td><input type="text" id="usernickname" name="usernickname" readonly value="<%=mvo.getM_nick()%>" required style="border: none;"></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
 							<tr class="register" height="30">
-								<td width="5%" align="center">*</td>
+								<td width="5%">*</td>
 								<td width="30%">프로필 소개글</td>
-								<td><textarea rows="2" cols="40" style="resize: none;"
-										id="profileintro" name="profileintro"><%=mvo.getM_intro()%></textarea></td>
+								<td><textarea rows="2" cols="40" style="resize: none;" id="profileintro" name="profileintro"><%=mvo.getM_intro()%></textarea></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
@@ -430,9 +403,7 @@ body {
 					</table>
 				</fieldset>
 				<div id="formbtn">
-					<br> <input class = "jck_join_button" type="submit" id="btnSubmit" value="수정완료">&nbsp;&nbsp;&nbsp;&nbsp;<input
-						class = "jck_join_button" type="button" id="btnback" value="취소"
-						onclick="location.href='./MyPage.jsp'">
+					<br> <input class="jck_join_button" type="submit" id="btnSubmit" value="수정완료">&nbsp;&nbsp;&nbsp;&nbsp;<input class="jck_join_button" type="button" id="btnback" value="취소" onclick="location.href=\'./MyPage.jsp\'">
 				</div>
 			</form>
 		</div>
@@ -440,37 +411,44 @@ body {
             </div>
             <div class = "jck_content_container_div3 jck_nav_container">
                       <%
-				      /* ProductService pdao = new ProductService();
-                       */
+				      ProductService pdao = new ProductService();
+                      
                       String p_1 = "0";
                       String p_2 = "0";
                       String p_3 = "0";
                       
                       if(session.getAttribute("img1") != null)
-				      	p_1 = (String) session.getAttribute("img1");
-                      if(session.getAttribute("img1") != null)
-                      	p_2 = (String) session.getAttribute("img2");
-                      if(session.getAttribute("img1") != null)
-                      	p_3 = (String) session.getAttribute("img3");
+  				      	p_1 = String.valueOf(session.getAttribute("img1"));
+                        if(session.getAttribute("img2") != null)
+                        	p_2 = String.valueOf(session.getAttribute("img2"));
+                        if(session.getAttribute("img3") != null)
+                        	p_3 = String.valueOf(session.getAttribute("img3"));
 				      
                       String p_img1 = "logoimg.png";
                       String p_img2 = "logoimg.png";
                       String p_img3 = "logoimg.png";
-                      /* 
+                      
                       if(!p_1.equals("0"))
 				      	p_img1 = pdao.selectHistory(p_1);
                       if(!p_2.equals("0"))
                       	p_img2 = pdao.selectHistory(p_2);
                       if(!p_3.equals("0"))
-                      	p_img3 = pdao.selectHistory(p_3); */
+                      	p_img3 = pdao.selectHistory(p_3);
 				      %>
-		      
+		      <div id="JWJhistorylist">
+		         <aside>
+		            <h3 style="color: white; background: #B97A57; text-align : center;">최근 본 상품</h3>
+		            <a href=""><img src="./upload/<%=p_img1 %>"></a> <a href=""><img src="./upload/<%=p_img2 %>"></a>
+		            <a href=""><img src="./upload/<%=p_img3 %>"></a>
+		         </aside>
+		      </div>
             </div>
         </div>
-        <div class = "jck_footer_container">
-            <div><a href = "#">감자 마켓<br>회사 소개</a></div>
-            <div><a href = "#">개인 정보<br>취급 방침</a></div>
-            <div><a href = "#">위치기반 서비스<br>이용 약관</a></div>
+        <div class = "jck_footer_container" style = "text-align : center;">
+            <div style = "color : #CC8431;">상호 : 감자마켓 | 팀원 : 정창균, 정운진, 강대영, 금지운, 윤지혜, 임채린<br>
+주소 : 서울특별시 중구 남대문로 120 대일빌딩 2F, 3F<br>
+서비스 이용문의 : nothing1360@gmail.com | 서비스제휴문의 : nothing1360@gmail.com<br>
+Copyright © Potato-Market. All Rights Reserved.</div>
         </div>
     </div>
     
@@ -484,18 +462,18 @@ body {
         </div>
         <div class="jck_modal-body">
             <ul>
-            	<li>
-            		<p><a href = "#">&lt;홈페이지 소개&gt;</a></p>
-            	</li>
-            	<li>
-					<hr>
-            	</li>
+            	<%
+            		if(session.getAttribute("userID") != null){
+            	%>
             	<li>
             		<p><a href = "MyPage.jsp">&lt;마이 페이지&gt;</a></p>
             	</li>
             	<li>
             		<hr>
             	</li>
+            	<%
+            		}
+            	%>
             	<li>
             		<p><a href = "ProductgetCountCtl.do">&lt;상품 검색&gt;</a></p>
             		<ul>
@@ -527,7 +505,10 @@ body {
             </ul>
         </div>
         <div class="jck_modal-footer">
-          <h2>Potato Market</h2>
+          <div>상호 : 감자마켓 | 팀원 : 정창균, 정운진, 강대영, 금지운, 윤지혜, 임채린<br>
+주소 : 서울특별시 중구 남대문로 120 대일빌딩 2F, 3F<br>
+서비스 이용문의 : nothing1360@gmail.com | 서비스제휴문의 : nothing1360@gmail.com<br>
+Copyright © Potato-Market. All Rights Reserved.</div>
         </div>
       </div>
     </div>
@@ -612,20 +593,20 @@ body {
     	}else{
     %>
     	
-    var before = document.getElementsByClassName("jck_before_login");
-	for(var i = 0 ; i<before.length;i++){
-		before[i].style.display = "none";
-	}
-	var after = document.getElementsByClassName("jck_after_login");
-	for(var i = 0 ; i<after.length;i++){
-		after[i].style.display = "block";
-	}
-	var LOtext = document.getElementById("jck_logout_text");
-	LOtext.innerHTML = "로그아웃";
-	LOtext.style.color = "#CC8431";
-	LOtext.style.width = "100%";
-	LOtext.style.textAlign = "center";
-	LOtext.style.fontWeight = "bolder";
+	    	var before = document.getElementsByClassName("jck_before_login");
+			for(var i = 0 ; i<before.length;i++){
+				before[i].style.display = "none";
+			}
+			var after = document.getElementsByClassName("jck_after_login");
+			for(var i = 0 ; i<after.length;i++){
+				after[i].style.display = "block";
+			}
+			var LOtext = document.getElementById("jck_logout_text");
+    		LOtext.innerHTML = "로그아웃";
+    		LOtext.style.color = "#CC8431";
+    		LOtext.style.width = "100%";
+    		LOtext.style.textAlign = "center";
+    		LOtext.style.fontWeight = "bolder";
     <%	
     	}
     %>
@@ -634,17 +615,27 @@ body {
     	<script>
     	$(document).ready(function(){
     		$("#jck_mainpage_btn1").click(function(){
-    			location.href = "./MainPage.jsp";
+    			location.href = "./ProductMainPageGetCountCtl.do";
     		});
     		$("#jck_mainpage_btn2").click(function(){
-    			location.href = "./MainPage.jsp";
+    			location.href = "./ProductMainPageGetCountCtl.do";
     		});
     		$("#jck_mypagebefore").click(function(){
     			location.href = "./Login.jsp";
     		});
     		
     		$("#jck_mypageafter").click(function(){
-    			location.href = "./MyPage.jsp";
+    			<%if(userID != null){
+    				if(userID.equals("MasterPotato1")){
+    			%>
+    				location.href = "./AdminListViewCtl.do";
+    			<%
+    				}else{
+    			%>
+    				location.href = "./MyPage.jsp";
+    			<%
+    				}}
+    			%>
     		});
     		$("#jck_loginbefore").click(function(){
     			location.href = "./Login.jsp";
@@ -708,8 +699,6 @@ body {
 		%>
 			<script type="text/javascript">
 				$(document).ready(function(){
-					getUnread();
-					getInfiniteUnread();
 				});
 			</script>
 		<%

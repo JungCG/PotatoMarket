@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.CategoryDAO;
+import service.CategoryService;
 import vo.Category_FavorVO;
 
 /**
@@ -46,7 +46,7 @@ public class LikeList extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String m_id = (String) request.getSession().getAttribute("userID");
-		CategoryDAO cdao = new CategoryDAO();
+		CategoryService cdao = new CategoryService();
 		
 		List<Category_FavorVO> cVoList = cdao.showCname(m_id); // list에 뿌려줄 data를 다 받아왔음
 		
