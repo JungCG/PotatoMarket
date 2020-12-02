@@ -7,10 +7,6 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-    <%
-    	String ctx = request.getContextPath();
-    	String ctxPath = request.getContextPath();
-    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,12 +39,6 @@ display:none;
 		String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
-		}
-		if(userID == null){
-			session.setAttribute("messageType", "오류 메시지");
-			session.setAttribute("messageContent", "현재 로그인이 되어 있지 않습니다.");
-			response.sendRedirect("Login.jsp");
-			return;
 		}
 	%>
 	

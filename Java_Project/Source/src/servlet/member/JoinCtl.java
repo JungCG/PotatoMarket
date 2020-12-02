@@ -66,10 +66,7 @@ public class JoinCtl extends HttpServlet {
 			out.close();
 		} else {
 			ServletContext context = getServletContext();
-			String uploadPath = context.getRealPath(fileSavePath); 
-			
-			// aws
-//			String uploadPath = request.getSession().getServletContext().getRealPath(fileSavePath);
+			String uploadPath = request.getSession().getServletContext().getRealPath(fileSavePath);
 			
 			MultipartRequest multi = new MultipartRequest(request, uploadPath, uploadSizeLimit, encType, new DefaultFileRenamePolicy());
 
@@ -91,7 +88,11 @@ public class JoinCtl extends HttpServlet {
 
 			vo.setM_address(
 					multi.getParameter("sample4_roadAddress") + "_" + multi.getParameter("sample4_detailAddress"));
-
+			
+			if(multi.getParameter("sample4_roadAddress").equals("") || multi.getParameter("sample4_roadAddress") == null) {
+				request.getRequestDispatcher("Join.jsp").forward(request, response);
+			}
+			
 			String lchk1 = multi.getParameter("sample4_roadAddress").split(" ")[0];
 			String lchk2 = multi.getParameter("sample4_roadAddress").split(" ")[1];
 

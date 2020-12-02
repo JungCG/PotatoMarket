@@ -47,10 +47,10 @@ public class BoardContentModifyCtl extends HttpServlet {
 		int uploadSizeLimit = 10 * 1024 * 1024; 
 		String encType ="UTF-8"; 
 		ServletContext context = getServletContext();
-		String uploadPath = context.getRealPath(fileSavePath); 
+		String uploadPath = request.getSession().getServletContext().getRealPath(fileSavePath);
 		MultipartRequest multi = new MultipartRequest(request,uploadPath,uploadSizeLimit,encType,new DefaultFileRenamePolicy()); 
 		Enumeration files = multi.getFileNames();
-		realFolder = context.getRealPath(fileSavePath);
+		realFolder = request.getSession().getServletContext().getRealPath(fileSavePath);
 		int i = 1;
 		BoardService sv = new BoardService();
 		BaddVO vo = new BaddVO();
@@ -60,17 +60,6 @@ public class BoardContentModifyCtl extends HttpServlet {
 		if((!(multi.getParameter("img1")==null)||(!multi.getParameter("img1").equals("")))) {
 			vo.setBa_img1(multi.getParameter("img1"));
 			File file2 = new File("C:\\Java_gjw\\PotatoBoardMVC2\\WebContent\\boardupload\\"+multi.getParameter("img1"));  
-			//file2 는 폴더에 있는 파일을 삭제하려고 쓰는 경로입니다
-			if( file2.exists() ){
-				if(file2.delete()){
-				}
-				else{ 
-				} 
-				}else{ 
-				}
-
-			
-			
 			
 		} 
 		if((!(multi.getParameter("img2")==null)||(!multi.getParameter("img2").equals("")))){

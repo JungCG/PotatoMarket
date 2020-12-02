@@ -1,6 +1,6 @@
+<%@page import="service.BoardService"%>
 <%@page import="service.ProductService"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="dao.BoardDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="vo.BoardVO"%>
 <%@page import="java.util.List"%>
@@ -12,10 +12,6 @@
     pageEncoding="UTF-8"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-    <%
-    	String ctx = request.getContextPath();
-    	String ctxPath = request.getContextPath();
-    %>
 	
 <!DOCTYPE html>
 <html>
@@ -200,7 +196,7 @@ background-size: cover;
                   <div id="GJW-dat">
 
                      <%
-                        BoardDAO dao = new BoardDAO();
+                        BoardService dao = new BoardService();
                      int b_id = Integer.parseInt(request.getParameter("b_id"));
                      List<BoardVO> listdat = dao.getComment(b_id);
                      for (int i = 0; i < listdat.size(); i++) {
@@ -405,12 +401,30 @@ background-size: cover;
                       	p_img2 = pdao.selectHistory(p_2);
                       if(!p_3.equals("0"))
                       	p_img3 = pdao.selectHistory(p_3);
+                      
+                      String href1="#";
+                      String href2="#";
+                      String href3="#";
+                      
+                      if(!p_img1.equals("logoimg.png")){
+                    	  href1="./ProductContentCtl.do?p_id="+session.getAttribute("img1")+"&c_lid="+session.getAttribute("img1_c_lid")+"&m_id="+session.getAttribute("img1_m_id")+"&Likeresult="+session.getAttribute("img1_likeresult");
+                      }
+                      if(!p_img2.equals("logoimg.png")){
+                    	  href2="./ProductContentCtl.do?p_id="+session.getAttribute("img2")+"&c_lid="+session.getAttribute("img2_c_lid")+"&m_id="+session.getAttribute("img2_m_id")+"&Likeresult="+session.getAttribute("img2_likeresult");
+                      }
+                      if(!p_img3.equals("logoimg.png")){
+                    	  href3="./ProductContentCtl.do?p_id="+session.getAttribute("img3")+"&c_lid="+session.getAttribute("img3_c_lid")+"&m_id="+session.getAttribute("img3_m_id")+"&Likeresult="+session.getAttribute("img3_likeresult");
+                      }
 				      %>
 		      <div id="JWJhistorylist">
 		         <aside>
 		            <h3 style="color: white; background: #B97A57; text-align : center;">최근 본 상품</h3>
-		            <a href=""><img src="./upload/<%=p_img1 %>"></a> <a href=""><img src="./upload/<%=p_img2 %>"></a>
-		            <a href=""><img src="./upload/<%=p_img3 %>"></a>
+		            
+		            <a href="<%=href1%>"><img src="./upload/<%=p_img1 %>"></a>
+		            
+		            <a href="<%=href2%>"><img src="./upload/<%=p_img2 %>"></a>
+		            
+		            <a href="<%=href3%>"><img src="./upload/<%=p_img3 %>"></a>
 		         </aside>
 		      </div>
             </div>
@@ -518,16 +532,7 @@ Copyright © Potato-Market. All Rights Reserved.</div>
     </script>
     <script>
     var prevScrollpos = window.pageYOffset;
-    window.onscroll = function() {
-    var currentScrollPos = window.pageYOffset;
-      
-        if(window.innerWidth >= 900){
-            document.getElementById("JWJhistorylist").style.display = "block";
-        } else{
-        	document.getElementById("JWJhistorylist").style.display = "none";
-        }
-      prevScrollpos = currentScrollPos;
-    }
+    
     $(window).resize(function(){
             var currentScrollPos = window.pageYOffset;
       

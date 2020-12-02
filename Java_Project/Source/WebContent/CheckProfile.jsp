@@ -9,10 +9,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-    	String ctx = request.getContextPath();
-    	String ctxPath = request.getContextPath();
-    %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +17,7 @@
 		String userID = null;
 		String showuserID = null;
 		if(session.getAttribute("userID") != null){
-			showuserID = (String) session.getAttribute("userID");
+			userID = (String) session.getAttribute("userID");
 		}
 		if(session.getAttribute("ShowUserID") != null){
 			showuserID = (String) session.getAttribute("ShowUserID");
@@ -155,7 +152,7 @@
 					<div id="JWJprofile">
 						<hr id="divline">
 						<div id="JWJprofileimg" style="margin:10px 20px 30px 20px;">
-							<img src="./images/mypagebefore.png" id="profileimg"
+							<img src="./profileIMG/<%=mvo.getM_image() %>" id="profileimg"
 								class="profileimg">
 							<h2><%=mvo.getM_nick()%></h2>
 							<br> <input type="button" id="m_like" value="추천하기">&nbsp;&nbsp;&nbsp;
@@ -417,7 +414,7 @@ Copyright © Potato-Market. All Rights Reserved.</div>
 							});
 
 							$("#jck_mypageafter").click(function(){
-				    			<%if(userID != null){
+				    			<% if(userID != null){
 				    				if(userID.equals("MasterPotato1")){
 				    			%>
 				    				location.href = "./AdminListViewCtl.do";
@@ -426,7 +423,8 @@ Copyright © Potato-Market. All Rights Reserved.</div>
 				    			%>
 				    				location.href = "./MyPage.jsp";
 				    			<%
-				    				}}
+				    				}
+				    			}
 				    			%>
 				    		});
 							$("#jck_loginbefore").click(function() {

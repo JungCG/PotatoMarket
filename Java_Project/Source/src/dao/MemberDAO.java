@@ -26,7 +26,7 @@ public class MemberDAO {
 		try {
 			Context initContext1 = new InitialContext();
 			Context envContext1 = (Context) initContext1.lookup("java:/comp/env");
-			ds = (DataSource) envContext1.lookup("jdbc/potato"); 
+			ds = (DataSource) envContext1.lookup("jdbc/potatoRDS"); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -686,6 +686,7 @@ public class MemberDAO {
 					mvo.setM_like(rs.getInt("M_like"));
 					mvo.setM_reportcount(rs.getInt("M_reportcount"));
 					mvo.setM_sellamount(rs.getInt("m_sellamount"));
+					mvo.setM_image(rs.getString("m_image"));
 					mVoList.add(mvo);
 				}
 			} catch (SQLException e) {

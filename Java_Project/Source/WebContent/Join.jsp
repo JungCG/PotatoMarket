@@ -5,10 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <%
-    	String ctx = request.getContextPath();
-    	String ctxPath = request.getContextPath();
-    %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -203,7 +200,7 @@ table * {
             </div>
             <div class = "jck_content_container_div2">
                 <div id="JWJmainsection">
-					<form action="<%=ctx %>/JoinCtl.do" method="post" name="form1" id = "form1"
+					<form action = "JoinCtl.do" method="post" name="form1" id = "form1"
 						enctype="multipart/form-data">
 						<h1 id="top_title">
 							<b>회원가입</b>
@@ -249,8 +246,7 @@ table * {
 								<tr class="register" height="30">
 									<td width="5%" align="center">&nbsp;</td>
 									<td width="20%">&nbsp;</td>
-									<td><b style="color: gray; font-size: 8pt;">첫글자 대문자 /
-											대소문자, 숫자 사용 / 6~12글자</b></td>
+									<td><b style="color: gray; font-size: 8pt;">대소문자, 숫자 사용 / 6~12글자</b></td>
 								</tr>
 								<tr>
 									<td colspan="3">&nbsp;</td>
@@ -414,12 +410,30 @@ table * {
                       	p_img2 = pdao.selectHistory(p_2);
                       if(!p_3.equals("0"))
                       	p_img3 = pdao.selectHistory(p_3);
+                      
+                      String href1="#";
+                      String href2="#";
+                      String href3="#";
+                      
+                      if(!p_img1.equals("logoimg.png")){
+                    	  href1="./ProductContentCtl.do?p_id="+session.getAttribute("img1")+"&c_lid="+session.getAttribute("img1_c_lid")+"&m_id="+session.getAttribute("img1_m_id")+"&Likeresult="+session.getAttribute("img1_likeresult");
+                      }
+                      if(!p_img2.equals("logoimg.png")){
+                    	  href2="./ProductContentCtl.do?p_id="+session.getAttribute("img2")+"&c_lid="+session.getAttribute("img2_c_lid")+"&m_id="+session.getAttribute("img2_m_id")+"&Likeresult="+session.getAttribute("img2_likeresult");
+                      }
+                      if(!p_img3.equals("logoimg.png")){
+                    	  href3="./ProductContentCtl.do?p_id="+session.getAttribute("img3")+"&c_lid="+session.getAttribute("img3_c_lid")+"&m_id="+session.getAttribute("img3_m_id")+"&Likeresult="+session.getAttribute("img3_likeresult");
+                      }
 				      %>
 		      <div id="JWJhistorylist">
 		         <aside>
 		            <h3 style="color: white; background: #B97A57; text-align : center;">최근 본 상품</h3>
-		            <a href=""><img src="./upload/<%=p_img1 %>"></a> <a href=""><img src="./upload/<%=p_img2 %>"></a>
-		            <a href=""><img src="./upload/<%=p_img3 %>"></a>
+		            
+		            <a href="<%=href1%>"><img src="./upload/<%=p_img1 %>"></a>
+		            
+		            <a href="<%=href2%>"><img src="./upload/<%=p_img2 %>"></a>
+		            
+		            <a href="<%=href3%>"><img src="./upload/<%=p_img3 %>"></a>
 		         </aside>
 		      </div>
             </div>
@@ -457,11 +471,11 @@ Copyright © Potato-Market. All Rights Reserved.</div>
             	<li>
             		<p><a href = "ProductgetCountCtl.do">&lt;상품 검색&gt;</a></p>
             		<ul>
-            			<li><a href = "<%=ctxPath%>/servlet/product/ProductCategoryCtl.do?c_lid=1">의류</a></li>
-            			<li><a href = "<%=ctxPath%>/servlet/product/ProductCategoryCtl.do?c_lid=2">가전제품</a></li>
-            			<li><a href = "<%=ctxPath%>/servlet/product/ProductCategoryCtl.do?c_lid=3">뷰티</a></li>
-            			<li><a href = "<%=ctxPath%>/servlet/product/ProductCategoryCtl.do?c_lid=4">아동용품</a></li>
-            			<li><a href = "<%=ctxPath%>/servlet/product/ProductCategoryCtl.do?c_lid=5">기타</a></li>
+            			<li><a href = "ProductCategoryCtl.do?c_lid=1">의류</a></li>
+            			<li><a href = "ProductCategoryCtl.do?c_lid=2">가전제품</a></li>
+            			<li><a href = "ProductCategoryCtl.do?c_lid=3">뷰티</a></li>
+            			<li><a href = "ProductCategoryCtl.do?c_lid=4">아동용품</a></li>
+            			<li><a href = "ProductCategoryCtl.do?c_lid=5">기타</a></li>
             		</ul>
             	</li>
             	<li>
@@ -622,7 +636,10 @@ Copyright © Potato-Market. All Rights Reserved.</div>
     			location.href = "./LogoutCtl.do";
     		});
     		$("#SearchButton").click(function(){
-    			location.href = "<%=ctxPath%>/servlet/product/ProductgetSearchCountCtl.do?SearchFilter="+$("#SearchFilter").val()+"&SearchStr="+$("#SearchStr").val();
+    			location.href = "./ProductgetSearchCountCtl.do?SearchFilter="+$("#SearchFilter").val()+"&SearchStr="+$("#SearchStr").val();
+    		});
+    		$("#jck_chatbox").click(function(){
+    			location.href="./box.jsp";
     		});
     	});
     		
@@ -867,7 +884,7 @@ Copyright © Potato-Market. All Rights Reserved.</div>
 			}
 		}
 
-		$("form1").submit(function() {
+		$("#form1").submit(function() {
 							var IOK = $("#idOk").val();
 							if (IOK == 'n') {
 								alert("ID 변경이 필요합니다.");
@@ -883,15 +900,26 @@ Copyright © Potato-Market. All Rights Reserved.</div>
 								$("#email").focus();
 								return false;
 							}
+							
+							var eemail = $('#email').val();
+							var emailreg1 = /[@]{1}[A-Za-z0-9]{1,}[.]{1}[A-Za-z0-9]{1,}$/;
+							
+							if(eemail != ""){
+								if(!emailreg1.test(eemail)){
+									alert("이메일 형식이 옳지 않습니다.");
+									$("#email").val("");
+									return false;
+								}
+							}
 
 							var pwd1 = $("#userpwd").val().trim();
-							var reg1 = /^[A-Z][A-Za-z0-9_]{5,11}$/;
+							var reg1 = /^[A-Za-z0-9_]{6,12}$/;
 							var reg2 = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$/;
 							/* ?= 있는지 .*길이에 상관없이 임의의 문자열 숫자 */
 
 							if (pwd1 != "") {
 								if (!reg1.test(pwd1)) {
-									alert("조건에 맞게 입력해주세요. [비밀번호 첫글자는 대문자, 6글자이상, 12글자 이하, 숫자, 영문자까지 입력이 가능.]");
+									alert("조건에 맞게 입력해주세요. [비밀번호는 대문자, 6글자이상, 12글자 이하, 숫자, 영문자까지 입력이 가능.]");
 									$("#userpwd").val("");
 									return false;
 								} else if (!reg2.test(pwd1)) {
@@ -910,11 +938,10 @@ Copyright © Potato-Market. All Rights Reserved.</div>
 							}
 
 							var a = $("#userphone").val().trim();
-							var regVal = /[0][0-9]{1,2}-[0-9]{3,4}-[0-9]{4,4}/;
+							var regVal = /^[0][0-9]{1,2}[-]{1}[0-9]{3,4}[-]{1}[0-9]{4}$/;
 							if (!regVal.test(a)) {
 								alert("전화번호 형식에 맞춰 작성해 주세요.(010-0000-0000)");
 								$("#userphone").val('').focus();
-
 								return false;
 							}
 
@@ -926,6 +953,18 @@ Copyright © Potato-Market. All Rights Reserved.</div>
 
 								return false;
 
+							}
+							
+							var addch = $("#sample4_roadAddress").val().trim();
+							if(addch == null || addch == "" || addch == "도로명주소"){
+								alert("주소를 입력해주세요.");
+								return false;
+							}
+							
+							var deaddch = $("#sample4_detailAddress").val().trim();
+							if(deaddch == null || deaddch == "" || deaddch == "상세주소를 입력해주세요."){
+								alert("상세 주소를 입력해주세요.");
+								return false;
 							}
 						});
 	</script>

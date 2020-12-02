@@ -76,11 +76,19 @@ public class ProductSelectLikeCtl extends HttpServlet {
 		int prePage = currentPage -1;
 		int nextPage = currentPage +1;
 		
-		if(prePage<1) {
-			prePage = startPage;
-		}else if(nextPage > endPage) {
-			nextPage = endPage;
-		}
+		int lastPage = 0;
+		   
+		   if(bCount%3==0) { //페이지 딱 떨어질 떄
+		      lastPage = bCount/3;
+		   }else if(bCount%3>0) {
+		      lastPage = (bCount/3) + 1;
+		   }
+		   
+		   if(nextPage > lastPage) {
+		      nextPage = lastPage;
+		   }else if(prePage < 1) {
+		      prePage = 1;
+		   }
 		
 		
 		

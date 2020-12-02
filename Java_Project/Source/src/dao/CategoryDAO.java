@@ -25,7 +25,7 @@ public class CategoryDAO {
 		try {
 			Context initContext1 = new InitialContext();
 			Context envContext1 = (Context) initContext1.lookup("java:/comp/env");
-			ds = (DataSource) envContext1.lookup("jdbc/potato");
+			ds = (DataSource) envContext1.lookup("jdbc/potatoRDS");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

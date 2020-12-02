@@ -5,7 +5,7 @@
 <head>
 
 <script type="text/javascript"
-   src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bb74b1c432c6717d09c3677341bf1ead"></script>
+   src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d74127830388b733af72f318db6754cb"></script>
 <script
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -62,7 +62,7 @@ color:black;
 
 // 지도에 폴리곤으로 표시할 영역데이터 배열입니다 
 var areas = [
-    {name:'경상남도',
+    {name:'경남',
        path: new kakao.maps.LatLng(35.432917, 128.176628),
        size:25000,
        idx:28,
@@ -70,7 +70,7 @@ var areas = [
        col2:'powderblue',
        res:0,
     },
-    {name:'전라남도',
+    {name:'전남',
           path: new kakao.maps.LatLng(34.868813, 126.980192),
        size:25000,
        idx:168,
@@ -79,7 +79,7 @@ var areas = [
        res:0,
 
     },
-    {name:'경상북도',
+    {name:'경북',
        size:25000,
           path: new kakao.maps.LatLng(36.377534, 128.898851),
           idx:29,
@@ -88,7 +88,7 @@ var areas = [
            res:0,
 
     },
-    {name:'충청남도',
+    {name:'충남',
        size:25000,
           path: new kakao.maps.LatLng(36.738892, 126.797291),
           idx:32,
@@ -97,7 +97,7 @@ var areas = [
          res:0,
 
     },
-    {name:'충청북도',
+    {name:'충북',
        size:25000,
           path: new kakao.maps.LatLng(37.006470, 127.693667),
           idx:33,
@@ -106,7 +106,7 @@ var areas = [
          res:0,
 
     },
-    {name:'강원도',
+    {name:'강원',
        size:25000,
           path: new kakao.maps.LatLng(37.758513, 128.071406),
           idx:26,
@@ -115,7 +115,7 @@ var areas = [
          res:0,
 
     },
-    {name:'전라북도',
+    {name:'전북',
        size:25000,
           path: new kakao.maps.LatLng(35.730343, 127.159324),
           idx:31,
@@ -124,7 +124,7 @@ var areas = [
          res:0,
 
     },
-    {name:'경기도',
+    {name:'경기',
        size:25000,
         value:1,
           path: new kakao.maps.LatLng(37.428343, 127.507843),
@@ -133,7 +133,7 @@ var areas = [
            res:0,
 
     },
-   {name:'제주도',
+   {name:'제주',
        size:25000,
        path:new kakao.maps.LatLng(33.386426, 126.512128),
        value:1,

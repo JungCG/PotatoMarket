@@ -28,7 +28,7 @@ public class BoardDAO{
 		try {
 			Context iniCtx = new InitialContext();
 			Context envCtx = (Context) iniCtx.lookup("java:/comp/env");
-			ds = (DataSource) envCtx.lookup("jdbc/potato");
+			ds = (DataSource) envCtx.lookup("jdbc/potatoRDS");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

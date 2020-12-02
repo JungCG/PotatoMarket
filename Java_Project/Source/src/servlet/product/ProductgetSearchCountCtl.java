@@ -94,11 +94,21 @@ public class ProductgetSearchCountCtl extends HttpServlet {
 		int prePage = currentPage -1;
 		int nextPage = currentPage +1;
 		
-		if(prePage<1) {
-			prePage = startPage;
-		}else if(nextPage > endPage) {
-			nextPage = endPage;
-		}
+		int lastPage = 0;
+	      
+	      if(bCount%9==0) {
+	         lastPage = bCount/9;
+	      }else if(bCount%9>0) {
+	         lastPage = (bCount/9) + 1;
+	      }
+	      
+	      if(nextPage > lastPage) {
+	         nextPage = lastPage;
+	      }else if(prePage < 1) {
+	         prePage = 1;
+	      }
+		
+		
 		
 		List<ProductVO> list = pservice.getProductByPage(startRnum, endRnum, map);
 		

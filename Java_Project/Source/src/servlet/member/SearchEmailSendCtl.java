@@ -81,9 +81,9 @@ public class SearchEmailSendCtl extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		String host = "http://localhost:8090/Member_MVC2/";
+		String host = "http://www.potato-market.com:8090/";
 		// 개인 이메일 작성
-		String from = "이메일 주소";
+		String from = "보내는 사람 이메일 주소";
 		String to = service.getUserEmail(userID);
 		String subject = "[감자마켓] 임시 비밀번호가 담긴 메일입니다.";
 		

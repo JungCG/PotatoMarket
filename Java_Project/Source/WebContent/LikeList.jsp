@@ -1,7 +1,7 @@
+<%@page import="service.MemberService"%>
 <%@page import="service.ProductService"%>
 <%@page import="vo.MemberVO"%>
 <%@page import="java.util.List"%>
-<%@page import="dao.MemberDAO"%>
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
 <link rel="stylesheet" href="css/jck_nav.css">
@@ -9,10 +9,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-    	String ctx = request.getContextPath();
-    	String ctxPath = request.getContextPath();
-    %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,12 +17,6 @@
 		String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
-		}
-		if(userID == null){
-			session.setAttribute("messageType", "오류 메시지");
-			session.setAttribute("messageContent", "현재 로그인이 되어 있지 않습니다.");
-			response.sendRedirect("Login.jsp");
-			return;
 		}
 	%>
 <meta name="msapplication-TileColor" content="#da532c">
@@ -189,7 +180,7 @@ margin-top : 5vh;
 		<%
 		String id = (String) session.getAttribute("userID");
 
-		MemberDAO dao = new MemberDAO();
+		MemberService dao = new MemberService();
 		List<MemberVO> mVoList = dao.ShowProfile(id);
 		MemberVO mvo = mVoList.get(0);
 		%>
@@ -492,6 +483,7 @@ Copyright © Potato-Market. All Rights Reserved.</div>
 		})
 	</script>
 	<script>
+	
 		$(document)
 				.ready(
 						function() {
@@ -529,6 +521,22 @@ Copyright © Potato-Market. All Rights Reserved.</div>
 				    		});
 				    		$("#jck_chatbox").click(function(){
 				    			location.href="./box.jsp";
+				    		});
+				    		
+				    		$("#frm").submit(function(){
+				    			var mn1 = $("#mainmenu").val();
+				    			var mn2 = $("#submenu").val();
+				    			
+				    			if(mn1 == 'none' || mn1 == null){
+				    				alert("대분류 선택 필요");
+				    				return false;
+				    			}
+				    			
+				    			if(mn2 == 'none' || mn2 == '0'){
+				    				alert("소분류 선택 필요");
+				    				return false;
+				    			}
+				    			
 				    		});
 						});
 	</script>

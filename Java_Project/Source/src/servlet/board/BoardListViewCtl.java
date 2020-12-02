@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.BoardDAO;
 import service.BoardService;
 import vo.BoardVO;
 
@@ -43,7 +42,7 @@ public class BoardListViewCtl extends HttpServlet {
 		String select = request.getParameter("select");
 		List<BoardVO> list = new ArrayList<BoardVO>();
 		BoardService sv = new BoardService();
-		BoardDAO dao = new BoardDAO();
+		BoardService dao = new BoardService();
 		int bCount = 0;
 		if(b_type==null) {
 			b_type ="G";

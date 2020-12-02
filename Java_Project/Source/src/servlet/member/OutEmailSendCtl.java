@@ -74,9 +74,9 @@ PrintWriter script = response.getWriter();
 			e.printStackTrace();
 		}
 		
-		String host = "http://localhost:8090/Member_MVC2/";
+		String host = "http://www.potato-market.com:8090/";
 		// 개인 이메일 작성
-		String from = "이메일 주소";
+		String from = "보내는 사람 이메일 주소";
 		String to = service.getUserEmail(userID);
 		String subject = "[감자마켓] 감자마켓 운영자입니다.";
 		

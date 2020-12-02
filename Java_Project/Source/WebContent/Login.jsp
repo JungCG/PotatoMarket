@@ -4,10 +4,7 @@
 <link rel = "stylesheet" href = "css/jck_nav.css">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%
-    	String ctx = request.getContextPath();
-    	String ctxPath = request.getContextPath();
-    %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -310,12 +307,30 @@ input {
                       	p_img2 = pdao.selectHistory(p_2);
                       if(!p_3.equals("0"))
                       	p_img3 = pdao.selectHistory(p_3);
+                      
+                      String href1="#";
+                      String href2="#";
+                      String href3="#";
+                      
+                      if(!p_img1.equals("logoimg.png")){
+                    	  href1="./ProductContentCtl.do?p_id="+session.getAttribute("img1")+"&c_lid="+session.getAttribute("img1_c_lid")+"&m_id="+session.getAttribute("img1_m_id")+"&Likeresult="+session.getAttribute("img1_likeresult");
+                      }
+                      if(!p_img2.equals("logoimg.png")){
+                    	  href2="./ProductContentCtl.do?p_id="+session.getAttribute("img2")+"&c_lid="+session.getAttribute("img2_c_lid")+"&m_id="+session.getAttribute("img2_m_id")+"&Likeresult="+session.getAttribute("img2_likeresult");
+                      }
+                      if(!p_img3.equals("logoimg.png")){
+                    	  href3="./ProductContentCtl.do?p_id="+session.getAttribute("img3")+"&c_lid="+session.getAttribute("img3_c_lid")+"&m_id="+session.getAttribute("img3_m_id")+"&Likeresult="+session.getAttribute("img3_likeresult");
+                      }
 				      %>
 		      <div id="JWJhistorylist">
 		         <aside>
 		            <h3 style="color: white; background: #B97A57; text-align : center;">최근 본 상품</h3>
-		            <a href=""><img src="./upload/<%=p_img1 %>"></a> <a href=""><img src="./upload/<%=p_img2 %>"></a>
-		            <a href=""><img src="./upload/<%=p_img3 %>"></a>
+		            
+		            <a href="<%=href1%>"><img src="./upload/<%=p_img1 %>"></a>
+		            
+		            <a href="<%=href2%>"><img src="./upload/<%=p_img2 %>"></a>
+		            
+		            <a href="<%=href3%>"><img src="./upload/<%=p_img3 %>"></a>
 		         </aside>
 		      </div>
             </div>
@@ -353,11 +368,11 @@ Copyright © Potato-Market. All Rights Reserved.</div>
             	<li>
             		<p><a href = "ProductgetCountCtl.do">&lt;상품 검색&gt;</a></p>
             		<ul>
-            			<li><a href = "<%=ctxPath%>/servlet/product/ProductCategoryCtl.do?c_lid=1">의류</a></li>
-            			<li><a href = "<%=ctxPath%>/servlet/product/ProductCategoryCtl.do?c_lid=2">가전제품</a></li>
-            			<li><a href = "<%=ctxPath%>/servlet/product/ProductCategoryCtl.do?c_lid=3">뷰티</a></li>
-            			<li><a href = "<%=ctxPath%>/servlet/product/ProductCategoryCtl.do?c_lid=4">아동용품</a></li>
-            			<li><a href = "<%=ctxPath%>/servlet/product/ProductCategoryCtl.do?c_lid=5">기타</a></li>
+            			<li><a href = "ProductCategoryCtl.do?c_lid=1">의류</a></li>
+            			<li><a href = "ProductCategoryCtl.do?c_lid=2">가전제품</a></li>
+            			<li><a href = "ProductCategoryCtl.do?c_lid=3">뷰티</a></li>
+            			<li><a href = "ProductCategoryCtl.do?c_lid=4">아동용품</a></li>
+            			<li><a href = "ProductCategoryCtl.do?c_lid=5">기타</a></li>
             		</ul>
             	</li>
             	<li>
@@ -528,7 +543,10 @@ Copyright © Potato-Market. All Rights Reserved.</div>
     			location.href = "./LogoutCtl.do";
     		});
     		$("#SearchButton").click(function(){
-    			location.href = "<%=ctxPath%>/servlet/product/ProductgetSearchCountCtl.do?SearchFilter="+$("#SearchFilter").val()+"&SearchStr="+$("#SearchStr").val();
+    			location.href = "./ProductgetSearchCountCtl.do?SearchFilter="+$("#SearchFilter").val()+"&SearchStr="+$("#SearchStr").val();
+    		});
+    		$("#jck_chatbox").click(function(){
+    			location.href="./box.jsp";
     		});
     		$("#search_id").click(function(){
 				location.href = "IdPwSearch.jsp";

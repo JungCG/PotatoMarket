@@ -8,10 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<%
-    	String ctx = request.getContextPath();
-    	String ctxPath = request.getContextPath();
-    %>
+
 <html>
 <head>
 
@@ -188,7 +185,7 @@ window.onload = function(){
 						</c:forEach>
 					</c:if>
 					<div id="ICR_pageNum" style="margin: 0; display: inline-block;">
-						<c:if test="${bCount gt 0 }">
+						<c:if test="${bCount gt 9 }">
 							<a href="ProductgetSearchCountCtl.do?SearchFilter=${SearchFilter2}&SearchStr=${SearchStr }&pageNum=${prePage}">[이전]</a>
 							<c:forEach begin="${startPage }" end="${endPage }" var="i">
 								<a href="ProductgetSearchCountCtl.do?SearchFilter=${SearchFilter2}&SearchStr=${SearchStr }&pageNum=<c:out value="${i }"/>">[<c:out value="${i }"/>]</a>
@@ -217,19 +214,37 @@ window.onload = function(){
                       String p_img1 = "logoimg.png";
                       String p_img2 = "logoimg.png";
                       String p_img3 = "logoimg.png";
-                       
+                      
                       if(!p_1.equals("0"))
 				      	p_img1 = pdao.selectHistory(p_1);
                       if(!p_2.equals("0"))
                       	p_img2 = pdao.selectHistory(p_2);
                       if(!p_3.equals("0"))
                       	p_img3 = pdao.selectHistory(p_3);
+                      
+                      String href1="#";
+                      String href2="#";
+                      String href3="#";
+                      
+                      if(!p_img1.equals("logoimg.png")){
+                    	  href1="./ProductContentCtl.do?p_id="+session.getAttribute("img1")+"&c_lid="+session.getAttribute("img1_c_lid")+"&m_id="+session.getAttribute("img1_m_id")+"&Likeresult="+session.getAttribute("img1_likeresult");
+                      }
+                      if(!p_img2.equals("logoimg.png")){
+                    	  href2="./ProductContentCtl.do?p_id="+session.getAttribute("img2")+"&c_lid="+session.getAttribute("img2_c_lid")+"&m_id="+session.getAttribute("img2_m_id")+"&Likeresult="+session.getAttribute("img2_likeresult");
+                      }
+                      if(!p_img3.equals("logoimg.png")){
+                    	  href3="./ProductContentCtl.do?p_id="+session.getAttribute("img3")+"&c_lid="+session.getAttribute("img3_c_lid")+"&m_id="+session.getAttribute("img3_m_id")+"&Likeresult="+session.getAttribute("img3_likeresult");
+                      }
 				      %>
 		      <div id="JWJhistorylist">
 		         <aside>
 		            <h3 style="color: white; background: #B97A57; text-align : center;">최근 본 상품</h3>
-		            <a href=""><img src="./upload/<%=p_img1 %>"></a> <a href=""><img src="./upload/<%=p_img2 %>"></a>
-		            <a href=""><img src="./upload/<%=p_img3 %>"></a>
+		            
+		            <a href="<%=href1%>"><img src="./upload/<%=p_img1 %>"></a>
+		            
+		            <a href="<%=href2%>"><img src="./upload/<%=p_img2 %>"></a>
+		            
+		            <a href="<%=href3%>"><img src="./upload/<%=p_img3 %>"></a>
 		         </aside>
 		      </div>
             </div>

@@ -1,3 +1,7 @@
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <link rel ="stylesheet" href = "css/GJW-avgchart.css">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
@@ -31,6 +35,20 @@ text-decoration: none;
 </style>
 </head>
 <body id="cvs">
+
+	<%
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		DateFormat df = new SimpleDateFormat("yyyy-MM");
+		
+		String dnowm0 = df.format(cal.getTime());
+		cal.add(Calendar.MONTH, -1);
+		String dnowm1 = df.format(cal.getTime());
+		cal.add(Calendar.MONTH, -1);
+		String dnowm2 = df.format(cal.getTime());
+		cal.add(Calendar.MONTH, -1);
+		String dnowm3 = df.format(cal.getTime());
+	%>
    <section>
       <div id="GJW-titlewrap">
          <h1 class="hhh"><a href ="ProductMainPageGetCountCtl.do">감자마켓 </a>시세조회</h1>
@@ -110,10 +128,10 @@ text-decoration: none;
                                                          type : 'line',
                                                          data : {
                                                             labels : [
-                                                                  '2020.08',
-                                                                  '2020.09',
-                                                                  '2020.10',
-                                                                  '2020.11' ],
+                                                                  '<%=dnowm3%>',
+                                                                  '<%=dnowm2%>',
+                                                                  '<%=dnowm1%>',
+                                                                  '<%=dnowm0%>'],
                                                             datasets : [ {
 
                                                                label : '검색 결과',

@@ -1,7 +1,6 @@
 <%@page import="service.ProductService"%>
 <%@page import="vo.MemberVO"%>
 <%@page import="java.util.List"%>
-<%@page import="dao.MemberDAO"%>
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
 <link rel="stylesheet" href="css/jck_nav.css">
@@ -9,10 +8,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-    	String ctx = request.getContextPath();
-    	String ctxPath = request.getContextPath();
-    %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,12 +16,6 @@
 		String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
-		}
-		if(userID == null){
-			session.setAttribute("messageType", "오류 메시지");
-			session.setAttribute("messageContent", "현재 로그인이 되어 있지 않습니다.");
-			response.sendRedirect("Login.jsp");
-			return;
 		}
 	%>
 
@@ -45,7 +35,7 @@
 	margin : 0;
 }
 .middle_input {
-	width: 9vw;
+	width: 6vw;
 	height: 35px;
 	color: white;
 	background-color: #CC8431;
@@ -200,7 +190,7 @@ margin-top : 5vh;
 	flex-basis: 0%;
 }
 .middle_input {
-	width: 9vw;
+	width: 8vw;
 	height: 35px;
 	color: white;
 	background-color: #CC8431;
@@ -311,7 +301,6 @@ margin-top : 5vh;
 								<tr>
 									<td width="10%">글 번호</td>
 									<td width="10%">등록 일자</td>
-									<td width="25%">상품 이미지</td>
 									<td width="25%">상품 제목</td>
 									<td width="10%">좋아요</td>
 									<td width="10%">프리미엄</td>
@@ -324,7 +313,6 @@ margin-top : 5vh;
 											<td id="p_id" style="display: none">${mvo.p_id }</td>
 											<td>${s.count}</td>
 											<td>${mvo.p_adddate}</td>
-											<td><a href=""><img src="./"></a></td>
 											<td>${mvo.p_name}</td>
 											<td>${mvo.p_like}</td>
 											<td>${mvo.p_premium}</td>
@@ -349,7 +337,7 @@ margin-top : 5vh;
 								</c:if>
 								<c:if test="${empty transactionList }">
 									<tr>
-										<td colspan="7" height=100 style="word-break: break-all;">판매한
+										<td colspan="6" height=100 style="word-break: break-all;">판매한
 											상품이 없습니다.</td>
 									</tr>
 								</c:if>
@@ -377,7 +365,7 @@ margin-top : 5vh;
 						var td = tr.children();
 
 						$("#p_id_value").val(td.eq(0).text());
-						$("#dealstatus_value").val(td.eq(8).text());
+						$("#dealstatus_value").val(td.eq(7).text());
 					});
 
 					$(".opencheck2").click(function() {
@@ -386,7 +374,7 @@ margin-top : 5vh;
 						var td = tr.children();
 
 						$("#p_id_value").val(td.eq(0).text());
-						$("#dealstatus_value").val(td.eq(8).text());
+						$("#dealstatus_value").val(td.eq(7).text());
 					});
 					
 				</script>
@@ -398,7 +386,7 @@ margin-top : 5vh;
 									name="buyerid" placeholder="구매자 아이디를 입력해주세요." required
 									style="width: 200px; margin-top: 10px;"><br> <br>
 								<input type="submit" value="확인"  class = "middle_input"> <input type="reset"
-									id="reset" value="취소"  class = "middle_input">
+									id="reset" value="취소"  class = "reset middle_input">
 							</div>
 							<div id="changeDealStatus2">
 								다음 상품을 판매완료를 취소하시겠습니까?<br> <input type="text"
@@ -482,7 +470,6 @@ margin-top : 5vh;
 							<tr>
 								<td width="10%">글 번호</td>
 								<td width="10%">등록 일자</td>
-								<td width="25%">상품 이미지</td>
 								<td width="25%">상품 제목</td>
 								<td width="10%">좋아요</td>
 								<td width="10%">프리미엄</td>
@@ -494,7 +481,6 @@ margin-top : 5vh;
 										<td id="p_id" style="display: none">${pvo.p_id }</td>
 										<td>${b.count}</td>
 										<td>${pvo.p_adddate}</td>
-										<td><a href=""><img src="./"></a></td>
 										<td>${pvo.p_name}</td>
 										<td>${pvo.p_like}</td>
 										<td>${pvo.p_premium}</td>
@@ -507,7 +493,7 @@ margin-top : 5vh;
 							</c:if>
 							<c:if test="${empty buyList }">
 								<tr>
-									<td colspan="7" height=100 style="word-break: break-all;">구매한
+									<td colspan="6" height=100 style="word-break: break-all;">구매한
 										상품이 없습니다.</td>
 								</tr>
 							</c:if>

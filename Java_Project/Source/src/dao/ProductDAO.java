@@ -28,7 +28,7 @@ public class ProductDAO {
 		try {
 			Context iniCtx = new InitialContext();
 			Context envCtx = (Context) iniCtx.lookup("java:/comp/env");
-			ds = (DataSource) envCtx.lookup("jdbc/potato");
+			ds = (DataSource) envCtx.lookup("jdbc/potatoRDS");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -200,7 +200,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 
 	public int getProductCount() {
 		int cnt = 0;
-		String sql = "select Count(*) from Product";
+		String sql = "select Count(*) from Product where p_dealstatus = 'N'";
 		try {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
@@ -218,7 +218,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 	
 	public int getLikeProductCount(String m_id) {
 		int cnt = 0;
-		String sql = "select Count(*) from plike where m_id = '" + m_id + "'";
+		String sql = "select Count(*) from plike where m_id = '" + m_id + "' and p_id in (select p_id from product where p_dealstatus = 'N')";
 		try {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
@@ -237,7 +237,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 	public List<ProductVO> selectAllProduct(int start, int end) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		String sql = "select * from (select rownum rnum, d.* from "
-				+ "(select a.*, b.pa_img3 from (select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) a join padd b on a.p_id = b.p_id) d) "
+				+ "(select a.*, b.pa_img1 from (select p.*, l.l_name from local l join product p on l.l_id = p.l_id  where p.p_dealstatus = 'N' order by p.p_id desc) a join padd b on a.p_id = b.p_id) d) "
 				+ "where rnum >= ? and rnum <= ?";
 
 		try {
@@ -267,7 +267,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 					vo.setP_premium(rs.getString("p_premium").charAt(0));
 					vo.setP_view(rs.getInt("p_view"));
 					vo.setL_name(rs.getString("l_name"));
-					vo.setPa_img3(rs.getString("pa_img3"));
+					vo.setPa_img3(rs.getString("pa_img1"));
 					list.add(vo);
 				} while (rs.next());
 			}
@@ -281,9 +281,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 	
 	public List<ProductVO> selectrelatedProduct(int c_lid, int p_id) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
-		String sql = "select a.*, b.pa_img3 from "
-				+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) a join padd b "
-				+ "on a.p_id = b.p_id where a.c_lid = " + c_lid + " and a.p_id <> " + p_id;
+		String sql = "select a.*, b.pa_img3 from (select p.*, l.l_name from local l join product p on l.l_id = p.l_id) a join padd b on a.p_id = b.p_id where a.c_lid = " + c_lid + " and a.p_id  !=	" + p_id+"";
 		
 		try {
 			conn = ds.getConnection();
@@ -324,9 +322,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 	
 	public List<ProductVO> selectotherProduct(String m_id, int p_id) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
-		String sql = "select a.*, b.pa_img3 from "
-				+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) a join padd b "
-				+ "on a.p_id = b.p_id where m_id = '" + m_id + "' and a.p_id <> " + p_id;
+		String sql = "select a.*, b.pa_img3 from (select p.*, l.l_name from local l join product p on l.l_id = p.l_id) a join padd b on a.p_id = b.p_id where m_id = '" + m_id + "' and a.p_id <> " + p_id;
 		
 		try {
 			conn = ds.getConnection();
@@ -361,12 +357,12 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		String sql;
 		if (SearchFilter == 1) {
 			sql = "select * from (select rownum rnum, d.* from " + "(select d.* from (select a.*, b.pa_img3 from "
-					+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) "
+					+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id where p.p_dealstatus = 'N' order by p.p_id desc) "
 					+ "a join padd b on a.p_id = b.p_id) d ";
 			if (SearchStr != "") {
 				sql += "where p_name like '%" + SearchStr + "%' ";
 			}
-			sql += "order by d.p_id desc) d) where rnum >= ? and rnum <= ?";
+			sql += ") d) where rnum >= ? and rnum <= ?";
 			try {
 				conn = ds.getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -404,12 +400,12 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			}
 		} else if (SearchFilter == 2) {
 			sql = "select * from (select rownum rnum, d.* from " + "(select d.* from (select a.*, b.pa_img3 from "
-					+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) "
+					+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id  where p.p_dealstatus = 'N') "
 					+ "a join padd b on a.p_id = b.p_id) d ";
 			if (SearchStr != "") {
 				sql += "where l_name like '%" + SearchStr + "%' ";
 			}
-			sql += "order by d.p_id desc) d) where rnum >= ? and rnum <= ?";
+			sql += "order by d.p_id desc) d) where rnum >= ? and rnum <= ? order by rnum";
 			try {
 				conn = ds.getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -447,12 +443,12 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 			}
 		} else if (SearchFilter == 0) {
 			sql = "select * from (select rownum rnum, d.* from " + "(select d.* from (select a.*, b.pa_img3 from "
-					+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) "
+					+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id  where p.p_dealstatus = 'N') "
 					+ "a join padd b on a.p_id = b.p_id) d ";
 			if (SearchStr != "") {
 				sql += "where l_name like '%" + SearchStr + "%' " + "or p_name like '%" + SearchStr + "%' ";
 			}
-			sql += "order by d.p_id desc) d) where rnum >= ? and rnum <= ?";
+			sql += "order by d.p_id desc) d) where rnum >= ? and rnum <= ?  order by rnum";
 			try {
 				conn = ds.getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -500,7 +496,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		if (SearchFilter == 1) { 
 			String sql = "select Count(*) "
 					+ "from (select p.*, l.l_name from product p join local l on l.l_id = p.l_id) d "
-					+ "where p_name like '%" + SearchStr + "%' order by d.p_id desc";
+					+ "where p_name like '%" + SearchStr + "%' and p_dealstatus = 'N' order by d.p_id desc";
 			try {
 				conn = ds.getConnection();
 				stmt = conn.createStatement();
@@ -993,7 +989,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		
 		String sql = "select * from (select rownum rnum, d.* from "
-				+ "(select a.*, b.pa_img3 from (select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) "
+				+ "(select a.*, b.pa_img3 from (select p.*, l.l_name from local l join product p on l.l_id = p.l_id where p.p_dealstatus = 'N' order by p.p_id desc) "
 				+ "a join padd b on a.p_id = b.p_id "
 				+ "where a.p_id in (select p_id from plike where m_id = ?)) d) " + "where rnum >= ? and rnum <= ?";
 		try {
@@ -1212,7 +1208,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		int cnt = 0;
 		String sql = "select Count(*) "
 				+ "from (select p.*, l.l_name from product p join local l on l.l_id = p.l_id) d " + "where c_lid = "
-				+ c_lid + " order by d.p_id desc";
+				+ c_lid + "and p_dealstatus = 'N' order by d.p_id desc";
 		try {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
@@ -1233,7 +1229,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		int cnt = 0;
 
 		String sql = "select * from (select rownum rnum, d.* from " + "(select d.* from (select a.*, b.pa_img3 from "
-				+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id order by p_id desc) "
+				+ "(select p.*, l.l_name from local l join product p on l.l_id = p.l_id  where p.p_dealstatus = 'N' order by p.p_id desc) "
 				+ "a join padd b on a.p_id = b.p_id) d " + "where c_lid = " + c_lid
 				+ " order by d.p_id desc) d) where rnum >= ? and rnum <= ?";
 		try {
@@ -1913,7 +1909,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 
 		public List<ProductVO> getMainProduct1(){
 			List<ProductVO> list = new ArrayList<ProductVO>();
-			String sql = "select * from (select rownum rnum, d.* from (select d.* from (select a.*,b.pa_img3 from (select p.*, l.l_name from local l join Product p on l.l_id = p.l_id order by p_like desc, p_view desc) a join padd b on a.p_id = b.p_id) d order by d.p_like desc, d.p_view desc) d) where rnum >= 1 and rnum <= 4";
+			String sql = "select * from (select rownum rnum, d.* from (select d.* from (select a.*,b.pa_img3 from (select p.*, l.l_name from local l join Product p on l.l_id = p.l_id  where p.p_dealstatus = 'N' order by p_like desc, p_view desc) a join padd b on a.p_id = b.p_id) d order by d.p_like desc, d.p_view desc) d) where rnum >= 1 and rnum <= 4";
 			try {
 				conn = ds.getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -1952,7 +1948,7 @@ String sql = "select * from (select * from (select rownum rnum,d.* from(select* 
 		
 		public List<ProductVO> getMainProduct2(){
 			List<ProductVO> list = new ArrayList<ProductVO>();
-			String sql = "select * from (select rownum rnum, d.* from (select d.* from (select a.*,b.pa_img3 from (select p.*, l.l_name from local l join Product p on l.l_id = p.l_id order by p_adddate desc) a join padd b on a.p_id = b.p_id) d order by p_adddate desc) d) where rnum >= 1 and rnum <= 4";
+			String sql = "select * from (select rownum rnum, d.* from (select d.* from (select a.*,b.pa_img3 from (select p.*, l.l_name from local l join Product p on l.l_id = p.l_id  where p.p_dealstatus = 'N' order by p_adddate desc) a join padd b on a.p_id = b.p_id) d order by p_adddate desc) d) where rnum >= 1 and rnum <= 4";
 			try {
 				conn = ds.getConnection();
 				pstmt = conn.prepareStatement(sql);

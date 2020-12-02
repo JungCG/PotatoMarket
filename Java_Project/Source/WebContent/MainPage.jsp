@@ -8,8 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
-    	String ctx = request.getContextPath();
-    	String ctxPath = request.getContextPath();
+
     	String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
@@ -43,14 +42,6 @@
 	<script type="text/javascript">
 		$("document").ready(function() {
 			$("html, body").animate({ scrollTop: 0 }, "slow");
-			$(window).on("scroll", function() {
-				if ($(window).scrollTop() > 150) {
-					$("#JWJhistorylist").css("top", "140px");
-					$("#JWJhistorylist").css("transition-duration", "0.7s");
-				} else {
-					$("#JWJhistorylist").css("top", "400px");
-				}
-			});
 			
 			$(window).scroll(function(){
 				if($(window).scrollTop() != 0){

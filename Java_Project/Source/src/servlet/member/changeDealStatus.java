@@ -40,6 +40,7 @@ public class changeDealStatus extends HttpServlet {
 		
 		MemberService mdao = new MemberService();
 		
+		
 		if (dealstatus.equals("N")) {
 			dealstatus = "Y";
 			tdao.insertTradeInfo(p_id, s_id, b_id);

@@ -42,14 +42,6 @@ public class ProductgetCountCtl extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		//임시 로그인 아이디**************************************
-//		//임시 로그인 아이디**************************************
-//		String userID = "MasterPotato1";
-//		request.getSession().setAttribute("userID", userID);
-////		String userID = "";
-//		//임시 로그인 아이디**************************************
-//		//임시 로그인 아이디**************************************
-
 		String m_id = (String) request.getSession().getAttribute("userID");
 
 		
@@ -88,11 +80,21 @@ public class ProductgetCountCtl extends HttpServlet {
 		int prePage = currentPage -1;
 		int nextPage = currentPage +1;
 		
-		if(prePage<1) {
-			prePage = startPage;
-		}else if(nextPage > endPage) {
-			nextPage = endPage;
-		}
+		int lastPage = 0;
+	      
+	      if(bCount%9==0) {
+	         lastPage = bCount/9;
+	      }else if(bCount%9>0) {
+	         lastPage = (bCount/9) + 1;
+	      }
+	      
+	      if(nextPage > lastPage) {
+	         nextPage = lastPage;
+	      }else if(prePage < 1) {
+	         prePage = 1;
+	      }
+		
+		
 		
 		//첫화면 모든 상품글 조회하기
 		List<ProductVO> list = pservice.selectAllProduct(startRnum, endRnum);

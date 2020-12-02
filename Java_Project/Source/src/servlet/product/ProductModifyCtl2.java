@@ -62,7 +62,7 @@ public class ProductModifyCtl2 extends HttpServlet {
       int uploadSizeLimit = 10 * 1024 * 1024; 
       String encType ="UTF-8"; 
       ServletContext context = getServletContext();
-      String uploadPath = context.getRealPath("upload");
+      String uploadPath = request.getSession().getServletContext().getRealPath("upload");
 //      String uploadPath = "C:\\_z_im\\_z_im\\NewWorkSpace\\Potato\\WebContent\\upload";
       MultipartRequest multi = new MultipartRequest(request,uploadPath,uploadSizeLimit,encType,new DefaultFileRenamePolicy()); 
       Enumeration files = multi.getFileNames();

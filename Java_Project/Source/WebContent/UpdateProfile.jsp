@@ -7,11 +7,7 @@
 <link rel = "stylesheet" href = "css/jck_nav.css">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%
-    	String ctx = request.getContextPath();
-    	String ctxPath = request.getContextPath();
-    	
-    %>
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,12 +15,6 @@
 		String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
-		}
-		if(userID == null){
-			session.setAttribute("messageType", "오류 메시지");
-			session.setAttribute("messageContent", "현재 로그인이 되어 있지 않습니다.");
-			response.sendRedirect("Login.jsp");
-			return;
 		}
 	%>
 	
@@ -36,6 +26,25 @@
 	<script src = "js/bootstrap.js"></script>
     <title>감자 마켓</title>
 	<script type="text/javascript">
+	$(function() {
+		$("#userimg").on("change", function() {
+			if (window.FileReader) {
+				var filename = $(this)[0].files[0].name;
+			}
+			$("#imgspan").html(filename);
+			
+			var temp = URL.createObjectURL(event.target.files[0]);
+			
+			$("#showimg").attr("src", temp);
+		});
+		
+		$("#imgDeleteBtn").on("click", function(){
+			$("#userimg").val("");
+			$("#imgspan").html("");
+			$("#showimg").attr("src", "");
+		});
+	});
+		
 		function getUnread(){
 			$.ajax({
 				type:"POST",
@@ -171,7 +180,7 @@ table * {
 #showimg{
 	height : 200px;
 }
-#profileIMGGG{
+.profileIMGGG{
 	height : 200px;
 }
 
@@ -339,7 +348,7 @@ margin-top : 5vh;
 							<tr class="register" height="30">
 								<td width="5%">*</td>
 								<td width="30%">생년월일</td>
-								<td><input type="date" id="userbirth" name="userbirth" style="width: 56%;" value="<%=mvo.getM_birth()%>" required></td>
+								<td><input type="date" id="userbirth" name="userbirth" style="width: 56%;" required></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
@@ -376,9 +385,20 @@ margin-top : 5vh;
 							<tr class="register" height="30">
 								<td width="5%">*</td>
 								<td width="30%">프로필 이미지</td>
-								<td><input type="text" id="userimg" name="userimg" value="<%=mvo.getM_image()%>">&nbsp;&nbsp;<input type="button" id="imgbtn" name="imgbtn" value="파일첨부"> <br>
-									<img src="./profileIMG/<%=mvo.getM_image()%>" id = "profileIMGGG"></td>
+								<td>
+										<div class="filebox">
+											<span id="imgspan"></span> <label for="userimg">첨부하기</label>
+											<input type="file" name="userimg" id="userimg" value = "<%=mvo.getM_image()%>">
+											<label id = "imgDeleteBtn">&times;</label>
+										</div>
+								</td>
 							</tr>
+							<tr style ="border : 1px solid beige;">
+									<td>&nbsp;</td>
+									<td colspan="2">
+										<img src = "./profileIMG/<%=mvo.getM_image()%>" class = "profileIMGGG" id = "showimg" name = "showimg">
+									</td>
+								</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
@@ -403,7 +423,7 @@ margin-top : 5vh;
 					</table>
 				</fieldset>
 				<div id="formbtn">
-					<br> <input class="jck_join_button" type="submit" id="btnSubmit" value="수정완료">&nbsp;&nbsp;&nbsp;&nbsp;<input class="jck_join_button" type="button" id="btnback" value="취소" onclick="location.href=\'./MyPage.jsp\'">
+					<br> <input class="jck_join_button" type="submit" id="btnSubmit" value="수정완료">&nbsp;&nbsp;&nbsp;&nbsp;<input class="jck_join_button" type="button" id="btnback" value="취소" onclick="location.href='./MyPage.jsp'">
 				</div>
 			</form>
 		</div>
@@ -434,12 +454,30 @@ margin-top : 5vh;
                       	p_img2 = pdao.selectHistory(p_2);
                       if(!p_3.equals("0"))
                       	p_img3 = pdao.selectHistory(p_3);
+                      
+                      String href1="#";
+                      String href2="#";
+                      String href3="#";
+                      
+                      if(!p_img1.equals("logoimg.png")){
+                    	  href1="./ProductContentCtl.do?p_id="+session.getAttribute("img1")+"&c_lid="+session.getAttribute("img1_c_lid")+"&m_id="+session.getAttribute("img1_m_id")+"&Likeresult="+session.getAttribute("img1_likeresult");
+                      }
+                      if(!p_img2.equals("logoimg.png")){
+                    	  href2="./ProductContentCtl.do?p_id="+session.getAttribute("img2")+"&c_lid="+session.getAttribute("img2_c_lid")+"&m_id="+session.getAttribute("img2_m_id")+"&Likeresult="+session.getAttribute("img2_likeresult");
+                      }
+                      if(!p_img3.equals("logoimg.png")){
+                    	  href3="./ProductContentCtl.do?p_id="+session.getAttribute("img3")+"&c_lid="+session.getAttribute("img3_c_lid")+"&m_id="+session.getAttribute("img3_m_id")+"&Likeresult="+session.getAttribute("img3_likeresult");
+                      }
 				      %>
 		      <div id="JWJhistorylist">
 		         <aside>
 		            <h3 style="color: white; background: #B97A57; text-align : center;">최근 본 상품</h3>
-		            <a href=""><img src="./upload/<%=p_img1 %>"></a> <a href=""><img src="./upload/<%=p_img2 %>"></a>
-		            <a href=""><img src="./upload/<%=p_img3 %>"></a>
+		            
+		            <a href="<%=href1%>"><img src="./upload/<%=p_img1 %>"></a>
+		            
+		            <a href="<%=href2%>"><img src="./upload/<%=p_img2 %>"></a>
+		            
+		            <a href="<%=href3%>"><img src="./upload/<%=p_img3 %>"></a>
 		         </aside>
 		      </div>
             </div>
@@ -512,6 +550,71 @@ Copyright © Potato-Market. All Rights Reserved.</div>
         </div>
       </div>
     </div>
+    
+    <script>
+		//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+		function sample4_execDaumPostcode() {
+			new daum.Postcode(
+					{
+						oncomplete : function(data) {
+							// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+							// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+							// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+							var roadAddr = data.roadAddress; // 도로명 주소 변수
+							var extraRoadAddr = ''; // 참고 항목 변수
+
+							// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+							// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+							if (data.bname !== ''
+									&& /[동|로|가]$/g.test(data.bname)) {
+								extraRoadAddr += data.bname;
+							}
+							// 건물명이 있고, 공동주택일 경우 추가한다.
+							if (data.buildingName !== ''
+									&& data.apartment === 'Y') {
+								extraRoadAddr += (extraRoadAddr !== '' ? ', '
+										+ data.buildingName : data.buildingName);
+							}
+							// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+							if (extraRoadAddr !== '') {
+								extraRoadAddr = ' (' + extraRoadAddr + ')';
+							}
+
+							// 우편번호와 주소 정보를 해당 필드에 넣는다.
+							document.getElementById('sample4_postcode').value = data.zonecode;
+							document.getElementById("sample4_roadAddress").value = roadAddr;
+							document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+
+							// 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+							if (roadAddr !== '') {
+								document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+							} else {
+								document.getElementById("sample4_extraAddress").value = '';
+							}
+
+							var guideTextBox = document.getElementById("guide");
+							// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+							if (data.autoRoadAddress) {
+								var expRoadAddr = data.autoRoadAddress
+										+ extraRoadAddr;
+								guideTextBox.innerHTML = '(예상 도로명 주소 : '
+										+ expRoadAddr + ')';
+								guideTextBox.style.display = 'block';
+
+							} else if (data.autoJibunAddress) {
+								var expJibunAddr = data.autoJibunAddress;
+								guideTextBox.innerHTML = '(예상 지번 주소 : '
+										+ expJibunAddr + ')';
+								guideTextBox.style.display = 'block';
+							} else {
+								guideTextBox.innerHTML = '';
+								guideTextBox.style.display = 'none';
+							}
+						}
+					}).open();
+		}
+	</script>
     
     <script>
         $(window).resize(function(){

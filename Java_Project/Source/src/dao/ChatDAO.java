@@ -23,7 +23,7 @@ public class ChatDAO {
 		try {
 			Context initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			ds = (DataSource) envContext.lookup("jdbc/potato");
+			ds = (DataSource) envContext.lookup("jdbc/potatoRDS");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -186,7 +186,7 @@ public class ChatDAO {
 	}
 	
 	public int submit(String fromID, String toID, String chatContent){
-		String sql = "insert into chat values ((select nvl(max(chatID)+1,1) from chat), ?, ?, ?, sysdate, 0)";
+		String sql = "insert into chat values ((select nvl(max(chatID)+1,1) from chat), ?, ?, ?, current_timestamp, 0)";
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);

@@ -56,14 +56,13 @@ public class BoardContentWriteCtl extends HttpServlet {
 		int uploadSizeLimit = 10 * 1024 * 1024; 
 		String encType ="UTF-8"; 
 		ServletContext context = getServletContext();
-//		String uploadPath = request.getsession.context.getRealPath(fileSavePath);
-		String uploadPath = context.getRealPath(fileSavePath); 
+		String uploadPath = request.getSession().getServletContext().getRealPath(fileSavePath);
 		MultipartRequest multi = new MultipartRequest(request,uploadPath,uploadSizeLimit,encType,new DefaultFileRenamePolicy()); 
 		Enumeration files = multi.getFileNames();
-		realFolder = context.getRealPath(fileSavePath);
+		realFolder = request.getSession().getServletContext().getRealPath(fileSavePath);
 		int i = 1;
 		BaddVO vod = new BaddVO();
-		while (files.hasMoreElements()) {       // �뾽濡쒕뱶 �맂 �뙆�씪 �씠由� �뼸�뼱�삤湲�    
+		while (files.hasMoreElements()) {      
 			String file = (String)files.nextElement();
 			String fileName = multi.getFilesystemName(file); 
 			if(fileName==null) {
@@ -100,7 +99,6 @@ public class BoardContentWriteCtl extends HttpServlet {
 		sv.insertImg(vod);
 		if(result > 0) {
 		out1.println("<script>");	
-		out1.println("alert('湲��벑濡앹뿉 �꽦怨듯븯���뒿�땲�떎');");	
 		out1.println("location.href='BoardContentCtl.do?b_id="+result+"&b_type="+multi.getParameter("b_type")+"&currentPage="+multi.getParameter("currentPage")+"'");
 		out1.println("</script>");	
 		out1.flush();
@@ -108,8 +106,8 @@ public class BoardContentWriteCtl extends HttpServlet {
 		
 		}else {
 			out1.println("<script>");	
-			out1.println("alert('湲��벑濡앹뿉 �떎�뙣�븯�뀲�뒿�땲�떎');");	
 			out1.println("location.href='BoardWrite.jsp?b_id="+result+"&b_type="+multi.getParameter("b_type")+"&currentPage="+multi.getParameter("currentPage")+"'");
+			out1.println("</script>");
 			out1.flush();
 			out1.close();
 			
