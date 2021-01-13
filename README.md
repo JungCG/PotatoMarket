@@ -1,8 +1,5 @@
 # 중고거래 사이트 PotatoMarket
 
------------------
-
-
 <p align="center">
     <img src = "ForREADME/MainPage.png", width="100%">
     <sup><a href="http://potato-market.com" target="_blank">감자마켓 메인페이지</a></sup>
@@ -13,7 +10,7 @@
 
 ## Presentation and Testing Video
 - **Youtube**:
-    - [**Presentation**](https://www.youtube.com/watch?v=DFRlnNcDH-Q).
+    - [**Presentation**](https://www.youtube.com/watch?v=DFRlnNcDH-Q) [![Youtube Badge](https://img.shields.io/badge/Youtube-ff0000?style=flat-square&logo=youtube&link=https://www.youtube.com/watch?v=DFRlnNcDH-Q)](https://www.youtube.com/watch?v=DFRlnNcDH-Q)
 
 -----------------
 
